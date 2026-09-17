@@ -2,16 +2,25 @@
   "name": "vibefarsi-ui",
   "version": "0.1.0",
   "private": true,
+  "bin": {
+    "vibefarsi": "./packages/cli/dist/index.js"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:cli": "tsc -p packages/cli/tsconfig.json",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "mcp": "npm run dev --prefix mcp",
+    "mcp:smoke": "npm run smoke --prefix mcp",
+    "vibefarsi": "node packages/cli/dist/index.js"
   },
   "dependencies": {
+    "lucide-react": "^1.46.0",
     "next": "16.3.5",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

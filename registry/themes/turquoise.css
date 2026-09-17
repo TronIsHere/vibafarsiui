@@ -1,0 +1,24 @@
+/* فیروزه. روی <html data-theme="turquoise"> یا هر عنصر دیگری اعمال کنید. */
+[data-theme="turquoise"] {
+  color-scheme: dark;
+  --background: oklch(0.15 0.03 215);
+  --foreground: oklch(0.97 0.01 200);
+  --card: oklch(0.18 0.03 215);
+  --card-foreground: oklch(0.97 0.01 200);
+  --popover: oklch(0.2 0.03 215);
+  --popover-foreground: oklch(0.97 0.01 200);
+  --primary: oklch(0.83 0.13 190);
+  --primary-foreground: oklch(0.16 0.04 200);
+  --secondary: oklch(0.25 0.04 215);
+  --secondary-foreground: oklch(0.97 0.01 200);
+  --muted: oklch(0.22 0.035 215);
+  --muted-foreground: oklch(0.72 0.04 205);
+  --accent: oklch(0.25 0.04 215);
+  --accent-foreground: oklch(0.97 0.01 200);
+  --border: oklch(0.85 0.08 200 / 14%);
+  --input: oklch(0.85 0.08 200 / 18%);
+  --ring: oklch(0.83 0.13 190);
+  --brand: oklch(0.88 0.1 185);
+  --brand-foreground: oklch(0.16 0.04 200);
+  --radius: 0.75rem;
+}

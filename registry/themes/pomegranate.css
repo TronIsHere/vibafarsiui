@@ -1,0 +1,24 @@
+/* انار. روی <html data-theme="pomegranate"> یا هر عنصر دیگری اعمال کنید. */
+[data-theme="pomegranate"] {
+  color-scheme: dark;
+  --background: oklch(0.14 0.02 15);
+  --foreground: oklch(0.97 0.01 15);
+  --card: oklch(0.17 0.025 15);
+  --card-foreground: oklch(0.97 0.01 15);
+  --popover: oklch(0.19 0.025 15);
+  --popover-foreground: oklch(0.97 0.01 15);
+  --primary: oklch(0.7 0.18 20);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.24 0.04 15);
+  --secondary-foreground: oklch(0.97 0.01 15);
+  --muted: oklch(0.21 0.03 15);
+  --muted-foreground: oklch(0.72 0.04 15);
+  --accent: oklch(0.24 0.04 15);
+  --accent-foreground: oklch(0.97 0.01 15);
+  --border: oklch(0.8 0.1 15 / 14%);
+  --input: oklch(0.8 0.1 15 / 18%);
+  --ring: oklch(0.7 0.18 20);
+  --brand: oklch(0.8 0.12 25);
+  --brand-foreground: oklch(0.2 0.05 20);
+  --radius: 1rem;
+}

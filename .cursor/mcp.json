@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "vibefarsi": {
+      "command": "npm",
+      "args": ["run", "mcp"]
+    }
+  }
+}

@@ -1,0 +1,27 @@
+/* گرافیت، پیش‌فرض. این بلوک را در :root بگذارید. */
+:root {
+  color-scheme: dark;
+  --background: oklch(0.115 0.002 285);
+  --foreground: oklch(0.975 0 0);
+  --card: oklch(0.14 0.002 285);
+  --card-foreground: oklch(0.975 0 0);
+  --popover: oklch(0.16 0.002 285);
+  --popover-foreground: oklch(0.975 0 0);
+  --primary: oklch(0.975 0 0);
+  --primary-foreground: oklch(0.13 0 0);
+  --secondary: oklch(0.2 0.002 285);
+  --secondary-foreground: oklch(0.975 0 0);
+  --muted: oklch(0.175 0.002 285);
+  --muted-foreground: oklch(0.63 0.004 285);
+  --accent: oklch(0.2 0.002 285);
+  --accent-foreground: oklch(0.975 0 0);
+  --destructive: oklch(0.65 0.2 25);
+  --success: oklch(0.75 0.16 160);
+  --warning: oklch(0.82 0.16 80);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 11%);
+  --ring: oklch(0.7 0 0);
+  --brand: oklch(0.8 0.165 65);
+  --brand-foreground: oklch(0.22 0.06 60);
+  --radius: 0.625rem;
+}

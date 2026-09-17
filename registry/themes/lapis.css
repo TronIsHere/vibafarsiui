@@ -1,0 +1,24 @@
+/* لاجورد. روی <html data-theme="lapis"> یا هر عنصر دیگری اعمال کنید. */
+[data-theme="lapis"] {
+  color-scheme: dark;
+  --background: oklch(0.13 0.03 275);
+  --foreground: oklch(0.97 0.01 275);
+  --card: oklch(0.165 0.035 275);
+  --card-foreground: oklch(0.97 0.01 275);
+  --popover: oklch(0.19 0.035 275);
+  --popover-foreground: oklch(0.97 0.01 275);
+  --primary: oklch(0.7 0.16 275);
+  --primary-foreground: oklch(0.98 0.01 275);
+  --secondary: oklch(0.23 0.04 275);
+  --secondary-foreground: oklch(0.97 0.01 275);
+  --muted: oklch(0.2 0.035 275);
+  --muted-foreground: oklch(0.72 0.04 275);
+  --accent: oklch(0.23 0.04 275);
+  --accent-foreground: oklch(0.97 0.01 275);
+  --border: oklch(0.7 0.1 275 / 18%);
+  --input: oklch(0.7 0.1 275 / 22%);
+  --ring: oklch(0.7 0.16 275);
+  --brand: oklch(0.8 0.12 255);
+  --brand-foreground: oklch(0.16 0.04 265);
+  --radius: 0.375rem;
+}

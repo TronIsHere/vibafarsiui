@@ -1,0 +1,25 @@
+{
+  "name": "vibefarsi",
+  "version": "0.1.0",
+  "description": "Add RTL Persian components, fonts, and Graphite tokens to a React app.",
+  "keywords": ["persian", "farsi", "rtl", "react", "tailwind", "components", "jalali"],
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "vibefarsi": "./dist/index.js"
+  },
+  "files": ["dist"],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vibefarsi/ui",
+    "directory": "packages/cli"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
+  }
+}

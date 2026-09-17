@@ -1,0 +1,45 @@
+{
+  "name": "@vibefarsi/mcp",
+  "version": "0.1.0",
+  "description": "MCP server for VibeFarsi. Gives Cursor, Claude Code, and Windsurf Persian RTL design rules and registry components so they stop emitting Inter, Latin digits, and LTR layout.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "vibefarsi-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "smoke": "tsx src/smoke.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vibefarsi/ui"
+  },
+  "keywords": [
+    "mcp",
+    "persian",
+    "farsi",
+    "rtl",
+    "react",
+    "tailwind"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.0.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}
