@@ -72,7 +72,7 @@ const orders = [
   },
 ];
 
-/** داشبورد فروشگاه — نوار کناری، آمار، نمودار هفتگی، سفارش‌های اخیر و هدف ماهانه. */
+/** داشبورد فروشگاه: نوار کناری، آمار، نمودار هفتگی، سفارش‌های اخیر و هدف ماهانه. */
 export function ShopDashboard() {
   return (
     <div className="flex min-h-dvh bg-background text-foreground">

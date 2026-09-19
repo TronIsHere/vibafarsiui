@@ -20,7 +20,7 @@ const rows: [string, (boolean | string)[]][] = [
   ["پشتیبانی تلفنی", [false, false, true]],
 ];
 
-/** صفحه‌ی قیمت‌گذاری — ماهانه/سالانه و جدول مقایسه. */
+/** صفحه‌ی قیمت‌گذاری: ماهانه/سالانه و جدول مقایسه. */
 export function PricingPage() {
   const [period, setPeriod] = React.useState("monthly");
   const yearly = period === "yearly";

@@ -34,8 +34,8 @@ export function Templates({ standalone }: { standalone?: boolean }) {
   const head = (
     <SectionHead
       eyebrow={<>{faN(templates.length)} قالب</>}
-      title={standalone ? "قالب‌ها" : "صفحه‌های کامل، از همین قطعه‌ها"}
-      desc="قالب‌ها با همین کامپوننت‌ها و توکن‌ها ساخته شده‌اند. تم را عوض کنید، همه‌ی صفحه‌ها با هم عوض می‌شوند. هر کدام را تمام‌صفحه باز کنید و کدش را بردارید."
+      title={standalone ? "قالب‌ها" : "صفحه‌های کامل، از همین کامپوننت‌ها"}
+      desc="قالب‌ها با همین کامپوننت‌ها و توکن‌ها ساخته شدن، پس اگر تم را عوض کنید همه‌ی صفحه‌ها با هم عوض میشن. هر قالب را می‌تونید تمام‌صفحه باز کنید و کدش را بردارید."
       href="/templates"
       standalone={standalone}
     />
@@ -73,7 +73,7 @@ export function Templates({ standalone }: { standalone?: boolean }) {
     <Section id="templates">
       {head}
       {grid}
-      <SectionFoot href="/templates" label="همه‌ی قالب‌ها" note="پیش‌نمایش زنده و کد کامل هر صفحه." />
+      <SectionFoot href="/templates" label="همه‌ی قالب‌ها" note="هر صفحه پیش‌نمایش زنده و کد کامل داره." />
     </Section>
   );
 }

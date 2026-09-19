@@ -35,7 +35,7 @@ const seed: Msg[] = [
   },
 ];
 
-/** چت هوش مصنوعی — گفت‌وگو، فراخوانی ابزار و جعبه‌ی پرامپت چسبیده به پایین. */
+/** چت هوش مصنوعی: گفت‌وگو، فراخوانی ابزار و جعبه‌ی پرامپت چسبیده به پایین. */
 export function AiChat() {
   const [msgs, setMsgs] = React.useState<Msg[]>(seed);
   const [loading, setLoading] = React.useState(false);

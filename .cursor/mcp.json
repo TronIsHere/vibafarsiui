@@ -2,7 +2,10 @@
   "mcpServers": {
     "vibefarsi": {
       "command": "npm",
-      "args": ["run", "mcp"]
+      "args": ["run", "mcp"],
+      "env": {
+        "VIBEFARSI_URL": "https://vibefarsi.ir"
+      }
     }
   }
 }

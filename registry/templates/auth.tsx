@@ -8,7 +8,7 @@ import { OtpField } from "@/registry/ui/otp-field";
 import { Stepper } from "@/registry/ui/stepper";
 import { fa } from "@/lib/utils";
 
-/** ورود با موبایل و کد تأیید — دو مرحله در یک کارت. */
+/** ورود با موبایل و کد تأیید: دو مرحله در یک کارت. */
 export function AuthPage() {
   const [step, setStep] = React.useState(0);
   const [phone, setPhone] = React.useState("");

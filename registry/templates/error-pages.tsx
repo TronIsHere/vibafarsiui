@@ -15,7 +15,7 @@ const COPY: Record<ErrorKind, { code?: string; icon: React.ComponentType<{ class
   empty: { icon: Inbox, title: "هنوز چیزی این‌جا نیست", body: "اولین مورد را اضافه کنید تا این صفحه پر شود. بعداً می‌توانید فیلتر و مرتب کنید.", primary: "افزودن مورد جدید", secondary: "راهنما" },
 };
 
-/** صفحه‌های خطا و خالی — ۴۰۴، ۵۰۰، آفلاین و حالت خالی؛ فارسیِ آدم‌وار، نه «اوپس». */
+/** صفحه‌های خطا و خالی: ۴۰۴، ۵۰۰، آفلاین و حالت خالی؛ فارسی ساده و طبیعی، نه «اوپس». */
 export function ErrorPage({ kind = "404", className }: { kind?: ErrorKind; className?: string }) {
   const c = COPY[kind];
   return (

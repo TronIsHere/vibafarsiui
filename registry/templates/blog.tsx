@@ -5,7 +5,7 @@ import { formatJalali } from "@/lib/jalali";
 
 const toc = ["چرا فونت مهم است", "ارتفاع خط و اندازه", "اعداد فارسی", "جمع‌بندی"];
 
-/** وبلاگ — صفحه‌ی مطلب با فهرست مطالب چسبان و تایپوگرافی خواندنی. */
+/** وبلاگ: صفحه‌ی مطلب با فهرست مطالب چسبان و تایپوگرافی خواندنی. */
 export function BlogPost() {
   return (
     <div className="min-h-dvh bg-background text-foreground">

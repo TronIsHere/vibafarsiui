@@ -16,7 +16,7 @@ const plans = [
   { name: "سازمانی", price: 990_000, desc: "برای تیم‌های بزرگ", items: ["چند فروشگاه", "API اختصاصی", "مدیر حساب"] },
 ];
 
-/** لندینگ استارتاپ — هیرو، ویژگی‌ها، قیمت و پرسش‌های متداول. */
+/** لندینگ استارتاپ: هیرو، ویژگی‌ها، قیمت و پرسش‌های متداول. */
 export function StartupLanding() {
   return (
     <div className="min-h-dvh bg-background text-foreground">
@@ -29,7 +29,7 @@ export function StartupLanding() {
       <section className="mx-auto max-w-3xl px-4 pb-16 pt-20 text-center">
         <Badge variant="brand">نسخه‌ی ۲ منتشر شد</Badge>
         <h1 className="mt-5 text-4xl font-bold leading-[1.2] sm:text-5xl">فروشگاه آنلاین‌تان را امروز باز کنید، نه ماه بعد.</h1>
-        <p className="mx-auto mt-5 max-w-xl text-muted-foreground">درگاه بانکی، پست، فاکتور شمسی، و هوش مصنوعی‌ای که به زبان مشتری حرف می‌زند. همه‌اش از روز اول داخل است.</p>
+        <p className="mx-auto mt-5 max-w-xl text-muted-foreground">درگاه بانکی، پست، فاکتور شمسی و هوش مصنوعی که به زبان مشتری حرف می‌زند. همه از روز اول آماده است.</p>
         <div className="mt-8 flex flex-col justify-center gap-2 sm:flex-row">
           <Button size="lg">ساخت فروشگاه رایگان</Button>
           <Button size="lg" variant="ghost">دیدن نمونه‌ها<ArrowLeft /></Button>

@@ -30,7 +30,7 @@ ${opts.preheader ? `<div style="display:none;max-height:0;overflow:hidden;color:
 const button = (label: string, href = "#") =>
   `<table dir="rtl" role="presentation" cellpadding="0" cellspacing="0" style="margin:20px 0;"><tr><td style="background:#18181b;border-radius:10px;"><a href="${href}" style="display:inline-block;padding:12px 22px;color:#ffffff;text-decoration:none;font-weight:bold;font-size:14px;font-family:${FONT};">${label}</a></td></tr></table>`;
 
-/** کد تأیید — بزرگ، LTR و قابل کپی. */
+/** کد تأیید: بزرگ، LTR و قابل کپی. */
 export function otpEmail({ name, code, minutes = 5 }: { name: string; code: string; minutes?: number }) {
   return shell({
     title: "کد تأیید",
@@ -42,7 +42,7 @@ export function otpEmail({ name, code, minutes = 5 }: { name: string; code: stri
   });
 }
 
-/** تأیید سفارش — جدول اقلام با تومان و لینک پیگیری. */
+/** تأیید سفارش: جدول اقلام با تومان و لینک پیگیری. */
 export function orderEmail({ name, orderId, items, shipping = 0 }: { name: string; orderId: number; items: { title: string; qty: number; price: number }[]; shipping?: number }) {
   const subtotal = items.reduce((s, i) => s + i.qty * i.price, 0);
   const rows = items.map((i) => `<tr><td style="padding:10px 0;border-bottom:1px solid #f4f4f5;text-align:right;">${i.title} <span style="color:#71717a;">× ${fa(i.qty)}</span></td><td style="padding:10px 0;border-bottom:1px solid #f4f4f5;text-align:left;white-space:nowrap;">${toman(i.qty * i.price)}</td></tr>`).join("");
@@ -60,7 +60,7 @@ ${button("پیگیری سفارش")}`,
   });
 }
 
-/** بازیابی رمز — لینک یک‌بارمصرف. */
+/** بازیابی رمز: لینک یک‌بارمصرف. */
 export function resetEmail({ name, minutes = 30 }: { name: string; minutes?: number }) {
   return shell({
     title: "بازیابی رمز عبور",

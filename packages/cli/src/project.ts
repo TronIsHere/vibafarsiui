@@ -30,7 +30,7 @@ export type Project = {
   };
 };
 
-const DEFAULT_REGISTRY = "https://vibefarsi.dev/r";
+const DEFAULT_REGISTRY = "https://vibefarsi.ir/r";
 
 export function defaultConfig(): VibefarsiConfig {
   return {

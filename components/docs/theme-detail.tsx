@@ -47,7 +47,7 @@ function Sample() {
         </div>
         <Progress value={72} label="هدف ماهانه" showValue />
         <Alert variant="success" title="ذخیره شد">
-          تنظیمات با موفقیت اعمال شد.
+          تنظیمات جدید اعمال شد.
         </Alert>
       </div>
     </div>

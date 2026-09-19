@@ -5,11 +5,11 @@ export const libs: DocBase[] = [
   {
     slug: "utils",
     name: "ابزارهای فارسی",
-    desc: "ارقام فارسی، تومان، درصد، حجم فایل و اتصال کلاس‌ها. تقریباً هر کامپوننت به این فایل نیاز دارد.",
+    desc: "اعداد فارسی، تومان، درصد، حجم فایل و اتصال کلاس‌ها. تقریباً هر کامپوننتی به این فایل نیاز داره.",
     file: "lib/utils.ts",
     usage: `import { cn, fa, faNumber, formatToman, faPercent, faFileSize, en } from "@/lib/utils"
 
-formatToman(1_250_000) // ۱۲٬۲۵۰٬۰۰۰ تومان
+formatToman(1_250_000) // ۱٬۲۵۰٬۰۰۰ تومان
 fa(1405)               // ۱۴۰۵`,
     promptBullets: [
       "fa converts Latin digits to Persian; faNumber adds the thousands separator «٬»; formatToman puts the unit after the number.",
@@ -20,7 +20,7 @@ fa(1405)               // ۱۴۰۵`,
   {
     slug: "jalali",
     name: "تقویم شمسی",
-    desc: "تبدیل میلادی ↔ شمسی، نام ماه و روز هفته، بدون وابستگی. پیش‌نیاز تقویم و خط زمان.",
+    desc: "تبدیل میلادی به شمسی و برعکس، نام ماه و روز هفته، بدون وابستگی. پیش‌نیاز تقویم و خط زمانه.",
     file: "lib/jalali.ts",
     usage: `import { toJalali, toGregorian, JALALI_MONTHS, JALALI_WEEKDAYS } from "@/lib/jalali"
 
@@ -35,7 +35,7 @@ JALALI_WEEKDAYS[0] // شنبه`,
   {
     slug: "persian",
     name: "اعتبارسنجی ایرانی",
-    desc: "موبایل، شبا، کد ملی، شماره‌ی کارت با جدول بانک‌ها، پلاک خودرو و زمان نسبی. پیش‌نیاز فیلدهای ایرانی.",
+    desc: "اعتبارسنجی موبایل، شبا، کد ملی و شماره‌ی کارت با جدول بانک‌ها، پلاک خودرو و زمان نسبی. پیش‌نیاز فیلدهای ایرانیه.",
     file: "lib/persian.ts",
     usage: `import { isNationalId, cardBank, isIban, ibanBank, parsePlate, formatPlate } from "@/lib/persian"
 
@@ -51,7 +51,7 @@ formatPlate(parsePlate("12ب345-11")) // ۱۲ ب ۳۴۵ ایران ۱۱`,
   {
     slug: "number-to-words",
     name: "عدد به حروف",
-    desc: "۱٬۲۵۰٬۰۰۰ → «یک میلیون و دویست و پنجاه هزار تومان». برای فاکتور، چک و تأیید پرداخت.",
+    desc: "۱٬۲۵۰٬۰۰۰ را به «یک میلیون و دویست و پنجاه هزار تومان» تبدیل می‌کنه، برای فاکتور، چک و تأیید پرداخت.",
     file: "lib/number-to-words.ts",
     usage: `import { numberToWords, tomanToWords, rialToWords } from "@/lib/number-to-words"
 

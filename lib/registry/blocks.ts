@@ -5,22 +5,22 @@ const bl = (slug: string) => `registry/blocks/${slug}.tsx`;
 export const blocks: BlockDoc[] = [
   {
     slug: "hero", name: "هیرو", file: bl("hero"), tags: ["لندینگ", "شروع"], deps: ["lucide-react"], registryDeps: ["button", "badge", "avatar"],
-    desc: "تیتر بزرگ وسط‌چین، دو دکمه و یک خط اثبات اجتماعی؛ روی شبکه‌ی محو.",
+    desc: "تیتر بزرگ وسط‌چین با دو دکمه و یک خط اثبات اجتماعی، روی شبکه‌ی محو.",
     usage: `import { HeroBlock } from "@/components/blocks/hero"
 
 <HeroBlock
   badge="نسخه‌ی ۲ منتشر شد"
   title={<>فروشگاه‌تان را امروز باز کنید، <span className="text-brand">نه ماه بعد</span></>}
-  description="درگاه بانکی، پست، فاکتور شمسی و هوش مصنوعی فارسی؛ همه آماده."
+  description="درگاه بانکی، پست، فاکتور شمسی و هوش مصنوعی فارسی، همه از روز اول آماده."
   primary={{ label: "ساخت فروشگاه رایگان" }}
   proof={{ people: [{ name: "سارا" }, { name: "علی" }, { name: "نگار" }], text: "بیش از ۲ هزار فروشگاه" }}
 />`,
-    props: [{ name: "title", type: "ReactNode", desc: "تیتر؛ می‌توانید یک کلمه را با text-brand برجسته کنید." }, { name: "proof", type: "{ people; text }", desc: "آواتارها و متن اثبات اجتماعی." }],
+    props: [{ name: "title", type: "ReactNode", desc: "تیتر. می‌تونید یک کلمه را با text-brand برجسته کنید." }, { name: "proof", type: "{ people; text }", desc: "آواتارها و متن اثبات اجتماعی." }],
     promptBullets: ["Headline 48–60px with line-height 1.2, description at most ~65 characters per line, two rounded buttons.", "Grid background with a radial mask from the top; no large image needed."],
   },
   {
     slug: "features", name: "ویژگی‌ها", file: bl("features"), tags: ["لندینگ"], registryDeps: [],
-    desc: "شبکه‌ی سه یا چهارتایی با کاشی آیکون و جداکننده‌ی یک‌پیکسلی (gap-px روی پس‌زمینه‌ی border).",
+    desc: "شبکه‌ی سه یا چهارتایی از ویژگی‌ها با کاشی آیکون و جداکننده‌ی یک‌پیکسلی.",
     usage: `import { FeaturesBlock } from "@/components/blocks/features"
 
 <FeaturesBlock eyebrow="چرا دکان" title="همه‌چیز برای فروش آنلاین" features={[{ icon: Zap, title: "سریع", description: "…" }]} />`,
@@ -29,7 +29,7 @@ export const blocks: BlockDoc[] = [
   },
   {
     slug: "pricing", name: "ردیف قیمت", file: bl("pricing"), tags: ["قیمت", "تبدیل"], deps: ["lucide-react"], registryDeps: ["button", "badge", "price", "tabs"],
-    desc: "سه پلن با تومان، تب ماهانه/سالانه (دو ماه رایگان) و پلن پیشنهادی برجسته.",
+    desc: "سه پلن با قیمت تومانی، تب ماهانه/سالانه با دو ماه رایگان و پلن پیشنهادی برجسته.",
     usage: `import { PricingBlock } from "@/components/blocks/pricing"
 
 <PricingBlock plans={[
@@ -40,7 +40,7 @@ export const blocks: BlockDoc[] = [
   },
   {
     slug: "faq", name: "پرسش‌های متداول", file: bl("faq"), tags: ["لندینگ", "پشتیبانی"], registryDeps: ["accordion"],
-    desc: "معرفی در ستون راست، آکاردئون در ستون چپ؛ اولین پرسش باز.",
+    desc: "پرسش‌های متداول با معرفی در ستون راست و آکاردئون در ستون چپ، که اولین پرسش بازه.",
     usage: `import { FaqBlock } from "@/components/blocks/faq"
 
 <FaqBlock items={[{ id: "1", title: "رایگان است؟", content: "بله…" }]} />`,
@@ -48,7 +48,7 @@ export const blocks: BlockDoc[] = [
   },
   {
     slug: "stats", name: "آمار", file: bl("stats"), tags: ["اثبات"], registryDeps: [],
-    desc: "نوار چهار عدد کلیدی با جداکننده‌ی نازک؛ اعداد را از قبل فارسی بدهید.",
+    desc: "نوار چهار عدد کلیدی با جداکننده‌ی نازک. اعداد را از قبل فارسی بدید.",
     usage: `import { StatsBlock } from "@/components/blocks/stats"
 
 <StatsBlock items={[{ value: "۲٬۴۰۰+", label: "فروشگاه فعال" }, { value: "۹۹٫۹٪", label: "دسترس‌پذیری" }]} />`,
@@ -64,7 +64,7 @@ export const blocks: BlockDoc[] = [
   },
   {
     slug: "auth-card", name: "کارت ورود", file: bl("auth-card"), tags: ["فرم", "کد تأیید"], registryDeps: ["phone-input", "otp-field", "button"],
-    desc: "موبایل → کد تأیید در یک کارت مستقل؛ روی هر پس‌زمینه‌ای بگذارید.",
+    desc: "کارت ورود با موبایل و کد تأیید که مستقله و روی هر پس‌زمینه‌ای می‌نشینه.",
     usage: `import { AuthCard } from "@/components/blocks/auth-card"
 
 <div className="flex min-h-dvh items-center justify-center"><AuthCard onVerified={(phone) => login(phone)} /></div>`,
@@ -72,10 +72,10 @@ export const blocks: BlockDoc[] = [
   },
   {
     slug: "cta", name: "فراخوان پایانی", file: bl("cta"), tags: ["تبدیل"], deps: ["lucide-react"], registryDeps: ["button"],
-    desc: "بنر گرم با یک دکمه؛ درخشش از توکن برند می‌آید.",
+    desc: "بنر گرم با یک دکمه که درخشش‌اش از توکن برند می‌آد.",
     usage: `import { CtaBlock } from "@/components/blocks/cta"
 
-<CtaBlock title="همین امروز شروع کنید" description="بدون کارت بانکی، در کمتر از ده دقیقه." action="ساخت حساب رایگان" note="بدون تعهد؛ هر وقت خواستید لغو کنید" />`,
+<CtaBlock title="همین امروز شروع کنید" description="بدون کارت بانکی، در کمتر از ده دقیقه." action="ساخت حساب رایگان" note="بدون تعهد، هر وقت خواستید لغو کنید" />`,
     promptBullets: ["radial-gradient of brand color at the top of the banner at ~20% opacity; one large rounded button.", "Short copy: headline, one sentence, one button, one trust note."],
   },
 ];

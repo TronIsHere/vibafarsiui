@@ -31,8 +31,8 @@ export function Animations({ standalone }: { standalone?: boolean }) {
   const head = (
     <SectionHead
       eyebrow={<>{fa(animations.length)} انیمیشن</>}
-      title={standalone ? "انیمیشن‌ها" : "حرکت، به اندازه و در جهت درست"}
-      desc="فقط CSS و React، بدون کتابخانه‌ی اضافه. همه از راست شروع می‌شوند و اگر سیستم «کاهش حرکت» داشته باشد خاموش می‌شوند."
+      title={standalone ? "انیمیشن‌ها" : "انیمیشن‌هایی که از راست شروع میشن"}
+      desc="همه با CSS و React ساخته شدن و به هیچ کتابخانه‌ی اضافه‌ای نیاز ندارن. جهتشون با فارسی هماهنگه و اگر کاربر «کاهش حرکت» را فعال کرده باشه، خودشون خاموش میشن."
       href="/animations"
       standalone={standalone}
     />
@@ -49,7 +49,7 @@ export function Animations({ standalone }: { standalone?: boolean }) {
     <Section id="animations">
       {head}
       {grid}
-      <SectionFoot href="/animations" label="همه‌ی انیمیشن‌ها" note="هر کدام یک فایل کوچک است، با چند خط keyframe." />
+      <SectionFoot href="/animations" label="همه‌ی انیمیشن‌ها" note="هر کدام یک فایل کوچک با چند خط keyframe هست." />
     </Section>
   );
 }

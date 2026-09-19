@@ -10,7 +10,7 @@ import { RadioGroup } from "@/registry/ui/radio-group";
 import { SuccessCheck } from "@/registry/animations/success-check";
 import { fa } from "@/lib/utils";
 
-/** ثبت‌نام پیامکی — موبایل → کد تأیید → پروفایل → پایان. */
+/** ثبت‌نام پیامکی: موبایل → کد تأیید → پروفایل → پایان. */
 export function OnboardingPage() {
   const [step, setStep] = React.useState(0);
   const [phone, setPhone] = React.useState("");

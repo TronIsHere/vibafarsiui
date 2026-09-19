@@ -19,7 +19,7 @@ const items = [
   { name: "قاب محافظ", qty: 1, price: 240_000 },
 ];
 
-/** فاکتور — قابل چاپ، با تاریخ شمسی و جمع‌های تومانی. دکمه‌ها در چاپ پنهان می‌شوند. */
+/** فاکتور: قابل چاپ، با تاریخ شمسی و جمع‌های تومانی. دکمه‌ها در چاپ پنهان می‌شوند. */
 export function InvoicePage() {
   const subtotal = items.reduce((s, i) => s + i.qty * i.price, 0);
   const tax = Math.round(subtotal * 0.1);

@@ -17,10 +17,10 @@ export async function generateMetadata({ params }: PageProps<"/themes/[slug]">):
 }
 
 const THEME_RULES = [
-  "هر رنگ در کامپوننت‌ها از یک توکن معنایی می‌آید (bg-background، text-muted-foreground، border-border). رنگ ثابت (hex) داخل کامپوننت نیست.",
-  "برای تم خودتان همین بلوک را کپی کنید، مقدارها را عوض کنید و روی html با data-theme بگذارید.",
-  "شعاع گوشه با --radius کنترل می‌شود؛ اندازه‌های sm، md، lg و xl از همان حساب می‌شوند.",
-  "تم روشن باید color-scheme: light داشته باشد تا کنترل‌های بومی مرورگر و اسکرول‌بار هم روشن بمانند.",
+  "هر رنگ در کامپوننت‌ها از یک توکن معنایی می‌آد، مثل bg-background، text-muted-foreground و border-border. هیچ رنگ ثابتی (hex) داخل کامپوننت نیست.",
+  "برای تم خودتون همین بلوک را کپی کنید، مقدارها را عوض کنید و روی html با data-theme بگذارید.",
+  "شعاع گوشه با --radius کنترل میشه و اندازه‌های sm، md، lg و xl از همان حساب میشن.",
+  "تم روشن باید color-scheme: light داشته باشه تا کنترل‌های بومی مرورگر و اسکرول‌بار هم روشن بمونن.",
 ];
 
 export default async function ThemePage({ params }: PageProps<"/themes/[slug]">) {

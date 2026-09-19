@@ -12,7 +12,7 @@ export function MonoFooter() {
           <div>
             <h2 className="text-2xl font-bold sm:text-3xl">رایگان. برای فارسی‌زبان‌ها.</h2>
             <p className="mt-2 max-w-lg text-sm text-muted-foreground sm:text-[15px]">
-              پلن پولی نیست و هیچ قطعه‌ای قفل نیست. می‌خواهیم ساخت رابط فارسی خوب ساده باشد.
+              پلن پولی نداریم و هیچ کامپوننتی قفل نیست. می‌خوایم ساختن یک رابط فارسی خوب، کار ساده‌ای باشه.
             </p>
           </div>
           <div className="flex gap-2">

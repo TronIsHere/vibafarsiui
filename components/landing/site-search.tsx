@@ -66,6 +66,7 @@ export function SiteSearch() {
     const pages: CommandItem[] = [
       { id: "page-home", label: "خانه", group: "صفحات", icon: BookOpen, keywords: ["home", "index"], onSelect: go("/") },
       { id: "page-docs", label: "شروع سریع", group: "صفحات", icon: BookOpen, keywords: ["docs", "مستندات", "نصب", "cli", "mcp"], onSelect: go("/docs") },
+      { id: "page-icons", label: "نشان‌ها", group: "صفحات", icon: Sparkles, keywords: ["icons", "logo", "نشان", "آیکون", "شمسه", "favicon", "فاویکون", "png", "svg"], onSelect: go("/icons") },
       ...sections.map((s) => ({
         id: `page-${s.key}`,
         label: s.label,
@@ -122,7 +123,7 @@ export function SiteSearch() {
         open={open}
         onOpenChange={setOpen}
         items={items}
-        placeholder="جست‌وجو در قطعات…"
+        placeholder="جست‌وجو در قطعه‌ها…"
         emptyText="چیزی پیدا نشد"
       />
     </>

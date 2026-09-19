@@ -63,7 +63,7 @@ export const COMPONENT_NAMES = ["Button", "Input", "Dialog", "Select", "Toast", 
 export const FEATURES = [
   {
     id: "visual",
-    title: "سطح بصری یکدست",
+    title: "ظاهر یکدست",
     body: "رنگ، شعاع گوشه، سایه و فاصله از توکن می‌آیند تا اپ شلخته به‌نظر نرسد.",
   },
   {

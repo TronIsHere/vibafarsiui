@@ -15,7 +15,7 @@ const ui = (slug: string) => `registry/ui/${slug}.tsx`;
 export const components: ComponentDoc[] = [
   {
     slug: "button", name: "دکمه", cat: "form", file: ui("button"), deps: ["lucide-react"],
-    desc: "واریانت‌ها، اندازه‌ها و حالت غیرفعال. آیکون کنار متن می‌نشیند، در جهت درست.",
+    desc: "دکمه در چند واریانت و اندازه، با حالت غیرفعال و آیکونی که در جهت درست کنار متن می‌نشینه.",
     usage: `import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 
@@ -23,16 +23,16 @@ import { Plus } from "lucide-react"
 <Button variant="outline" size="sm">انصراف</Button>
 <Button variant="brand"><Plus />محصول جدید</Button>`,
     props: [
-      { name: "variant", type: '"default" | "secondary" | "outline" | "ghost" | "brand" | "destructive"', default: '"default"', desc: "سبک دکمه. default سفید و اصلی است." },
-      { name: "size", type: '"sm" | "md" | "lg" | "icon"', default: '"md"', desc: "ارتفاع و پدینگ؛ icon مربع است." },
+      { name: "variant", type: '"default" | "secondary" | "outline" | "ghost" | "brand" | "destructive"', default: '"default"', desc: "سبک دکمه. default همان دکمه‌ی سفید اصلیه." },
+      { name: "size", type: '"sm" | "md" | "lg" | "icon"', default: '"md"', desc: "ارتفاع و پدینگ. icon مربعه." },
       { name: "disabled", type: "boolean", desc: "غیرفعال با کاهش شفافیت." },
     ],
-    notes: ["آیکون را قبل از متن بگذارید؛ در RTL خودش سمت راست می‌نشیند.", "برای عمل مخرب از destructive و برای عمل ثانویه از outline استفاده کنید؛ در هر بخش فقط یک دکمه‌ی default."],
+    notes: ["آیکون را قبل از متن بگذارید، در RTL خودش سمت راست می‌نشینه.", "برای عمل مخرب از destructive و برای عمل ثانویه از outline استفاده کنید. در هر بخش فقط یک دکمه‌ی default بگذارید."],
     promptBullets: ["Variants default, secondary, outline, ghost, destructive and sizes sm/md/lg/icon.", "Icons sized with [&_svg]:size-4 and gap-2 from the label.", "Disabled: opacity-50 and pointer-events-none; active: scale-[0.98]."],
   },
   {
     slug: "input", name: "ورودی", cat: "form", file: ui("input"),
-    desc: "ورودی متن با برچسب، پیشوند/پسوند و پیام خطا. فیلد موبایل خودش چپ‌چین می‌شود.",
+    desc: "ورودی متن با برچسب، پیشوند و پسوند و پیام خطا. فیلد موبایل هم خودش چپ‌چین میشه.",
     usage: `import { Input, Field } from "@/components/ui/input"
 
 <Field label="نام و نام خانوادگی" htmlFor="name">
@@ -45,27 +45,27 @@ import { Plus } from "lucide-react"
     props: [
       { name: "startAddon", type: "ReactNode", desc: "محتوای ابتدای فیلد (سمت راست در RTL)، مثل پیش‌شماره." },
       { name: "endAddon", type: "ReactNode", desc: "محتوای انتهای فیلد، مثل واحد یا آیکون." },
-      { name: "error", type: "string", desc: "پیام خطا زیر فیلد؛ aria-invalid را هم می‌گذارد." },
+      { name: "error", type: "string", desc: "پیام خطا زیر فیلد، که aria-invalid را هم می‌گذاره." },
       { name: "dir", type: '"rtl" | "ltr"', default: "ارث‌بری", desc: "برای موبایل، ایمیل و کد از ltr استفاده کنید." },
     ],
-    notes: ["برچسب همیشه بالا و با htmlFor وصل باشد؛ placeholder جای برچسب نیست.", "برای شماره‌ی موبایل dir=\"ltr\" و inputMode=\"tel\" بگذارید تا کیبورد عددی و ترتیب رقم‌ها درست باشد."],
+    notes: ["برچسب همیشه بالا باشه و با htmlFor وصل شده باشه. placeholder جای برچسب نیست.", "برای شماره‌ی موبایل dir=\"ltr\" و inputMode=\"tel\" بگذارید تا کیبورد عددی و ترتیب رقم‌ها درست باشه."],
     promptBullets: ["Input with startAddon, endAddon, and error props; Field wraps the label and hint.", "dir=\"ltr\" for phone and email so the value is left-aligned while the form stays RTL.", "Error: a mild red border and a text-xs message under the field."],
   },
   {
     slug: "textarea", name: "متن چندخطی", cat: "form", file: ui("textarea"),
-    desc: "متن چندخطی با شمارنده‌ی کاراکتر فارسی و ارتفاع خودکار.",
+    desc: "متن چندخطی با شمارنده‌ی کاراکتر فارسی و ارتفاعی که خودش با محتوا بزرگ میشه.",
     usage: `import { Textarea } from "@/components/ui/textarea"
 
 <Textarea placeholder="پیام‌تان را بنویسید…" maxLength={200} showCount autoResize />`,
     props: [
-      { name: "autoResize", type: "boolean", default: "false", desc: "ارتفاع با محتوا زیاد می‌شود." },
-      { name: "showCount", type: "boolean", default: "false", desc: "شمارنده‌ی «۲۴ / ۲۰۰» زیر فیلد (به maxLength نیاز دارد)." },
+      { name: "autoResize", type: "boolean", default: "false", desc: "ارتفاع با محتوا زیاد میشه." },
+      { name: "showCount", type: "boolean", default: "false", desc: "شمارنده‌ی «۲۴ / ۲۰۰» زیر فیلد (به maxLength نیاز داره)." },
     ],
     promptBullets: ["Character counter with Persian digits, left side under the field (text-end).", "Auto-height by measuring scrollHeight with resize-none."],
   },
   {
     slug: "select", name: "انتخاب", cat: "form", file: ui("select"), deps: ["lucide-react"],
-    desc: "فهرست انتخاب بومی با ظاهر سفارشی؛ شورون سمت چپ.",
+    desc: "فهرست انتخاب بومی مرورگر با ظاهر سفارشی و شورون در سمت چپ.",
     usage: `import { Select } from "@/components/ui/select"
 
 <Select
@@ -77,18 +77,18 @@ import { Plus } from "lucide-react"
       { name: "options", type: "{ value; label; disabled? }[]", desc: "گزینه‌ها." },
       { name: "placeholder", type: "string", desc: "گزینه‌ی غیرفعال اول." },
     ],
-    notes: ["روی موبایل، فهرست بومی سیستم‌عامل باز می‌شود؛ برای جست‌وجو از Combobox استفاده کنید."],
+    notes: ["روی موبایل، فهرست بومی سیستم‌عامل باز میشه. اگر جست‌وجو می‌خواید از Combobox استفاده کنید."],
     promptBullets: ["Use a native <select> with appearance-none and put the chevron at end-3 (left in RTL).", "End padding pe-9 for the chevron; ps-3 for the text."],
   },
   {
     slug: "combobox", name: "کمبوباکس", cat: "form", file: ui("combobox"), deps: ["lucide-react"],
-    desc: "ورودی با پیشنهادهای زنده؛ اول تطبیق پیشوند، بعد شامل‌بودن.",
+    desc: "ورودی با پیشنهادهای زنده که اول گزینه‌هایی را نشان میده که با متن شما شروع میشن و بعد بقیه را.",
     usage: `import { Combobox } from "@/components/ui/combobox"
 
 const cities = ["اصفهان", "اهواز", "اراک", "اردبیل", "تهران", "تبریز"]
 <Combobox options={cities} placeholder="نام شهر…" onChange={setCity} />`,
     props: [
-      { name: "options", type: "string[]", desc: "همه‌ی گزینه‌ها؛ فیلتر داخل کامپوننت انجام می‌شود." },
+      { name: "options", type: "string[]", desc: "همه‌ی گزینه‌ها. فیلتر داخل خود کامپوننت انجام میشه." },
       { name: "value / onChange", type: "string / (v) => void", desc: "کنترل‌شده یا آزاد." },
       { name: "emptyText", type: "string", default: '"چیزی پیدا نشد"', desc: "متن حالت خالی." },
     ],
@@ -96,21 +96,21 @@ const cities = ["اصفهان", "اهواز", "اراک", "اردبیل", "ته�
   },
   {
     slug: "otp-field", name: "کد تأیید", cat: "form", file: ui("otp-field"),
-    desc: "شش خانه‌ی جدا، ارقام فارسی، چسباندن خودکار از پیامک.",
+    desc: "کد تأیید شش‌خانه‌ای با اعداد فارسی که از پیامک خودش پر میشه.",
     usage: `import { OtpField } from "@/components/ui/otp-field"
 
 <OtpField length={6} onComplete={(code) => verify(code)} />`,
     props: [
       { name: "length", type: "number", default: "6", desc: "تعداد خانه‌ها." },
-      { name: "onComplete", type: "(code: string) => void", desc: "وقتی همه‌ی خانه‌ها پر شد؛ کد با ارقام لاتین برمی‌گردد." },
+      { name: "onComplete", type: "(code: string) => void", desc: "وقتی همه‌ی خانه‌ها پر شد صدا زده میشه و کد را با اعداد لاتین برمی‌گردونه." },
       { name: "value / onChange", type: "string", desc: "حالت کنترل‌شده." },
     ],
-    notes: ["خانه‌ها LTR چیده می‌شوند چون کد از پیامک به همان ترتیب خوانده می‌شود.", "autoComplete=\"one-time-code\" روی خانه‌ی اول، پیشنهاد کد از پیامک را در iOS و اندروید فعال می‌کند."],
+    notes: ["خانه‌ها LTR چیده میشن چون کد از پیامک به همان ترتیب خوانده میشه.", "autoComplete=\"one-time-code\" روی خانه‌ی اول، پیشنهاد کد از پیامک را در iOS و اندروید فعال می‌کنه."],
     promptBullets: ["Cell layout dir=\"ltr\" but each glyph is a Persian digit; the submitted value uses Latin digits.", "Accept Persian and Latin digits from the keyboard; Backspace on an empty cell moves to the previous one.", "Paste fills every cell and fires onComplete."],
   },
   {
     slug: "number-field", name: "عدد", cat: "form", file: ui("number-field"), deps: ["lucide-react"],
-    desc: "افزایش و کاهش با دکمه، ارقام فارسی، حداقل و حداکثر.",
+    desc: "ورودی عدد با دکمه‌های افزایش و کاهش، اعداد فارسی و حداقل و حداکثر.",
     usage: `import { NumberField } from "@/components/ui/number-field"
 
 <NumberField defaultValue={1} min={1} max={9} aria-label="تعداد" />`,
@@ -122,7 +122,7 @@ const cities = ["اصفهان", "اهواز", "اراک", "اردبیل", "ته�
   },
   {
     slug: "checkbox-group", name: "گروه چک‌باکس", cat: "form", file: ui("checkbox"), deps: ["lucide-react"],
-    desc: "چک‌باکس تکی با حالت نامشخص، و گروه با وضعیت مشترک.",
+    desc: "چک‌باکس تکی با حالت نامشخص و گروه چک‌باکس با وضعیت مشترک.",
     usage: `import { Checkbox, CheckboxGroup } from "@/components/ui/checkbox"
 
 <CheckboxGroup
@@ -141,7 +141,7 @@ const cities = ["اصفهان", "اهواز", "اراک", "اردبیل", "ته�
   },
   {
     slug: "radio-group", name: "گروه رادیویی", cat: "form", file: ui("radio-group"),
-    desc: "یک انتخاب از چند گزینه، با توضیح زیر هر کدام و واریانت کارتی.",
+    desc: "انتخاب یک گزینه از چند گزینه، با توضیح زیر هر کدام و یک واریانت کارتی.",
     usage: `import { RadioGroup } from "@/components/ui/radio-group"
 
 <RadioGroup
@@ -160,7 +160,7 @@ const cities = ["اصفهان", "اهواز", "اراک", "اردبیل", "ته�
   },
   {
     slug: "switch", name: "کلید", cat: "form", file: ui("switch"),
-    desc: "روشن و خاموش با انیمیشن؛ در RTL دستگیره سمت درست می‌رود.",
+    desc: "کلید روشن و خاموش با انیمیشن که در RTL دستگیره‌اش به سمت درست میره.",
     usage: `import { Switch } from "@/components/ui/switch"
 
 <label className="flex items-center justify-between">
@@ -171,12 +171,12 @@ const cities = ["اصفهان", "اهواز", "اراک", "اردبیل", "ته�
       { name: "checked / defaultChecked", type: "boolean", desc: "کنترل‌شده یا آزاد." },
       { name: "onCheckedChange", type: "(checked: boolean) => void", desc: "هنگام تغییر." },
     ],
-    notes: ["در RTL حالت «روشن» یعنی دستگیره سمت چپ؛ با translate منفی پیاده شده تا با dir هماهنگ بماند."],
+    notes: ["در RTL حالت «روشن» یعنی دستگیره سمت چپ. با translate منفی پیاده شده تا با dir هماهنگ بمونه."],
     promptBullets: ["role=\"switch\" with aria-checked; the thumb moves left when on (RTL).", "On: bg-primary thumb bg-primary-foreground; off: bg-input thumb bg-foreground."],
   },
   {
     slug: "slider", name: "اسلایدر", cat: "form", file: ui("slider"),
-    desc: "بازه با یک دستگیره و برچسب مقدار؛ پرشدن مسیر از راست.",
+    desc: "اسلایدر بازه با یک دستگیره و برچسب مقدار که مسیرش از راست پر میشه.",
     usage: `import { Slider } from "@/components/ui/slider"
 import { formatToman } from "@/lib/utils"
 
@@ -189,7 +189,7 @@ import { formatToman } from "@/lib/utils"
   },
   {
     slug: "rating", name: "امتیاز", cat: "form", file: ui("rating"), deps: ["lucide-react"],
-    desc: "ستاره‌ها از راست پر می‌شوند؛ پیش‌نمایش با هاور.",
+    desc: "امتیاز ستاره‌ای که از راست پر میشه و با هاور پیش‌نمایش میده.",
     usage: `import { Rating } from "@/components/ui/rating"
 
 <Rating defaultValue={4} showValue onChange={setScore} />
@@ -203,34 +203,34 @@ import { formatToman } from "@/lib/utils"
   },
   {
     slug: "file-upload", name: "آپلود فایل", cat: "form", file: ui("file-upload"), deps: ["lucide-react"],
-    desc: "کشیدن و رها کردن، فهرست فایل با حجم فارسی و حد اندازه.",
+    desc: "آپلود فایل با کشیدن و رها کردن، فهرست فایل‌ها با حجم فارسی و محدودیت اندازه.",
     usage: `import { FileUpload } from "@/components/ui/file-upload"
 
 <FileUpload accept=".pdf,.png" maxSize={5 * 1024 * 1024} hint="PDF یا PNG، تا ۵ مگابایت" onFiles={setFiles} />`,
     props: [
-      { name: "maxSize", type: "number", desc: "بایت؛ فایل بزرگ‌تر رد می‌شود و پیام فارسی می‌دهد." },
+      { name: "maxSize", type: "number", desc: "به بایت. فایل بزرگ‌تر رد میشه و پیام فارسی میده." },
       { name: "onFiles", type: "(files: File[]) => void", desc: "فهرست فعلی پس از هر تغییر." },
     ],
     promptBullets: ["Drop zone with a dashed border that strengthens on dragover.", "File size via a Persian helper (کیلوبایت/مگابایت) and file name with dir=\"auto\"."],
   },
   {
     slug: "calendar", name: "تقویم شمسی", cat: "form", file: ui("calendar"), wide: true, deps: ["lucide-react"], registryDeps: ["jalali"],
-    desc: "ماه و روز شمسی، جمعه‌ها خاکستری، امروز با حلقه. خروجی Date معمولی.",
+    desc: "تقویم شمسی با ماه و روز فارسی، جمعه‌های خاکستری و حلقه‌ی امروز، که خروجی‌اش یک Date معمولیه.",
     usage: `import { Calendar } from "@/components/ui/calendar"
 
 <Calendar defaultValue={new Date()} onChange={(d) => console.log(formatJalali(d))} />`,
     props: [
       { name: "value / defaultValue", type: "Date | null", desc: "تاریخ انتخاب‌شده (Date میلادی معمولی)." },
-      { name: "min / max", type: "Date", desc: "روزهای خارج از بازه غیرفعال می‌شوند." },
+      { name: "min / max", type: "Date", desc: "روزهای خارج از بازه غیرفعال میشن." },
       { name: "markWeekend", type: "boolean", default: "true", desc: "جمعه‌ها کم‌رنگ." },
       { name: "compact", type: "boolean", desc: "نسخه‌ی کوچک برای پاپ‌آور." },
     ],
-    notes: ["تبدیل تاریخ با الگوریتم جلالی بدون وابستگی در lib/jalali.ts؛ سال‌های کبیسه (مثل ۱۴۰۳) درست حساب می‌شوند.", "هفته از شنبه شروع می‌شود و ستون آخر جمعه است."],
+    notes: ["تبدیل تاریخ با الگوریتم جلالی و بدون وابستگی در lib/jalali.ts انجام میشه و سال‌های کبیسه (مثل ۱۴۰۳) درست حساب میشن.", "هفته از شنبه شروع میشه و ستون آخر جمعه‌ست."],
     promptBullets: ["Week starts Saturday (ش ی د س چ پ ج), Fridays muted, today with a ring.", "Use the Jalali conversion helper (jalaali) and return a Date.", "Prev/next month buttons with chevrons; \"prev\" points right and \"next\" points left."],
   },
   {
     slug: "date-picker", name: "انتخاب تاریخ", cat: "form", file: ui("date-picker"), deps: ["lucide-react"], registryDeps: ["calendar"],
-    desc: "ورودی تاریخ با تقویم شمسی در پاپ‌آور و پاک‌کردن سریع.",
+    desc: "ورودی تاریخ با تقویم شمسی در پاپ‌آور و دکمه‌ی پاک کردن سریع.",
     usage: `import { DatePicker } from "@/components/ui/date-picker"
 
 <DatePicker placeholder="تاریخ ارسال" onChange={setDate} min={new Date()} />`,
@@ -243,7 +243,7 @@ import { formatToman } from "@/lib/utils"
   },
   {
     slug: "command", name: "پالت دستور", cat: "overlay", file: ui("command"), deps: ["lucide-react"],
-    desc: "جست‌وجو و اجرای دستور با ⌘K، با گروه‌بندی و میانبر.",
+    desc: "پالت دستور با ⌘K برای جست‌وجو و اجرای دستورها، با گروه‌بندی و میانبر.",
     usage: `import { CommandDialog } from "@/components/ui/command"
 
 const [open, setOpen] = useState(false)
@@ -257,13 +257,13 @@ const [open, setOpen] = useState(false)
 />`,
     props: [
       { name: "items", type: "CommandItem[]", desc: "id، label، icon، shortcut، keywords، group، onSelect." },
-      { name: "open / onOpenChange", type: "boolean", desc: "برای CommandDialog؛ ⌘K و Ctrl+K خودکار وصل‌اند." },
+      { name: "open / onOpenChange", type: "boolean", desc: "برای CommandDialog. میانبرهای ⌘K و Ctrl+K خودکار وصل هستن." },
     ],
     promptBullets: ["Filter on label and keywords; group with a small heading.", "Up/down and Enter; active item bg-accent with an Enter icon on the left.", "Dialog version opens with ⌘K and sits on a blurred overlay."],
   },
   {
     slug: "dialog", name: "پنجره", cat: "overlay", file: ui("dialog"), deps: ["lucide-react"],
-    desc: "مودال با عنوان، بدنه و دکمه‌های عمل در جای درست؛ قفل اسکرول و بازگشت فوکوس.",
+    desc: "مودال با عنوان، بدنه و دکمه‌های عمل در جای درست، همراه قفل اسکرول و بازگشت فوکوس.",
     usage: `import { Dialog } from "@/components/ui/dialog"
 
 <Dialog
@@ -277,15 +277,15 @@ const [open, setOpen] = useState(false)
 </Dialog>`,
     props: [
       { name: "open / onOpenChange", type: "boolean / (o) => void", desc: "کنترل باز و بسته." },
-      { name: "title / description", type: "ReactNode", desc: "با aria-labelledby و aria-describedby وصل می‌شوند." },
-      { name: "footer", type: "ReactNode", desc: "دکمه‌ها؛ دکمه‌ی اصلی اول." },
-      { name: "role", type: '"dialog" | "alertdialog"', default: '"dialog"', desc: "alertdialog با کلیک بیرون بسته نمی‌شود." },
+      { name: "title / description", type: "ReactNode", desc: "با aria-labelledby و aria-describedby وصل میشن." },
+      { name: "footer", type: "ReactNode", desc: "دکمه‌ها، که دکمه‌ی اصلی اول می‌آد." },
+      { name: "role", type: '"dialog" | "alertdialog"', default: '"dialog"', desc: "alertdialog با کلیک بیرون بسته نمیشه." },
     ],
     promptBullets: ["Escape and overlay click close it; lock body scroll; move focus inside on open and restore on close.", "On mobile from the bottom (items-end), centered on desktop; close button in the top-left corner."],
   },
   {
     slug: "alert-dialog", name: "تأیید عمل", cat: "overlay", file: ui("alert-dialog"), registryDeps: ["dialog", "button"],
-    desc: "پنجره‌ی تأیید برای کارهای برگشت‌ناپذیر؛ فوکوس اول روی «انصراف».",
+    desc: "پنجره‌ی تأیید برای کارهای برگشت‌ناپذیر که فوکوس را اول روی «انصراف» می‌گذاره.",
     usage: `import { AlertDialog } from "@/components/ui/alert-dialog"
 
 <AlertDialog
@@ -298,14 +298,14 @@ const [open, setOpen] = useState(false)
   onConfirm={async () => { await deleteProduct(id) }}
 />`,
     props: [
-      { name: "onConfirm", type: "() => void | Promise<void>", desc: "اگر Promise برگرداند، دکمه تا پایان «لطفاً صبر کنید…» می‌شود." },
+      { name: "onConfirm", type: "() => void | Promise<void>", desc: "اگر Promise برگرداند، دکمه تا پایان «لطفاً صبر کنید…» میشه." },
       { name: "destructive", type: "boolean", desc: "دکمه‌ی تأیید قرمز." },
     ],
     promptBullets: ["role=\"alertdialog\"; initial focus on cancel, not delete.", "Confirm button disables while a Promise is pending, with waiting copy."],
   },
   {
     slug: "dropdown-menu", name: "منوی کشویی", cat: "overlay", file: ui("dropdown-menu"),
-    desc: "منوی عمل با میانبر، جداکننده و آیتم خطرناک.",
+    desc: "منوی عمل با میانبر، جداکننده و آیتم قرمز برای حذف.",
     usage: `import { DropdownMenu } from "@/components/ui/dropdown-menu"
 
 <DropdownMenu
@@ -325,7 +325,7 @@ const [open, setOpen] = useState(false)
   },
   {
     slug: "tooltip", name: "راهنمای ابزار", cat: "overlay", file: ui("tooltip"),
-    desc: "توضیح کوتاه هنگام هاور یا فوکوس؛ فقط CSS.",
+    desc: "توضیح کوتاهی که با هاور یا فوکوس ظاهر میشه، فقط با CSS.",
     usage: `import { Tooltip } from "@/components/ui/tooltip"
 
 <Tooltip content="افزودن به علاقه‌مندی‌ها">
@@ -339,7 +339,7 @@ const [open, setOpen] = useState(false)
   },
   {
     slug: "sheet", name: "کشو", cat: "overlay", file: ui("sheet"), deps: ["lucide-react"],
-    desc: "پنل کناری که از سمت راست باز می‌شود؛ برای فیلتر، سبد و منوی موبایل.",
+    desc: "پنل کناری که از سمت راست باز میشه، برای فیلتر، سبد خرید و منوی موبایل.",
     usage: `import { Sheet } from "@/components/ui/sheet"
 
 <Sheet open={open} onOpenChange={setOpen} title="فیلترها">
@@ -352,7 +352,7 @@ const [open, setOpen] = useState(false)
   },
   {
     slug: "tabs", name: "تب‌ها", cat: "nav", file: ui("tabs"),
-    desc: "تب‌های بخش‌بندی‌شده یا خطی؛ با کیبورد کار می‌کنند و جهت راست‌چین را رعایت می‌کنند.",
+    desc: "تب‌های بخش‌بندی‌شده یا خطی که با کیبورد کار می‌کنن و جهت راست‌چین را رعایت می‌کنن.",
     usage: `import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 
 <Tabs defaultValue="preview">
@@ -371,7 +371,7 @@ const [open, setOpen] = useState(false)
   },
   {
     slug: "pagination", name: "صفحه‌بندی", cat: "nav", file: ui("pagination"), deps: ["lucide-react"],
-    desc: "شماره‌ی صفحه‌ها با ارقام فارسی، سه‌نقطه، و فلش در جهت راست‌چین.",
+    desc: "صفحه‌بندی با اعداد فارسی، سه‌نقطه و فلش‌هایی در جهت راست‌چین.",
     usage: `import { Pagination } from "@/components/ui/pagination"
 
 <Pagination page={page} total={12} onChange={setPage} />`,
@@ -383,16 +383,16 @@ const [open, setOpen] = useState(false)
   },
   {
     slug: "breadcrumb", name: "مسیر", cat: "nav", file: ui("breadcrumb"), deps: ["lucide-react"],
-    desc: "مسیر صفحه‌ی فعلی؛ جداکننده‌ها به سمت چپ.",
+    desc: "مسیر صفحه‌ی فعلی با جداکننده‌هایی که به سمت چپ اشاره می‌کنن.",
     usage: `import { Breadcrumb } from "@/components/ui/breadcrumb"
 
 <Breadcrumb items={[{ label: "خانه", href: "/" }, { label: "فروشگاه", href: "/shop" }, { label: "هدفون بی‌سیم" }]} />`,
-    props: [{ name: "items", type: "{ label; href? }[]", desc: "آخرین آیتم صفحه‌ی فعلی است و لینک نمی‌شود." }],
+    props: [{ name: "items", type: "{ label; href? }[]", desc: "آخرین آیتم صفحه‌ی فعلیه و لینک نمیشه." }],
     promptBullets: ["nav with aria-label=\"مسیر\" and an ol; ChevronLeft separator; last item aria-current=\"page\"."],
   },
   {
     slug: "stepper", name: "مراحل", cat: "nav", file: ui("stepper"), wide: true, deps: ["lucide-react"],
-    desc: "گام‌های فرم چندمرحله‌ای، افقی یا عمودی، از راست به چپ.",
+    desc: "نمایش گام‌های فرم چندمرحله‌ای، افقی یا عمودی، از راست به چپ.",
     usage: `import { Stepper } from "@/components/ui/stepper"
 
 <Stepper current={1} steps={[{ label: "سبد" }, { label: "آدرس", description: "کجا بفرستیم؟" }, { label: "پرداخت" }]} />`,
@@ -404,7 +404,7 @@ const [open, setOpen] = useState(false)
   },
   {
     slug: "sidebar", name: "نوار کناری", cat: "nav", file: ui("sidebar"), deps: ["lucide-react"],
-    desc: "ناوبری اپ با گروه، نشان و بخش جمع‌شونده.",
+    desc: "ناوبری اپ با گروه‌بندی، نشان شمارنده و بخش‌های جمع‌شونده.",
     usage: `import { Sidebar, SidebarGroup, SidebarItem } from "@/components/ui/sidebar"
 
 <Sidebar header={<Logo />}>
@@ -423,7 +423,7 @@ const [open, setOpen] = useState(false)
   },
   {
     slug: "toast", name: "اعلان", cat: "feedback", file: ui("toast"), deps: ["lucide-react"],
-    desc: "پشته‌ی اعلان: چند اعلان روی هم با سقف تعداد، «بستن همه»، جایگاه قابل تنظیم؛ با Provider و هوک.",
+    desc: "اعلان‌هایی که روی هم جمع میشن، با سقف تعداد، دکمه‌ی «بستن همه» و جایگاه قابل تنظیم، از طریق Provider و هوک.",
     usage: `// app/layout.tsx
 import { ToastProvider } from "@/components/ui/toast"
 <ToastProvider>{children}</ToastProvider>
@@ -432,16 +432,16 @@ import { ToastProvider } from "@/components/ui/toast"
 const { toast } = useToast()
 toast({ title: "تغییرات ذخیره شد", variant: "success", action: { label: "واگرد", onClick: undo } })`,
     props: [
-      { name: "toast(options)", type: "{ title; description?; variant?; action?; duration? }", desc: "نمایش اعلان؛ duration پیش‌فرض ۴۰۰۰ میلی‌ثانیه." },
+      { name: "toast(options)", type: "{ title; description?; variant?; action?; duration? }", desc: "نمایش اعلان. duration پیش‌فرض ۴۰۰۰ میلی‌ثانیه‌ست." },
       { name: "variant", type: '"default" | "success" | "error"', desc: "آیکون و رنگ." },
       { name: "ToastProvider max / position", type: 'number / "bottom-start" | "bottom-end" | "top-start" | "top-end"', default: '3 / "bottom-start"', desc: "سقف اعلان‌های هم‌زمان و گوشه." },
     ],
-    notes: ["اعلان‌ها در گوشه‌ی پایین راست (start) می‌نشینند؛ همان جایی که چشم فارسی‌خوان اول می‌رود.", "با بیش از یک اعلان، دکمه‌ی «بستن همه» ظاهر می‌شود؛ قدیمی‌ترها با رسیدن به سقف حذف می‌شوند."],
+    notes: ["اعلان‌ها در گوشه‌ی پایین راست (start) می‌نشینن، همان جایی که چشم فارسی‌خوان اول میره.", "با بیش از یک اعلان، دکمه‌ی «بستن همه» ظاهر میشه و قدیمی‌ترها با رسیدن به سقف حذف میشن."],
     promptBullets: ["ToastProvider with useToast; aria-live=\"polite\" region at bottom-right (bottom-4 start-4).", "Card with a status icon, title, description, action, and close; short enter animation from the right."],
   },
   {
     slug: "alert", name: "هشدار", cat: "feedback", file: ui("alert"), deps: ["lucide-react"],
-    desc: "پیام درون‌صفحه‌ای برای اطلاع، موفقیت، توجه و خطا.",
+    desc: "پیام درون صفحه برای اطلاع، موفقیت، توجه و خطا.",
     usage: `import { Alert } from "@/components/ui/alert"
 
 <Alert variant="success" title="پرداخت با موفقیت انجام شد">رسید به شماره‌ی ۰۹۱۲۳۴۵۶۷۸۹ پیامک شد.</Alert>
@@ -454,7 +454,7 @@ toast({ title: "تغییرات ذخیره شد", variant: "success", action: { l
   },
   {
     slug: "progress", name: "پیشرفت", cat: "feedback", file: ui("progress"),
-    desc: "نوار پیشرفت که از راست پر می‌شود، با درصد فارسی.",
+    desc: "نوار پیشرفتی که از راست پر میشه و درصدش را با اعداد فارسی نشان میده.",
     usage: `import { Progress } from "@/components/ui/progress"
 
 <Progress value={72} label="آپلود فایل‌ها" showValue />`,
@@ -466,7 +466,7 @@ toast({ title: "تغییرات ذخیره شد", variant: "success", action: { l
   },
   {
     slug: "skeleton", name: "اسکلت", cat: "feedback", file: ui("skeleton"),
-    desc: "جای خالی ضربان‌دار یا درخشان، تا داده برسد.",
+    desc: "جای خالی ضربان‌دار یا درخشان تا وقتی داده برسد.",
     usage: `import { Skeleton, SkeletonRow } from "@/components/ui/skeleton"
 
 <Skeleton className="h-24 w-full rounded-lg" shimmer />
@@ -476,7 +476,7 @@ toast({ title: "تغییرات ذخیره شد", variant: "success", action: { l
   },
   {
     slug: "empty-state", name: "حالت خالی", cat: "feedback", file: ui("empty-state"), deps: ["lucide-react"],
-    desc: "وقتی هنوز داده‌ای نیست؛ با توضیح و دکمه‌ی قدم بعدی.",
+    desc: "حالت خالی برای وقتی هنوز داده‌ای نیست، با توضیح و دکمه‌ی قدم بعدی.",
     usage: `import { EmptyState } from "@/components/ui/empty-state"
 
 <EmptyState title="هنوز سفارشی ندارید" description="اولین محصول را اضافه کنید تا این‌جا پر شود." action={<Button size="sm">افزودن محصول</Button>} />`,
@@ -488,7 +488,7 @@ toast({ title: "تغییرات ذخیره شد", variant: "success", action: { l
   },
   {
     slug: "badge", name: "نشان", cat: "display", file: ui("badge"),
-    desc: "برچسب وضعیت؛ فقط متن رنگی، بدون پس‌زمینه و آیکون.",
+    desc: "برچسب وضعیت با متن رنگی، بدون پس‌زمینه و آیکون.",
     usage: `import { Badge } from "@/components/ui/badge"
 
 <Badge variant="success">فعال</Badge>
@@ -498,7 +498,7 @@ toast({ title: "تغییرات ذخیره شد", variant: "success", action: { l
   },
   {
     slug: "avatar", name: "آواتار", cat: "display", file: ui("avatar"),
-    desc: "تصویر دایره‌ای؛ اگر نباشد حرف اول سفید با حلقه‌ی سفید روی پس‌زمینه‌ی شفاف.",
+    desc: "تصویر دایره‌ای کاربر که اگر تصویر نباشه، حرف اول اسم را با حلقه‌ی سفید نشان میده.",
     usage: `import { Avatar, AvatarGroup } from "@/components/ui/avatar"
 
 <Avatar name="سارا محمدی" src="/avatars/sara.jpg" />
@@ -506,14 +506,14 @@ toast({ title: "تغییرات ذخیره شد", variant: "success", action: { l
 <AvatarGroup people={[{ name: "سارا", src: "/avatars/sara.jpg" }, { name: "علی", src: "/avatars/ali.jpg" }, { name: "نگار" }, { name: "رضا" }, { name: "مینا" }]} max={4} />`,
     props: [
       { name: "name", type: "string", desc: "title و حرف اول وقتی تصویر نیست." },
-      { name: "src", type: "string", desc: "آدرس تصویر؛ اگر نباشد حرف اول سفید." },
+      { name: "src", type: "string", desc: "آدرس تصویر. اگر نباشه، حرف اول اسم سفید نشان داده میشه." },
       { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', desc: "اندازه." },
     ],
     promptBullets: ["If src is set, a circular image only, no fill or gradient.", "If there is no image, a white first letter, a white ring, and a transparent background.", "AvatarGroup overlaps with -ms-2 and a «+۱۲ نفر دیگر» trailer."],
   },
   {
     slug: "table", name: "جدول", cat: "display", file: ui("table"), wide: true,
-    desc: "ستون‌ها از راست، مبلغ‌ها با تومان، سطرها با هاور.",
+    desc: "جدول با ستون‌هایی که از راست شروع میشن، مبلغ‌های تومانی و سطرهایی که با هاور برجسته میشن.",
     usage: `import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table"
 
 <Table>
@@ -522,60 +522,60 @@ toast({ title: "تغییرات ذخیره شد", variant: "success", action: { l
     <TableRow><TableCell>مریم احمدی</TableCell><TableCell numeric>{formatToman(2_890_000)}</TableCell></TableRow>
   </TableBody>
 </Table>`,
-    props: [{ name: "numeric", type: "boolean", desc: "روی TableCell: ارقام هم‌عرض برای ستون مبلغ." }],
+    props: [{ name: "numeric", type: "boolean", desc: "روی TableCell، ارقام هم‌عرض برای ستون مبلغ." }],
     promptBullets: ["th with text-start; header row on a muted background; rows hover:bg-accent/40.", "Numeric cells tabular-nums and amounts with «تومان»."],
   },
   {
     slug: "stat", name: "آمار", cat: "display", file: ui("stat"), deps: ["lucide-react"],
-    desc: "عدد کلیدی با تغییر نسبت به دوره‌ی قبل.",
+    desc: "عدد کلیدی با میزان تغییرش نسبت به دوره‌ی قبل.",
     usage: `import { Stat } from "@/components/ui/stat"
 
 <Stat label="درآمد این ماه" value={faNumber(216_000_000)} unit="تومان" delta={18} />`,
     props: [
-      { name: "delta", type: "number", desc: "درصد تغییر؛ منفی قرمز و رو به پایین." },
+      { name: "delta", type: "number", desc: "درصد تغییر. مقدار منفی قرمز و رو به پایین نشان داده میشه." },
       { name: "unit", type: "ReactNode", desc: "واحد کنار عدد." },
     ],
     promptBullets: ["Growth arrow points up-left (ArrowUpLeft) because \"forward\" in RTL is left.", "Positive text-success, negative text-destructive."],
   },
   {
     slug: "price", name: "قیمت", cat: "display", file: ui("price"),
-    desc: "عدد با جداکننده‌ی هزارگان، تخفیف و واحد.",
+    desc: "قیمت با جداکننده‌ی هزارگان، درصد تخفیف و واحد.",
     usage: `import { Price } from "@/components/ui/price"
 
 <Price amount={12_450_000} original={14_900_000} />`,
     props: [
-      { name: "amount / original", type: "number", desc: "قیمت فعلی و قبلی؛ درصد تخفیف خودکار حساب می‌شود." },
+      { name: "amount / original", type: "number", desc: "قیمت فعلی و قبلی. درصد تخفیف خودکار حساب میشه." },
       { name: "unit", type: "string", default: '"تومان"', desc: "واحد." },
     ],
     promptBullets: ["Separator «٬» (U+066C), unit after the number, original price line-through, discount percent in a badge."],
   },
   {
     slug: "timeline", name: "خط زمان", cat: "display", file: ui("timeline"), registryDeps: ["jalali"],
-    desc: "رویدادها با تاریخ شمسی، خط در سمت راست.",
+    desc: "خط زمان رویدادها با تاریخ شمسی و خطی که در سمت راست قرار می‌گیره.",
     usage: `import { Timeline } from "@/components/ui/timeline"
 
 <Timeline items={[{ date: new Date(), title: "سفارش تحویل شد" }, { date: "۲۳ شهریور", title: "بسته ارسال شد" }]} />`,
     props: [
-      { name: "items", type: "{ date: Date | string; title; description? }[]", desc: "Date به شمسی تبدیل می‌شود." },
+      { name: "items", type: "{ date: Date | string; title; description? }[]", desc: "Date به شمسی تبدیل میشه." },
       { name: "activeIndex", type: "number", default: "0", desc: "رویداد پررنگ." },
     ],
     promptBullets: ["Vertical line with border-s on the right and dots on it; date under the title as text-xs."],
   },
   {
     slug: "accordion", name: "آکاردئون", cat: "display", file: ui("accordion"), deps: ["lucide-react"],
-    desc: "پرسش‌های متداول؛ شورون در سمت چپ، ارتفاع با CSS grid انیمیت می‌شود.",
+    desc: "آکاردئون برای پرسش‌های متداول، با شورون در سمت چپ و ارتفاعی که با CSS grid انیمیت میشه.",
     usage: `import { Accordion } from "@/components/ui/accordion"
 
 <Accordion items={[{ id: "free", title: "آیا رایگان است؟", content: "بله، بدون پلن پولی." }]} defaultOpen={["free"]} />`,
     props: [
-      { name: "multiple", type: "boolean", desc: "چند پنل هم‌زمان باز باشند." },
+      { name: "multiple", type: "boolean", desc: "چند پنل هم‌زمان باز باشن." },
       { name: "defaultOpen", type: "string[]", desc: "شناسه‌ی پنل‌های باز اولیه." },
     ],
     promptBullets: ["Height animation via grid-template-rows: 0fr → 1fr, no measuring.", "Button with aria-expanded and aria-controls; chevron on the left that rotates 180deg."],
   },
   {
     slug: "kbd", name: "کلید میانبر", cat: "display", file: ui("kbd"),
-    desc: "نمایش میانبرهای کیبورد، همیشه چپ‌به‌راست.",
+    desc: "نمایش میانبرهای کیبورد که همیشه چپ‌به‌راست می‌مونه.",
     usage: `import { Kbd } from "@/components/ui/kbd"
 
 <Kbd keys={["⌘", "K"]} />`,
@@ -584,13 +584,13 @@ toast({ title: "تغییرات ذخیره شد", variant: "success", action: { l
   },
   {
     slug: "prompt-input", name: "جعبه‌ی پرامپت", cat: "form", file: ui("prompt-input"), wide: true, deps: ["lucide-react"],
-    desc: "ورودی چت هوش مصنوعی: بزرگ‌شونده، پیوست، مدل و دکمه‌ی ارسال/توقف.",
+    desc: "ورودی چت هوش مصنوعی با قابلیت بزرگ شدن، پیوست، انتخاب مدل و دکمه‌ی ارسال/توقف.",
     usage: `import { PromptInput } from "@/components/ui/prompt-input"
 
 <PromptInput loading={streaming} onSubmit={send} onStop={stop} placeholder="یک فرم ثبت‌نام فارسی بساز…" />`,
     props: [
-      { name: "onSubmit", type: "(value: string) => void", desc: "Enter یا دکمه‌ی ارسال؛ Shift+Enter خط جدید." },
-      { name: "loading / onStop", type: "boolean / () => void", desc: "در حال تولید: دکمه‌ی توقف نشان داده می‌شود." },
+      { name: "onSubmit", type: "(value: string) => void", desc: "با Enter یا دکمه‌ی ارسال. Shift+Enter خط جدید می‌آوره." },
+      { name: "loading / onStop", type: "boolean / () => void", desc: "در حال تولید، به‌جای ارسال دکمه‌ی توقف نشان داده میشه." },
       { name: "tools", type: "ReactNode", desc: "جایگزین انتخاب مدل در نوار ابزار." },
     ],
     promptBullets: ["Textarea auto-grows up to 200px; Enter submits, Shift+Enter is a newline, ignore isComposing.", "Send button at the end (left) and tools at the start (right); loading shows a square stop button."],
@@ -608,7 +608,7 @@ toast({ title: "تغییرات ذخیره شد", variant: "success", action: { l
   },
   {
     slug: "data-table", name: "جدول داده", cat: "data", file: ui("data-table"), wide: true, deps: ["lucide-react"], registryDeps: ["table", "pagination", "skeleton", "empty-state", "input"],
-    desc: "مرتب‌سازی، فیلتر متنی، ستون‌های تومانی، اسکلت بارگذاری، حالت خالی و صفحه‌بندی؛ همه در سمت کلاینت.",
+    desc: "جدول داده با مرتب‌سازی، فیلتر متنی، ستون‌های تومانی، اسکلت بارگذاری، حالت خالی و صفحه‌بندی، همه در سمت کلاینت.",
     usage: `import { DataTable, type Column } from "@/components/ui/data-table"
 
 const columns: Column<Order>[] = [
@@ -619,17 +619,17 @@ const columns: Column<Order>[] = [
 <DataTable rows={orders} columns={columns} rowKey={(o) => o.id} searchKeys={["customer"]} pageSize={8} />`,
     props: [
       { name: "columns", type: "Column<T>[]", desc: "key، header، sortable، numeric، cell، className." },
-      { name: "searchKeys", type: "(keyof T)[]", desc: "فیلدهای جست‌وجو؛ ارقام فارسی و لاتین یکی حساب می‌شوند." },
+      { name: "searchKeys", type: "(keyof T)[]", desc: "فیلدهای جست‌وجو. اعداد فارسی و لاتین یکی حساب میشن." },
       { name: "loading", type: "boolean", desc: "ردیف‌های اسکلتی به‌جای داده." },
       { name: "pageSize", type: "number", default: "8", desc: "تعداد در هر صفحه." },
       { name: "toolbar", type: "ReactNode", desc: "فیلترهای اضافه کنار جست‌وجو." },
     ],
-    notes: ["مرتب‌سازی رشته‌ها با localeCompare('fa') تا ترتیب الفبای فارسی درست باشد؛ ستون‌های numeric عددی مرتب می‌شوند.", "جست‌وجو قبل از مقایسه ارقام فارسی را لاتین می‌کند؛ «۱۴۰۵۲» و «14052» هر دو پیدا می‌شوند."],
+    notes: ["رشته‌ها با localeCompare('fa') مرتب میشن تا ترتیب الفبای فارسی درست باشه و ستون‌های numeric عددی مرتب میشن.", "جست‌وجو قبل از مقایسه اعداد فارسی را لاتین می‌کنه، پس «۱۴۰۵۲» و «14052» هر دو پیدا میشن."],
     promptBullets: ["Columns from config (key/header/sortable/numeric/cell); header click cycles asc, desc, unsorted and sets aria-sort.", "Text filter on searchKeys with Persian-digit normalization; loading uses Skeleton, empty uses EmptyState inside a colSpan row.", "Pagination with Persian digits and «صفحه‌ی ۲ از ۵»."],
   },
   {
     slug: "chart", name: "نمودار", cat: "data", file: ui("chart"), wide: true, registryDeps: ["jalali"],
-    desc: "نمودار میله‌ای، خطی و اسپارک‌لاین با SVG خالص؛ برچسب‌های شمسی، هفته از شنبه، تیک‌های فارسی، محور مقدار سمت راست.",
+    desc: "نمودار میله‌ای، خطی و اسپارک‌لاین با SVG خالص، با برچسب‌های شمسی، هفته‌ای که از شنبه شروع میشه، تیک‌های فارسی و محور مقدار در سمت راست.",
     usage: `import { BarChart, LineChart, Sparkline, jalaliWeekLabels, jalaliDayLabels } from "@/components/ui/chart"
 
 const week = jalaliWeekLabels() // ["ش","ی","د","س","چ","پ","ج"] ending today
@@ -637,17 +637,17 @@ const week = jalaliWeekLabels() // ["ش","ی","د","س","چ","پ","ج"] ending t
 <LineChart data={jalaliDayLabels(10).map((label, i) => ({ label, value: visits[i] }))} />
 <Sparkline data={[3, 5, 4, 8, 7, 9]} />`,
     props: [
-      { name: "data", type: "{ label: string; value: number }[]", desc: "نقطه‌ها؛ اولی سمت راست رسم می‌شود." },
-      { name: "format", type: "(n) => string", default: "compactFa", desc: "قالب تیک‌ها: «۱۲ میلیون»، «۸۰۰ هزار»." },
+      { name: "data", type: "{ label: string; value: number }[]", desc: "نقطه‌ها. اولی سمت راست رسم میشه." },
+      { name: "format", type: "(n) => string", default: "compactFa", desc: "قالب تیک‌ها، مثل «۱۲ میلیون» و «۸۰۰ هزار»." },
       { name: "highlight", type: "number", desc: "شاخص میله‌ی برجسته (مثلاً امروز)." },
       { name: "height", type: "number", default: "180", desc: "ارتفاع viewBox." },
     ],
-    notes: ["بدون کتابخانه‌ی نمودار؛ SVG با viewBox و عرض ۱۰۰٪. برای داشبوردهای سنگین همین هندسه را می‌توان به Recharts منتقل کرد.", "jalaliWeekLabels از شنبه شروع نمی‌کند؛ هفت روز اخیر را با نام روز شمسی برمی‌گرداند. برای هفته‌ی تقویمی ثابت از JALALI_WEEKDAYS_SHORT استفاده کنید."],
+    notes: ["بدون کتابخانه‌ی نمودار، فقط SVG با viewBox و عرض ۱۰۰٪. برای داشبوردهای سنگین همین هندسه را میشه به Recharts منتقل کرد.", "jalaliWeekLabels از شنبه شروع نمی‌کنه و هفت روز اخیر را با نام روز شمسی برمی‌گردونه. برای هفته‌ی تقویمی ثابت از JALALI_WEEKDAYS_SHORT استفاده کنید."],
     promptBullets: ["x of the first point is on the right (x = width − pad − (i+1)·slot) and the value axis labels sit on the right edge.", "\"Nice\" ticks (1, 2, 2.5, 5 × power of 10) and compact Persian formatting; simple hover tooltip.", "Time labels from the Jalali calendar; weekly short names ش to ج."],
   },
   {
     slug: "popover", name: "پاپ‌آور", cat: "overlay", file: ui("popover"),
-    desc: "پنل کوچک چسبیده به دکمه؛ با کلیک بیرون و Escape بسته می‌شود.",
+    desc: "پنل کوچکی که به دکمه می‌چسبه و با کلیک بیرون یا Escape بسته میشه.",
     usage: `import { Popover } from "@/components/ui/popover"
 
 <Popover trigger={<Button variant="outline">فیلتر</Button>} align="start">
@@ -658,7 +658,7 @@ const week = jalaliWeekLabels() // ["ش","ی","د","س","چ","پ","ج"] ending t
   },
   {
     slug: "context-menu", name: "منوی راست‌کلیک", cat: "overlay", file: ui("context-menu"), registryDeps: ["dropdown-menu"],
-    desc: "منو در نقطه‌ی راست‌کلیک باز می‌شود؛ همان آیتم‌های منوی کشویی.",
+    desc: "منویی که در نقطه‌ی راست‌کلیک باز میشه، با همان آیتم‌های منوی کشویی.",
     usage: `import { ContextMenu } from "@/components/ui/context-menu"
 
 <ContextMenu items={[{ label: "ویرایش", icon: Pencil }, { type: "separator" }, { label: "حذف", danger: true }]}>
@@ -668,7 +668,7 @@ const week = jalaliWeekLabels() // ["ش","ی","د","س","چ","پ","ج"] ending t
   },
   {
     slug: "hover-card", name: "کارت شناور", cat: "overlay", file: ui("hover-card"),
-    desc: "با نگه‌داشتن ماوس یا فوکوس باز می‌شود؛ برای پیش‌نمایش پروفایل.",
+    desc: "کارتی که با نگه‌داشتن ماوس یا فوکوس باز میشه، مناسب پیش‌نمایش پروفایل.",
     usage: `import { HoverCard } from "@/components/ui/hover-card"
 
 <HoverCard trigger={<a href="#" className="underline">@negar</a>}>
@@ -679,19 +679,19 @@ const week = jalaliWeekLabels() // ["ش","ی","د","س","چ","پ","ج"] ending t
   },
   {
     slug: "carousel", name: "اسلایدر", cat: "display", file: ui("carousel"), wide: true, deps: ["lucide-react"],
-    desc: "اسکرول‌اسنپ بومی راست‌چین: اولین اسلاید سمت راست، «بعدی» به چپ می‌رود. نه آینه‌ی یک اسلایدر چپ‌چین.",
+    desc: "اسلایدر با اسکرول‌اسنپ بومی و راست‌چین واقعی، که اولین اسلاید سمت راسته و «بعدی» به چپ میره.",
     usage: `import { Carousel } from "@/components/ui/carousel"
 
 <Carousel slideWidth={0.5}>
   {products.map((p) => <ProductCard key={p.id} {...p} />)}
 </Carousel>`,
     props: [{ name: "slideWidth", type: "number", default: "1", desc: "سهم هر اسلاید از عرض (۰٫۵ = دو تا در دید)." }, { name: "showDots", type: "boolean", default: "true", desc: "نقطه‌های پایین." }],
-    notes: ["در مرورگرهای امروزی scrollLeft ظرف RTL از صفر شروع می‌شود و منفی می‌رود؛ همین باعث می‌شود «بعدی» = scrollTo(left منفی) باشد."],
+    notes: ["در مرورگرهای امروزی scrollLeft ظرف RTL از صفر شروع میشه و منفی میره. همین باعث میشه «بعدی» یعنی scrollTo با left منفی."],
     promptBullets: ["Flex container with snap-x snap-mandatory and overflow-x-auto; slides are shrink-0 snap-start.", "Active index from Math.abs(scrollLeft) / slide width; previous button on the right with a right chevron, next on the left with a left chevron."],
   },
   {
     slug: "combobox-async", name: "کمبوباکس آنلاین", cat: "form", file: ui("combobox-async"), deps: ["lucide-react"],
-    desc: "جست‌وجوی سرور با debounce، لغو درخواست‌های قدیمی، و حالت‌های بارگذاری/خالی/خطا؛ برای شهر و محصول.",
+    desc: "جست‌وجوی سمت سرور با debounce، لغو درخواست‌های قدیمی و حالت‌های بارگذاری، خالی و خطا، مناسب شهر و محصول.",
     usage: `import { ComboboxAsync } from "@/components/ui/combobox-async"
 
 <ComboboxAsync
@@ -707,7 +707,7 @@ const week = jalaliWeekLabels() // ["ش","ی","د","س","چ","پ","ج"] ending t
   },
   {
     slug: "password-input", name: "رمز عبور", cat: "form", file: ui("password-input"), deps: ["lucide-react"],
-    desc: "نمایش/پنهان کردن، همیشه چپ‌چین، و سنجش قدرت با برچسب فارسی.",
+    desc: "رمز عبور با نمایش و پنهان کردن، همیشه چپ‌چین، همراه سنجش قدرت با برچسب فارسی.",
     usage: `import { PasswordInput } from "@/components/ui/password-input"
 
 <PasswordInput strength placeholder="حداقل ۸ کاراکتر" />`,
@@ -716,17 +716,17 @@ const week = jalaliWeekLabels() // ["ش","ی","د","س","چ","پ","ج"] ending t
   },
   {
     slug: "iban-input", name: "شماره‌ی شبا", cat: "form", file: ui("iban-input"), deps: ["lucide-react"], registryDeps: ["persian"],
-    desc: "پیشوند ثابت IR، گروه‌بندی چهارتایی، اعتبارسنجی mod-97 و تشخیص بانک.",
+    desc: "شماره‌ی شبا با پیشوند ثابت IR، گروه‌بندی چهارتایی، اعتبارسنجی mod-97 و تشخیص بانک.",
     usage: `import { IbanInput } from "@/components/ui/iban-input"
 
 <IbanInput onChange={(iban, valid) => setIban(valid ? iban : null)} />`,
     props: [{ name: "onChange", type: "(iban, valid) => void", desc: "شبا نرمال‌شده (IR + ۲۴ رقم) و اعتبار." }],
-    notes: ["الگوریتم: رشته‌ی بعد از IR + «1827» + دو رقم کنترل، پیمانه‌ی ۹۷ باید ۱ شود. نام بانک از سه رقم بعد از ارقام کنترل."],
+    notes: ["الگوریتم این‌طوریه که رشته‌ی بعد از IR + «1827» + دو رقم کنترل، به پیمانه‌ی ۹۷ باید ۱ بشه. نام بانک هم از سه رقم بعد از ارقام کنترل درمی‌آد."],
     promptBullets: ["Fixed IR outside the input; input is 24 digits grouped every 4 with font-mono.", "mod-97 validation and bank name from the three-digit code; show the error only when all 24 digits are filled."],
   },
   {
     slug: "phone-input", name: "شماره‌ی موبایل", cat: "form", file: ui("phone-input"), deps: ["lucide-react"], registryDeps: ["persian"],
-    desc: "+۹۸ ثابت در چپ، گروه ۳-۳-۴، تشخیص اپراتور، پذیرش ارقام فارسی و صفر اول.",
+    desc: "شماره‌ی موبایل با +۹۸ ثابت در چپ، گروه‌بندی ۳-۳-۴، تشخیص اپراتور و پذیرش اعداد فارسی و صفر اول.",
     usage: `import { PhoneInput } from "@/components/ui/phone-input"
 
 <PhoneInput onChange={(digits, valid) => valid && setPhone(digits)} />`,
@@ -735,7 +735,7 @@ const week = jalaliWeekLabels() // ["ش","ی","د","س","چ","پ","ج"] ending t
   },
   {
     slug: "notification-inbox", name: "صندوق اعلان", cat: "feedback", file: ui("notification-inbox"), deps: ["lucide-react"], registryDeps: ["popover", "persian"],
-    desc: "زنگ با شمارنده‌ی نخوانده و پنل گروه‌بندی‌شده به امروز/دیروز/قدیمی‌تر؛ زمان نسبی فارسی.",
+    desc: "زنگ اعلان با شمارنده‌ی نخوانده و پنلی که اعلان‌ها را به امروز، دیروز و قدیمی‌تر گروه می‌کنه، با زمان نسبی فارسی.",
     usage: `import { NotificationInbox } from "@/components/ui/notification-inbox"
 
 <NotificationInbox items={notifications} onRead={markRead} onReadAll={markAllRead} />`,
@@ -744,7 +744,7 @@ const week = jalaliWeekLabels() // ["ش","ی","د","س","چ","پ","ج"] ending t
   },
   {
     slug: "form", name: "فرم", cat: "form", file: ui("form"), registryDeps: ["persian"],
-    desc: "useForm شصت‌خطی: مقدارها، نقشه‌ی خطا، اعتبارسنج‌های فارسی (موبایل، شبا، کد ملی) و FormField؛ بدون کتابخانه‌ی فرم.",
+    desc: "هوک useForm شصت‌خطی با مقدارها، نقشه‌ی خطا، اعتبارسنج‌های فارسی (موبایل، شبا، کد ملی) و FormField، بدون کتابخانه‌ی فرم.",
     usage: `import { useForm, rules, FormField, FormErrors } from "@/components/ui/form"
 
 const form = useForm({
@@ -769,32 +769,32 @@ const form = useForm({
   },
   {
     slug: "national-id-input", name: "کد ملی", cat: "form", file: ui("national-id-input"), deps: ["lucide-react"], registryDeps: ["persian"],
-    desc: "ده رقم با گروه‌بندی ۳-۶-۱ مثل روی کارت، اعتبارسنجی رقم کنترل، و نگه‌داشتن صفر اول.",
+    desc: "کد ملی ده‌رقمی با گروه‌بندی ۳-۶-۱ مثل روی کارت، اعتبارسنجی رقم کنترل و نگه‌داشتن صفر اول.",
     usage: `import { NationalIdInput } from "@/components/ui/national-id-input"
 
 <NationalIdInput onChange={(digits, valid) => setNationalId(valid ? digits : null)} />`,
     props: [
-      { name: "value", type: "string", desc: "ده رقم لاتین؛ رشته بماند تا صفر اول حذف نشود." },
+      { name: "value", type: "string", desc: "ده رقم لاتین. رشته بمونه تا صفر اول حذف نشه." },
       { name: "onChange", type: "(digits, valid) => void", desc: "رقم‌های نرمال‌شده و نتیجه‌ی اعتبارسنجی." },
     ],
-    notes: ["الگوریتم: جمع رقم‌ها ضرب در وزن ۱۰ تا ۲، باقی‌مانده بر ۱۱؛ کدهای یکنواخت مثل ۱۱۱۱۱۱۱۱۱۱ رد می‌شوند.", "خطا فقط بعد از رقم دهم نشان داده می‌شود تا هنگام تایپ مزاحم نباشد."],
+    notes: ["الگوریتم این‌طوریه که رقم‌ها ضرب در وزن ۱۰ تا ۲ جمع میشن و باقی‌مانده بر ۱۱ بررسی میشه. کدهای یکنواخت مثل ۱۱۱۱۱۱۱۱۱۱ رد میشن.", "خطا فقط بعد از رقم دهم نشان داده میشه تا هنگام تایپ مزاحم نباشه."],
     promptBullets: ["dir=ltr field; digits shown in Persian with the 3-6-1 grouping «۰۰۱-۲۳۴۵۶۷-۸»; store the value as a string.", "Checksum: weights 10…2, sum mod 11; reject all-same digits. Show the error only once ten digits are typed, a check icon when valid."],
   },
   {
     slug: "card-number-input", name: "شماره‌ی کارت", cat: "form", file: ui("card-number-input"), deps: ["lucide-react"], registryDeps: ["persian"],
-    desc: "چهار گروه چهارتایی، تشخیص بانک از شش رقم اول، و اعتبارسنجی Luhn بعد از رقم شانزدهم.",
+    desc: "شماره‌ی کارت در چهار گروه چهارتایی، با تشخیص بانک از شش رقم اول و اعتبارسنجی Luhn بعد از رقم شانزدهم.",
     usage: `import { CardNumberInput } from "@/components/ui/card-number-input"
 
 <CardNumberInput onChange={(digits, valid, bank) => valid && setCard({ digits, bank })} />`,
     props: [
       { name: "onChange", type: "(digits, valid, bank) => void", desc: "شانزده رقم لاتین، نتیجه‌ی Luhn و نام بانک (یا null)." },
     ],
-    notes: ["جدول پیش‌شماره‌ها در lib/persian.ts است؛ بانک‌های ادغام‌شده (انصار، قوامین، حکمت، مهر اقتصاد، کوثر) زیر نام سپه می‌آیند.", "autoComplete=\"cc-number\" را نگه دارید تا مرورگر کارت ذخیره‌شده را پیشنهاد کند."],
+    notes: ["جدول پیش‌شماره‌ها در lib/persian.ts هست و بانک‌های ادغام‌شده (انصار، قوامین، حکمت، مهر اقتصاد، کوثر) زیر نام سپه می‌آن.", "autoComplete=\"cc-number\" را نگه دارید تا مرورگر کارت ذخیره‌شده را پیشنهاد کند."],
     promptBullets: ["dir=ltr field; Persian digits grouped in fours; inputMode=numeric and autoComplete=cc-number.", "Bank name from the first six digits (BIN table for Iranian banks) shown under the field with a bank icon; Luhn error only when all 16 digits are in."],
   },
   {
     slug: "plate-input", name: "پلاک خودرو", cat: "form", file: ui("plate-input"), registryDeps: ["persian"],
-    desc: "چیدمان ۲ رقم، حرف، ۳ رقم و کد شهر مثل پلاک واقعی؛ انتخاب حرف از فهرست با معنی هر حرف؛ تایپ پیوسته بین جعبه‌ها.",
+    desc: "پلاک خودرو با چیدمان واقعی (دو رقم، حرف، سه رقم و کد شهر)، انتخاب حرف از فهرست با معنی هر حرف و تایپ پیوسته بین جعبه‌ها.",
     usage: `import { PlateInput } from "@/components/ui/plate-input"
 import { stringifyPlate } from "@/lib/persian"
 
@@ -804,16 +804,16 @@ import { stringifyPlate } from "@/lib/persian"
 <PlateInput letters={["ت"]} />`,
     props: [
       { name: "value / defaultValue", type: "PlateValue", desc: "{ left, letter, middle, region } با رقم‌های لاتین." },
-      { name: "onChange", type: "(value, complete) => void", desc: "complete وقتی هر چهار بخش پر و حرف مجاز باشد." },
+      { name: "onChange", type: "(value, complete) => void", desc: "complete وقتی هر چهار بخش پر و حرف مجاز باشه." },
       { name: "letters", type: "string[]", desc: "محدود کردن حرف‌های مجاز، مثلاً [\"ت\"] برای تاکسی." },
       { name: "name", type: "string", desc: "ورودی مخفی با مقدار «12ب345-11» برای فرم معمولی." },
     ],
-    notes: ["خود پلاک dir=\"ltr\" است چون روی فلز از چپ خوانده می‌شود؛ فهرست حرف‌ها rtl است و کلیدهای چپ/راست در آن برعکس می‌شوند.", "تایپ حرف روی جعبه‌ی حرف هم کار می‌کند: ي و ك عربی به ی و ک، و «ا» به «الف» تبدیل می‌شود.", "چسباندن کل پلاک در جعبه‌ی اول همه‌ی بخش‌ها را پر می‌کند."],
+    notes: ["خود پلاک dir=\"ltr\" هست چون روی فلز از چپ خوانده میشه، ولی فهرست حرف‌ها rtl هست و کلیدهای چپ و راست در آن برعکس میشن.", "تایپ حرف روی جعبه‌ی حرف هم کار می‌کنه و ي و ك عربی به ی و ک، و «ا» به «الف» تبدیل میشه.", "پیست کردن کل پلاک در جعبه‌ی اول همه‌ی بخش‌ها را پر می‌کنه."],
     promptBullets: ["Plate frame dir=ltr: a dark «I.R. IRAN» strip, a 2-digit box, a letter button, a 3-digit box, then a divided «ایران» box with the 2-digit region code.", "The letter button opens an RTL listbox grid of legal plate letters with a footer naming the class (تاکسی، دولتی، شخصی…); arrow keys, typeahead, Escape, and focus return.", "Typing auto-advances between boxes, Backspace on an empty box goes back, and pasting «12ب345-11» fills everything."],
   },
   {
     slug: "date-range-picker", name: "بازه‌ی تاریخ شمسی", cat: "form", file: ui("date-range-picker"), wide: true, deps: ["lucide-react"], registryDeps: ["jalali"],
-    desc: "دو ماه شمسی کنار هم، پیش‌نمایش بازه با هاور، بازه‌های آماده (۷ روز گذشته، این ماه) و شمارش روزها.",
+    desc: "بازه‌ی تاریخ شمسی با دو ماه کنار هم، پیش‌نمایش بازه با هاور، بازه‌های آماده مثل «۷ روز گذشته» و شمارش روزها.",
     usage: `import { DateRangePicker, RangeCalendar, formatJalaliRange } from "@/components/ui/date-range-picker"
 
 <DateRangePicker onChange={(r) => r.from && r.to && load(r)} min={new Date()} />
@@ -821,41 +821,41 @@ import { stringifyPlate } from "@/lib/persian"
 // تقویم بدون فیلد:
 <RangeCalendar months={2} defaultValue={{ from, to }} />`,
     props: [
-      { name: "value / defaultValue", type: "{ from: Date | null; to: Date | null }", desc: "دو سر بازه با Date معمولی؛ اگر پایان قبل از شروع انتخاب شود جابه‌جا می‌شوند." },
-      { name: "months", type: "1 | 2", default: "۲ در فیلد، ۱ در تقویم", desc: "تعداد ماه‌های کنار هم؛ زیر ۶۴۰ پیکسل زیر هم می‌روند." },
-      { name: "presets", type: "RangePreset[]", default: "defaultRangePresets", desc: "چیپ‌های بالای تقویم؛ [] برای حذف." },
-      { name: "min / max", type: "Date", desc: "روزهای خارج از بازه غیرفعال می‌شوند." },
+      { name: "value / defaultValue", type: "{ from: Date | null; to: Date | null }", desc: "دو سر بازه با Date معمولی. اگر پایان قبل از شروع انتخاب بشه، جابه‌جا میشن." },
+      { name: "months", type: "1 | 2", default: "۲ در فیلد، ۱ در تقویم", desc: "تعداد ماه‌های کنار هم. زیر ۶۴۰ پیکسل زیر هم میرن." },
+      { name: "presets", type: "RangePreset[]", default: "defaultRangePresets", desc: "چیپ‌های بالای تقویم. برای حذف [] بدید." },
+      { name: "min / max", type: "Date", desc: "روزهای خارج از بازه غیرفعال میشن." },
     ],
-    notes: ["نوار بین دو سر بازه با rounded-s و rounded-e گرد می‌شود، نه left/right؛ چون هفته از راست به چپ می‌رود.", "نمایش متنی بازه کوتاه می‌شود: «۱۲ تا ۲۵ مهر ۱۴۰۵»، و فقط وقتی سال فرق کند سال هر دو سر می‌آید."],
+    notes: ["نوار بین دو سر بازه با rounded-s و rounded-e گرد میشه، نه left و right، چون هفته از راست به چپ میره.", "نمایش متنی بازه کوتاه میشه، مثل «۱۲ تا ۲۵ مهر ۱۴۰۵»، و فقط وقتی سال فرق کنه سال هر دو سر می‌آد."],
     promptBullets: ["RangeCalendar: first click = start, second = end (swap if earlier), third starts over; hovering previews the band before the end is chosen.", "Band cells use bg-accent with rounded-s-md on the start and rounded-e-md on the end; ends use bg-primary. Week starts Saturday, Fridays muted.", "DateRangePicker field shows «۱۲ تا ۲۵ مهر ۱۴۰۵», closes once both ends are picked, has preset chips (امروز، ۷ روز گذشته، ۳۰ روز گذشته، این ماه) and a clear button."],
   },
   {
     slug: "time-picker", name: "انتخاب ساعت", cat: "form", file: ui("time-picker"), deps: ["lucide-react"],
-    desc: "ساعت ۲۴ساعته با دو بخش تایپی، ارقام فارسی، بالا/پایین برای تغییر، و فهرست ساعت و دقیقه برای ماوس.",
+    desc: "انتخاب ساعت ۲۴ساعته با دو بخش تایپی و اعداد فارسی، کلیدهای بالا و پایین برای تغییر و فهرست ساعت و دقیقه برای ماوس.",
     usage: `import { TimePicker } from "@/components/ui/time-picker"
 
 <TimePicker step={15} min="09:00" max="18:00" onChange={(t) => setTime(t)} /> // "14:30"`,
     props: [
       { name: "value", type: "string | null", desc: "«HH:mm» با رقم لاتین، مثل \"14:30\"." },
-      { name: "step", type: "1 | 5 | 10 | 15 | 30", default: "5", desc: "گام ستون دقیقه؛ تایپ هر دقیقه‌ای را می‌پذیرد." },
-      { name: "min / max", type: "string", desc: "بازه‌ی مجاز؛ گزینه‌های بیرون از آن غیرفعال و مقدار تایپی بیرون از آن خطا می‌گیرد." },
+      { name: "step", type: "1 | 5 | 10 | 15 | 30", default: "5", desc: "گام ستون دقیقه. تایپ دستی هر دقیقه‌ای را می‌پذیره." },
+      { name: "min / max", type: "string", desc: "بازه‌ی مجاز. گزینه‌های بیرون از آن غیرفعال میشن و مقدار تایپی بیرون از آن خطا می‌گیره." },
     ],
-    notes: ["ایران ساعت ۲۴ساعته می‌نویسد؛ صبح/عصر ندارد.", "فیلد dir=\"ltr\" است چون ساعت:دقیقه در متن فارسی هم از چپ خوانده می‌شود؛ برچسب‌ها فارسی می‌مانند."],
+    notes: ["ایران ساعت را ۲۴ساعته می‌نویسه و صبح و عصر نداره.", "فیلد dir=\"ltr\" هست چون ساعت:دقیقه در متن فارسی هم از چپ خوانده میشه، ولی برچسب‌ها فارسی می‌مونن."],
     promptBullets: ["Two segments (hour, minute) that behave like a native time input: a high first digit pads itself, «:» or → moves to minutes, ↑/↓ steps, Backspace on an empty minute goes back.", "Dropdown with an hours column and a minutes column (step), selected item scrolled into view; footer with «الان» and «تأیید».", "Value is \"HH:mm\" in Latin digits; display uses Persian digits, 24-hour clock."],
   },
   {
     slug: "amount-input", name: "مبلغ", cat: "form", file: ui("amount-input"), registryDeps: ["number-to-words"],
-    desc: "جداکننده‌ی هزارگان هنگام تایپ، واحد بعد از عدد، و مبلغ به حروف زیر فیلد: «یک میلیون و دویست و پنجاه هزار تومان».",
+    desc: "ورودی مبلغ با جداکننده‌ی هزارگان هنگام تایپ، واحد بعد از عدد و مبلغ به حروف زیر فیلد، مثل «یک میلیون و دویست و پنجاه هزار تومان».",
     usage: `import { AmountInput } from "@/components/ui/amount-input"
 
 <AmountInput min={10_000} max={50_000_000} quick={[100_000, 500_000, 1_000_000]} onChange={setAmount} />`,
     props: [
-      { name: "value / defaultValue", type: "number | null", desc: "مقدار عددی خام؛ نمایش با «٬» و ارقام فارسی." },
+      { name: "value / defaultValue", type: "number | null", desc: "مقدار عددی خام. نمایش با «٬» و اعداد فارسیه." },
       { name: "unit", type: "string", default: "«تومان»", desc: "واحد در انتهای فیلد و آخر جمله‌ی حروفی." },
       { name: "words", type: "boolean", default: "true", desc: "نمایش مبلغ به حروف زیر فیلد." },
-      { name: "quick", type: "number[]", desc: "چیپ‌های مبلغ آماده با برچسب کوتاه: «۵۰۰ هزار»، «۱ میلیون»." },
+      { name: "quick", type: "number[]", desc: "چیپ‌های مبلغ آماده با برچسب کوتاه، مثل «۵۰۰ هزار» و «۱ میلیون»." },
     ],
-    notes: ["تبدیل عدد به حروف در lib/number-to-words.ts است و جدا هم قابل استفاده است: numberToWords، tomanToWords، rialToWords.", "«هزار» بدون «یک» می‌آید (هزار تومان، نه یک هزار تومان)؛ از میلیون به بالا «یک میلیون»."],
+    notes: ["تبدیل عدد به حروف در lib/number-to-words.ts هست و جدا هم میشه ازش استفاده کرد، با numberToWords، tomanToWords و rialToWords.", "«هزار» بدون «یک» می‌آد (هزار تومان، نه یک هزار تومان) ولی از میلیون به بالا «یک میلیون» نوشته میشه."],
     promptBullets: ["Numeric text field; strip non-digits (Persian digits accepted), keep a plain number in state, render with «٬» and Persian digits; unit at the end.", "Under the field spell the amount in Persian words with the unit; min/max errors replace it.", "Optional quick chips that set common amounts, labelled «۱۰۰ هزار» / «۱ میلیون»."],
   },
 ];

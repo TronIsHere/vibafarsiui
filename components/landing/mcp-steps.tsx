@@ -15,11 +15,11 @@ const CONFIG = `
 `;
 
 const TOOLS = [
-  { id: "get_design_rules", d: "قوانین راست‌چین، فونت، ارقام و توکن" },
-  { id: "search_registry", d: "جست‌وجو در قطعه‌ها؛ فارسی یا انگلیسی" },
-  { id: "get_component", d: "کد و پرامپت همان قطعه" },
-  { id: "get_theme", d: "توکن‌های رنگ و شعاع گوشه" },
-  { id: "scaffold_page", d: "از توضیح صفحه، یک ترکیب آماده" },
+  { id: "get_design_rules", d: "قوانین راست‌چین، فونت، اعداد و توکن‌ها" },
+  { id: "search_registry", d: "جست‌وجو بین کامپوننت‌ها، به فارسی یا انگلیسی" },
+  { id: "get_component", d: "کد و پرامپت همان کامپوننت" },
+  { id: "get_theme", d: "توکن‌های رنگ و شعاع گوشه‌ی هر تم" },
+  { id: "scaffold_page", d: "از توضیح صفحه، یک ترکیب آماده می‌سازه" },
 ] as const;
 
 export function McpSteps() {
@@ -30,13 +30,12 @@ export function McpSteps() {
           MCP
         </Badge>
         <h2 className="mx-auto mt-5 max-w-2xl text-3xl font-bold sm:text-[2.6rem] sm:leading-[1.2]">
-          پرامپت را بدهید؛ <span className="text-brand">قطعه‌ی فارسی</span> ساخته می‌شود.
+          پرامپت را بدید، <span className="text-brand">کامپوننت فارسی</span> تحویل بگیرید.
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground sm:text-base">
-          ابزارهای هوش مصنوعی به انگلیسی فکر می‌کنند: فونت Inter می‌گذارند،
-          ارقام را لاتین می‌نویسند و دکمه را چپ‌چین می‌کنند. سرور MCP وایب‌فارسی
-          قوانین طراحی فارسی و کد قطعه‌ها را مستقیم به Cursor، Claude Code و
-          Windsurf می‌دهد.
+          ابزارهای هوش مصنوعی به انگلیسی فکر می‌کنن: فونت Inter می‌گذارن، اعداد را
+          لاتین می‌نویسن و دکمه را چپ‌چین می‌کنن. سرور MCP وایب‌فارسی قوانین طراحی
+          فارسی و کد کامپوننت‌ها را مستقیم به Cursor، Claude Code و Windsurf می‌ده.
         </p>
       </div>
 
@@ -62,7 +61,7 @@ export function McpSteps() {
           <StepHead
             n="۱"
             t="سرور را اضافه کنید"
-            d="یک‌بار در تنظیمات ادیتور؛ بعد دیگر کاری نیست."
+            d="یک‌بار در تنظیمات ادیتور، بعدش دیگه کاری ندارید."
           />
           <div className="m-4 mt-0 overflow-hidden rounded-lg border border-border bg-background">
             <CodeBlock code={CONFIG} lang="json" className="p-4 text-[12px]" />
@@ -71,7 +70,7 @@ export function McpSteps() {
         <li className="flex flex-col border-b border-border lg:border-b-0 lg:border-e">
           <StepHead
             n="۲"
-            t="مثل همیشه پرامپت بدهید"
+            t="مثل همیشه پرامپت بدید"
             d="لازم نیست چیزی درباره‌ی فارسی یادآوری کنید."
           />
           <div className="m-4 mt-0 flex-1 rounded-lg border border-border bg-background p-4 text-sm">
@@ -89,15 +88,15 @@ export function McpSteps() {
           <StepHead
             n="۳"
             t="خروجی فارسی درست بگیرید"
-            d="همان بار اول؛ بدون رفت‌وبرگشت برای راست‌چین و ارقام."
+            d="همان بار اول، بدون رفت‌وبرگشت برای راست‌چین و اعداد."
           />
           <ul className="m-4 mt-0 flex-1 space-y-2 rounded-lg border border-border bg-background p-4 text-sm">
             {[
-              "فونت پروژه، بدون letter-spacing",
-              "چیدمان راست‌چین، آیکون سمت راست",
-              "مبلغ‌ها با ارقام فارسی و تومان",
+              "فونت خود پروژه، بدون letter-spacing",
+              "چیدمان راست‌چین با آیکون سمت راست",
+              "مبلغ‌ها با اعداد فارسی و تومان",
               "فیلد موبایل چپ‌چین و ۱۱ رقمی",
-              "توکن‌های تم پروژه، نه رنگ دلخواه مدل",
+              "رنگ‌ها از توکن‌های تم پروژه، نه رنگ دلخواه مدل",
             ].map((t) => (
               <li key={t} className="flex items-center gap-2 text-foreground/85">
                 <Check className="size-3.5 shrink-0 text-brand" />

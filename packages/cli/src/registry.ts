@@ -1,4 +1,4 @@
-export const DEFAULT_REGISTRY = "https://vibefarsi.dev/r";
+export const DEFAULT_REGISTRY = "https://vibefarsi.ir/r";
 
 export type RegistryType = "component" | "animation" | "background" | "template" | "theme" | "lib";
 

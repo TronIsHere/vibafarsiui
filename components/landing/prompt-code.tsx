@@ -24,19 +24,20 @@ export function PromptCode({
       <div className="grid grid-cols-1 lg:grid-cols-12">
         <div className="flex flex-col justify-center px-5 py-10 sm:px-8 lg:col-span-5 lg:border-e lg:border-border lg:py-16">
           <p className="  text-xs text-muted-foreground">
-            دو خروجی برای هر کامپوننت
+            هر کامپوننت دو خروجی داره
           </p>
           <h2 className="mt-3 text-2xl font-bold sm:text-3xl">
-            کد می‌خواهید یا پرامپت؟
+            کد می‌خواید یا پرامپت؟
           </h2>
           <p className="mt-4 max-w-md text-sm text-muted-foreground sm:text-[15px]">
-            اگر خودتان کد می‌زنید، فایل را کپی کنید و در پروژه بگذارید؛ همین دکمه است، نه نمونه. اگر با
-            Cursor یا Claude کار می‌کنید، پرامپت انگلیسی را بدهید تا با سبک پروژه همان را بسازد. خروجی هر دو راست‌چین و فارسی است.
+            اگر خودتون کد می‌زنید، فایل را کپی کنید و در پروژه بگذارید. همین دکمه‌ای که این‌جا می‌بینید کد واقعیه،
+            نه یک نمونه. اگر با Cursor یا Claude کار می‌کنید، پرامپت انگلیسی را به آن بدید تا همین کامپوننت را با سبک
+            پروژه‌تون بسازه. در هر دو حالت خروجی راست‌چین و فارسیه.
           </p>
           <ul className="mt-6 space-y-2 text-sm">
             {[
-              ["کد", "TypeScript، Tailwind، بدون وابستگی اضافه"],
-              ["پرامپت", "انگلیسی، با قوانین راست‌چین و فارسی داخلش"],
+              ["کد", "TypeScript و Tailwind، بدون هیچ وابستگی اضافه"],
+              ["پرامپت", "به انگلیسی، با قوانین راست‌چین و فارسی داخلش"],
             ].map(([k, v]) => (
               <li key={k} className="flex items-baseline gap-3">
                 <span className="w-14 shrink-0   text-xs text-foreground/80">

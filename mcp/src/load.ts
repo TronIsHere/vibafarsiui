@@ -3,7 +3,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import type { Catalog, CatalogItem, RegistryItem } from "./types.js";
 
-const DEFAULT_URL = "https://vibefarsi.dev";
+const DEFAULT_URL = "https://vibefarsi.ir";
 
 export function registryUrl(): string {
   return (process.env.VIBEFARSI_URL || DEFAULT_URL).replace(/\/$/, "");

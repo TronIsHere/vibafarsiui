@@ -23,7 +23,7 @@ const names = ["مریم احمدی", "علی رضایی", "نگار کریمی"
 const statuses: Status[] = ["paid", "pending", "shipped", "paid", "canceled", "paid", "shipped", "pending", "paid", "paid", "shipped", "paid"];
 const orders: Order[] = names.map((customer, i) => ({ id: 14052 - i, customer, amount: (i * 937 + 350) * 1000 + 240_000, status: statuses[i], date: new Date(Date.now() - i * 864e5 * 1.3), items: (i % 4) + 1 }));
 
-/** مدیریت سفارش‌ها — جدول داده با فیلتر تاریخ شمسی، وضعیت، اکشن‌ها و آمار بالا. */
+/** مدیریت سفارش‌ها: جدول داده با فیلتر تاریخ شمسی، وضعیت، منوی عمل و آمار بالا. */
 export function AdminOrdersPage() {
   const [status, setStatus] = React.useState("all");
   const [from, setFrom] = React.useState<Date | null>(null);

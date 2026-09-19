@@ -47,7 +47,7 @@ Step 2: six-cell OtpField, resend countdown with Persian digits, «تغییر ش
     id: "dashboard",
     title: "داشبورد فروش",
     aliases: ["dashboard", "admin", "داشبورد", "پنل", "آمار فروش"],
-    summary: "سایدبار راست، آمار تومان، هفته‌ی ش–ج، جدول سفارش.",
+    summary: "سایدبار راست، آمار تومان، نمودار هفته از شنبه تا جمعه، جدول سفارش.",
     template: "shop-dashboard",
     components: ["sidebar", "stat", "table", "badge", "avatar", "progress", "button", "input"],
     libs: ["utils", "jalali"],

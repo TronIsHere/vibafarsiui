@@ -18,7 +18,7 @@ const services = [
 ];
 const slots = ["۱۰:۰۰", "۱۰:۴۵", "۱۱:۳۰", "۱۲:۱۵", "۱۴:۰۰", "۱۴:۴۵", "۱۵:۳۰", "۱۶:۱۵", "۱۷:۰۰"];
 
-/** رزرو نوبت — سرویس، روز روی تقویم شمسی (جمعه‌ها تعطیل)، ساعت، و تأیید. */
+/** رزرو نوبت: سرویس، روز روی تقویم شمسی (جمعه‌ها تعطیل)، ساعت و تأیید. */
 export function BookingPage() {
   const [service, setService] = React.useState("cut");
   const [date, setDate] = React.useState<Date | null>(null);

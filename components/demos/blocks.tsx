@@ -50,7 +50,7 @@ export const blockDemos: Record<string, React.ReactNode> = {
       ]}
     />
   ),
-  stats: <StatsBlock items={[{ value: "۲٬۴۰۰+", label: "فروشگاه فعال" }, { value: "۹۹٫۹٪", label: "دسترس‌پذیری", hint: "۱۲ ماه گذشته" }, { value: "۴٫۸", label: "امتیاز کاربران", hint: "از ۵" }, { value: "۲۴/۷", label: "پشتیبانی" }]} />,
+  stats: <StatsBlock items={[{ value: "۲٬۴۰۰+", label: "فروشگاه فعال" }, { value: "۹۹٫۹٪", label: "آپ‌تایم", hint: "۱۲ ماه گذشته" }, { value: "۴٫۸", label: "امتیاز کاربران", hint: "از ۵" }, { value: "۲۴/۷", label: "پشتیبانی" }]} />,
   testimonials: (
     <TestimonialsBlock
       items={[

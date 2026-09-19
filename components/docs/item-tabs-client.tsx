@@ -244,7 +244,7 @@ export function ItemTabsClient({
               <div className="relative flex h-full flex-col items-center justify-center gap-2 text-center">
                 <p className="text-2xl font-bold">متن روی پس‌زمینه</p>
                 <p className="text-sm text-muted-foreground">
-                  در همه‌ی تم‌ها باید خوانا بماند.
+                  در همه‌ی تم‌ها باید خوانا بمونه.
                 </p>
               </div>
             </div>
@@ -261,7 +261,7 @@ export function ItemTabsClient({
       {tab === "prompt" && (
         <div className="p-5">
           <p className="mb-3 text-xs text-muted-foreground">
-            این متن را در Cursor، Claude Code یا ابزار مشابه بچسبانید:
+            این متن را در Cursor، Claude Code یا ابزار مشابه پیست کنید:
           </p>
           <pre
             className="whitespace-pre-wrap font-sans text-[15px] leading-7 text-foreground/90"

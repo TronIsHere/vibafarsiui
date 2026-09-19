@@ -28,7 +28,7 @@ const gateways = [
   { value: "wallet", label: "کیف پول", description: "موجودی: ۲٬۱۰۰٬۰۰۰ تومان" },
 ];
 
-/** پرداخت — سبد → آدرس → ارسال → درگاه، با خلاصه‌ی سفارش چسبان. */
+/** پرداخت: سبد → آدرس → ارسال → درگاه، با خلاصه‌ی سفارش چسبان. */
 export function CheckoutPage() {
   const [step, setStep] = React.useState(0);
   const [qty, setQty] = React.useState<Record<number, number>>({ 1: 1, 2: 2 });

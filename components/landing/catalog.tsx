@@ -46,10 +46,10 @@ export function Catalog({ standalone }: { standalone?: boolean }) {
   const head = (
     <SectionHead
       eyebrow={<>{fa(visible.length)} از {fa(components.length)} کامپوننت</>}
-      title={standalone ? "کامپوننت‌ها" : "هر کارت یک کامپوننت زنده است"}
+      title={standalone ? "کامپوننت‌ها" : "این‌ها عکس نیستن، خود کامپوننت هستن"}
       desc={standalone
-        ? "دکمه، ورودی، جدول، تقویم شمسی و بقیه. هر کارت زنده است؛ روی نام بزنید تا کد، پرامپت و راهنما را ببینید."
-        : "تصویر نیست؛ خود قطعه است. روی نام بزنید تا کد، پرامپت و راهنما را ببینید."}
+        ? "دکمه، ورودی، جدول، تقویم شمسی و بقیه. این کارت‌ها عکس نیستن، خود کامپوننت هستن. روی اسم هر کدام بزنید تا کد، پرامپت و راهنماش را ببینید."
+        : "روی اسم هر کارت بزنید تا کد، پرامپت و راهنمای همان کامپوننت را ببینید."}
       href="/components"
       standalone={standalone}
       aside={filters}
@@ -61,7 +61,7 @@ export function Catalog({ standalone }: { standalone?: boolean }) {
     <Section id="catalog">
       {head}
       {grid}
-      <SectionFoot href="/components" label="همه‌ی کامپوننت‌ها" note="هر کدام کد، پرامپت و راهنمای راست‌چین دارد." />
+      <SectionFoot href="/components" label="همه‌ی کامپوننت‌ها" note="هر کدام کد، پرامپت و راهنمای راست‌چین خودش را داره." />
     </Section>
   );
 }

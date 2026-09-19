@@ -1,4 +1,4 @@
-export const DEFAULT_REGISTRY = "https://vibefarsi.dev/r";
+export const DEFAULT_REGISTRY = "https://vibefarsi.ir/r";
 export function makeClient(registry) {
     const trimmed = registry.replace(/\/$/, "");
     const catalogUrl = trimmed.endsWith("/r") ? trimmed : `${trimmed}/r`;

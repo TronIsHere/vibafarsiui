@@ -51,9 +51,10 @@ export function Hero() {
           className="mt-6 max-w-2xl text-base text-muted-foreground sm:text-[17px] animate-fade-up"
           style={{ animationDelay: "120ms" }}
         >
-            راست‌چین از پایه؛ فونت و ارقام فارسی داخل خود قطعه است. فایل را کپی
-            کنید، یا پرامپت انگلیسی را به Cursor و Claude بدهید تا همان را در پروژه
-            بسازند. قوانین فارسی داخل پرامپت است؛ لازم نیست یادآوری کنید.
+            همه‌ی کامپوننت‌ها از پایه راست‌چین هستن و فونت و اعداد فارسی هم داخل
+            خودشون هست. می‌تونید فایل را کپی کنید و در پروژه بگذارید، یا پرامپت
+            انگلیسی‌اش را به Cursor یا Claude بدید تا همان را در پروژه‌تون بسازه.
+            قوانین فارسی داخل پرامپت هست، پس لازم نیست چیزی یادآوری کنید.
         </p>
 
         <div
@@ -64,14 +65,14 @@ export function Hero() {
             href="/components"
             className="inline-flex h-11 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
           >
-            دیدن کامپوننت‌ها
+            کامپوننت‌ها را ببینید
             <ArrowLeft className="size-4" />
           </Link>
           <Link
             href="/docs"
             className="inline-flex h-11 items-center rounded-full border border-border bg-card px-6 text-sm font-semibold transition-colors hover:bg-accent"
           >
-            شروع در دو دقیقه
+            در دو دقیقه شروع کنید
           </Link>
         </div>
 

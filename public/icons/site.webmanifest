@@ -1,0 +1,22 @@
+{
+  "name": "وایب‌فارسی UI",
+  "short_name": "وایب‌فارسی",
+  "dir": "rtl",
+  "lang": "fa",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#111111",
+  "background_color": "#111111",
+  "icons": [
+    {
+      "src": "/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

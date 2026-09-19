@@ -224,7 +224,7 @@ export const animationDemos: Record<string, (k: number) => React.ReactNode> = {
   "tilt-card": () => (
     <TiltCard className="w-full max-w-[220px] cursor-pointer p-4">
       <div className="flex items-center justify-between">
-        <span className="text-sm font-semibold">کارت اعتباری</span>
+        <span className="text-sm font-semibold">کارت بانکی</span>
         <span className="size-5 rounded-full bg-secondary" />
       </div>
       <p className="mt-5   text-sm tracking-wider" dir="ltr">

@@ -483,7 +483,7 @@ function ToastDemoInner() {
           title: "تغییرات ذخیره شد",
           description: "۲ ثانیه پیش",
           variant: "success",
-          action: { label: "برگشت", onClick: () => {} },
+          action: { label: "واگرد", onClick: () => {} },
         }}
         className="w-full max-w-[300px]"
       />
@@ -1305,7 +1305,7 @@ export const componentCardDemos: Record<string, React.ReactNode> = {
         title: "تغییرات ذخیره شد",
         description: "۲ ثانیه پیش",
         variant: "success",
-        action: { label: "برگشت", onClick: () => {} },
+        action: { label: "واگرد", onClick: () => {} },
       }}
       className="w-full"
     />

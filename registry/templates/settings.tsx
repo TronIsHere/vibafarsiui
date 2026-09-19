@@ -18,7 +18,7 @@ function Panel({ title, desc, children, footer }: { title: string; desc: string;
   );
 }
 
-/** پنل تنظیمات — پروفایل، امنیت و اعلان‌ها با ناوبری کناری. */
+/** پنل تنظیمات: پروفایل، امنیت و اعلان‌ها با ناوبری کناری. */
 export function SettingsPage() {
   return (
     <div className="min-h-dvh bg-background text-foreground">

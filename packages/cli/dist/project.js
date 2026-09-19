@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-const DEFAULT_REGISTRY = "https://vibefarsi.dev/r";
+const DEFAULT_REGISTRY = "https://vibefarsi.ir/r";
 export function defaultConfig() {
     return {
         registry: process.env.VIBEFARSI_REGISTRY || process.env.VIBEFARSI_URL || DEFAULT_REGISTRY,

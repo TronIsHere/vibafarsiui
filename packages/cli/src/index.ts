@@ -21,7 +21,7 @@ Commands
 
 Flags
   --cwd <dir>          Project directory (default: .)
-  --registry <url>     Registry root (default: https://vibefarsi.dev/r)
+  --registry <url>     Registry root (default: https://vibefarsi.ir/r)
   --font vazirmatn|iransans
   --theme <slug>       Design tokens to apply on init (default: graphite)
   --overwrite          Replace existing files

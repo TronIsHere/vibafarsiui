@@ -1,7 +1,28 @@
 import { cn } from "@/lib/utils";
 
+/** Standalone SVG for download. Colors must be resolved rgb/hex, not CSS variables. */
+export function logoMarkSvg(brand: string, brandLight: string, id = "vf-g") {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" width="32" height="32">
+  <defs>
+    <linearGradient id="${id}" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="${brandLight}"/>
+      <stop offset="1" stop-color="${brand}"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="20" height="20" rx="4" stroke="url(#${id})" stroke-width="1.8"/>
+  <rect x="6" y="6" width="20" height="20" rx="4" stroke="url(#${id})" stroke-width="1.8" transform="rotate(45 16 16)" opacity="0.85"/>
+  <circle cx="16" cy="16" r="3.2" fill="url(#${id})"/>
+</svg>`;
+}
+
 /** Eight-point star (شمسه) — a nod to Persian tile geometry. */
-export function LogoMark({ className }: { className?: string }) {
+export function LogoMark({
+  className,
+  paintId = "vf-g",
+}: {
+  className?: string;
+  paintId?: string;
+}) {
   return (
     <svg
       viewBox="0 0 32 32"
@@ -11,7 +32,7 @@ export function LogoMark({ className }: { className?: string }) {
     >
       <defs>
         <linearGradient
-          id="vf-g"
+          id={paintId}
           x1="0"
           y1="0"
           x2="32"
@@ -28,7 +49,7 @@ export function LogoMark({ className }: { className?: string }) {
         width="20"
         height="20"
         rx="4"
-        stroke="url(#vf-g)"
+        stroke={`url(#${paintId})`}
         strokeWidth="1.8"
       />
       <rect
@@ -37,12 +58,12 @@ export function LogoMark({ className }: { className?: string }) {
         width="20"
         height="20"
         rx="4"
-        stroke="url(#vf-g)"
+        stroke={`url(#${paintId})`}
         strokeWidth="1.8"
         transform="rotate(45 16 16)"
         opacity="0.85"
       />
-      <circle cx="16" cy="16" r="3.2" fill="url(#vf-g)" />
+      <circle cx="16" cy="16" r="3.2" fill={`url(#${paintId})`} />
     </svg>
   );
 }

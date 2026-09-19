@@ -171,7 +171,7 @@ function fromTheme(item: ThemeDoc): CatalogItem {
   };
 }
 
-export function buildCatalog(homepage = "https://vibefarsi.dev"): Catalog {
+export function buildCatalog(homepage = "https://vibefarsi.ir"): Catalog {
   const items: CatalogItem[] = [
     ...libs.map((i) => fromDoc("lib", i)),
     ...components.map((i) => fromDoc("component", i, { category: i.cat, tags: [i.cat] })),

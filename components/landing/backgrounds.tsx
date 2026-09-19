@@ -11,8 +11,8 @@ export function Backgrounds({ standalone }: { standalone?: boolean }) {
   const head = (
     <SectionHead
       eyebrow={<>{fa(backgrounds.length)} پس‌زمینه</>}
-      title={standalone ? "پس‌زمینه‌ها" : "پس‌زمینه‌هایی که متن را خفه نمی‌کنند"}
-      desc="کم‌کنتراست و آرام، تا خط فارسی خوانا بماند. هر کدام یک کامپوننت کوچک است؛ داخل والد relative بگذارید. شیدرهای WebGL هم رنگ را از تم می‌گیرند و بدون کتابخانه کار می‌کنند."
+      title={standalone ? "پس‌زمینه‌ها" : "پس‌زمینه‌هایی که متن روشون خوانا می‌مونه"}
+      desc="همه کم‌کنتراست و آرام هستن تا خط فارسی خوانا بمونه. هر کدام یک کامپوننت کوچکه که داخل یک والد relative قرار می‌گیره. شیدرهای WebGL هم رنگشون را از تم می‌گیرن و بدون کتابخانه کار می‌کنن."
       href="/backgrounds"
       standalone={standalone}
     />
@@ -68,7 +68,7 @@ export function Backgrounds({ standalone }: { standalone?: boolean }) {
       <SectionFoot
         href="/backgrounds"
         label="همه‌ی پس‌زمینه‌ها"
-        note="با عوض شدن تم، رنگ‌شان هم عوض می‌شود."
+        note="تم را عوض کنید، رنگ همه‌شون هم عوض میشه."
       />
     </Section>
   );

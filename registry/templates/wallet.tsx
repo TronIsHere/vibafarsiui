@@ -19,7 +19,7 @@ const tx = [
   { id: 4, title: "بازگشت وجه سفارش #۱۴۰۴۹", amount: 640_000, date: new Date(Date.now() - 6 * 864e5), kind: "in" as const },
 ];
 
-/** کیف پول — موجودی، تراکنش‌ها با تاریخ شمسی، شارژ سریع و برداشت به شبا. */
+/** کیف پول: موجودی، تراکنش‌ها با تاریخ شمسی، شارژ سریع و برداشت به شبا. */
 export function WalletPage() {
   const [hidden, setHidden] = React.useState(false);
   const [withdraw, setWithdraw] = React.useState(false);

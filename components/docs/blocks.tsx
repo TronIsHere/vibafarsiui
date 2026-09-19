@@ -128,11 +128,11 @@ export function InstallSteps({
       <li className="rounded-xl border border-border bg-card p-4">
         <p className="text-sm font-medium">با CLI</p>
         <p className="mt-1 text-xs text-muted-foreground">
-          اگر هنوز init نکرده‌اید، اول از{" "}
+          اگر هنوز init نکردید، اول از{" "}
           <Link href="/docs#install" className="underline underline-offset-4">
             راهنمای نصب
           </Link>{" "}
-          پروژه را آماده کنید. بعد این دستور قطعه و وابستگی‌هایش را می‌نویسد.
+          پروژه را آماده کنید. بعد این دستور کامپوننت و وابستگی‌هاش را می‌نویسه.
         </p>
         <div
           className="mt-2 flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-1.5   text-xs"
