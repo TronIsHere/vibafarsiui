@@ -47,7 +47,6 @@ export function DocsSidebar({ onNavigate }: { onNavigate?: () => void }) {
         {link("/docs#manual", "نصب دستی", false)}
         {link("/docs#prompts", "کار با هوش مصنوعی", false)}
         {link("/docs#mcp", "سرور MCP", false)}
-        {link("/icons", "نشان‌ها", pathname === "/icons")}
       </div>
       {sections.map((s) => (
         <div key={s.key}>
