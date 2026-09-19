@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { Bot, Check, Code2, Eye } from "lucide-react";
-import { CodeBlock } from "@/components/shared/code-block";
 import { CopyButton } from "@/components/shared/copy-button";
 import { useTheme } from "@/lib/theme-store";
 import type { ThemeDoc } from "@/lib/registry";
@@ -58,10 +57,14 @@ function Sample() {
 export function ThemeDetail({
   theme,
   css,
+  codeBlock,
   prompt,
 }: {
   theme: ThemeDoc;
+  /** Raw CSS, for the copy button and token count. */
   css: string;
+  /** `<CodeBlock>` of `css`, rendered by the server parent (it can't be imported here). */
+  codeBlock: React.ReactNode;
   prompt: string;
 }) {
   const [tab, setTab] = React.useState<"preview" | "code" | "prompt">(
@@ -165,7 +168,7 @@ export function ThemeDetail({
             <Sample />
           </div>
         )}
-        {tab === "code" && <CodeBlock code={css} />}
+        {tab === "code" && codeBlock}
         {tab === "prompt" && (
           <div className="p-5">
             <pre

@@ -14,6 +14,14 @@ import { BookingPage } from "@/registry/templates/booking";
 import { WalletPage } from "@/registry/templates/wallet";
 import { ErrorPagesDemo } from "@/registry/templates/error-pages";
 import { EmailPreview } from "@/registry/templates/email";
+import { SaasLanding } from "@/registry/templates/saas-landing";
+import { FinanceDashboard } from "@/registry/templates/finance-dashboard";
+import { FoodDelivery } from "@/registry/templates/food-delivery";
+import { KanbanBoard } from "@/registry/templates/kanban";
+import { CoursePage } from "@/registry/templates/course";
+import { PaymentReceipt } from "@/registry/templates/receipt";
+import { TravelSearch } from "@/registry/templates/travel-search";
+import { ComingSoon } from "@/registry/templates/coming-soon";
 
 export const templateComponents: Record<string, React.ComponentType> = {
   "shop-dashboard": ShopDashboard,
@@ -32,4 +40,12 @@ export const templateComponents: Record<string, React.ComponentType> = {
   wallet: WalletPage,
   "error-pages": ErrorPagesDemo,
   email: EmailPreview,
+  "saas-landing": SaasLanding,
+  "finance-dashboard": FinanceDashboard,
+  "food-delivery": FoodDelivery,
+  kanban: KanbanBoard,
+  course: CoursePage,
+  receipt: PaymentReceipt,
+  "travel-search": TravelSearch,
+  "coming-soon": ComingSoon,
 };

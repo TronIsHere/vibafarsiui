@@ -85,6 +85,12 @@ import { ComboboxAsync } from "@/registry/ui/combobox-async";
 import { PasswordInput } from "@/registry/ui/password-input";
 import { IbanInput } from "@/registry/ui/iban-input";
 import { PhoneInput } from "@/registry/ui/phone-input";
+import { NationalIdInput } from "@/registry/ui/national-id-input";
+import { CardNumberInput } from "@/registry/ui/card-number-input";
+import { PlateInput } from "@/registry/ui/plate-input";
+import { DateRangePicker, RangeCalendar, type DateRange } from "@/registry/ui/date-range-picker";
+import { TimePicker } from "@/registry/ui/time-picker";
+import { AmountInput } from "@/registry/ui/amount-input";
 import { NotificationInbox } from "@/registry/ui/notification-inbox";
 import { FormField, FormErrors, rules, useForm } from "@/registry/ui/form";
 import { Slider as SliderUi } from "@/registry/ui/slider";
@@ -572,6 +578,26 @@ const orders = [
     tone: "brand" as const,
   },
 ];
+
+const sampleRange: DateRange = (() => {
+  const from = new Date();
+  from.setDate(from.getDate() - 9);
+  const to = new Date();
+  to.setDate(to.getDate() + 4);
+  return { from, to };
+})();
+
+function RangeDemo() {
+  const [range, setRange] = React.useState<DateRange>(sampleRange);
+  return (
+    <div className="flex w-full flex-col items-center gap-4">
+      <div className="w-full max-w-xs">
+        <DateRangePicker value={range} onChange={setRange} />
+      </div>
+      <RangeCalendar months={2} value={range} onChange={setRange} />
+    </div>
+  );
+}
 
 export const componentDemos: Record<string, React.ReactNode> = {
   button: (
@@ -1070,6 +1096,28 @@ export const componentDemos: Record<string, React.ReactNode> = {
       <PhoneInput />
     </div>
   ),
+  "national-id-input": (
+    <div className="w-full max-w-xs">
+      <NationalIdInput id="d-nid" />
+    </div>
+  ),
+  "card-number-input": (
+    <div className="w-full max-w-xs">
+      <CardNumberInput id="d-card" />
+    </div>
+  ),
+  "plate-input": <PlateInput defaultValue={{ left: "12", letter: "ب", middle: "345", region: "11" }} />,
+  "date-range-picker": <RangeDemo />,
+  "time-picker": (
+    <div className="w-full max-w-[200px]">
+      <TimePicker defaultValue="14:30" step={15} min="08:00" max="20:00" />
+    </div>
+  ),
+  "amount-input": (
+    <div className="w-full max-w-xs">
+      <AmountInput id="d-amount" defaultValue={1_250_000} quick={[100_000, 500_000, 1_000_000, 5_000_000]} />
+    </div>
+  ),
   "notification-inbox": <InboxDemo />,
   form: <FormDemo />,
   card: (
@@ -1369,6 +1417,29 @@ export const componentCardDemos: Record<string, React.ReactNode> = {
   "phone-input": (
     <div className="w-full">
       <PhoneInput />
+    </div>
+  ),
+  "national-id-input": (
+    <div className="w-full">
+      <NationalIdInput />
+    </div>
+  ),
+  "card-number-input": (
+    <div className="w-full">
+      <CardNumberInput />
+    </div>
+  ),
+  "date-range-picker": (
+    <RangeCalendar months={2} compact defaultValue={sampleRange} />
+  ),
+  "time-picker": (
+    <div className="w-full max-w-[180px]">
+      <TimePicker defaultValue="14:30" step={15} />
+    </div>
+  ),
+  "amount-input": (
+    <div className="w-full">
+      <AmountInput defaultValue={1_250_000} quick={[100_000, 500_000, 1_000_000]} />
     </div>
   ),
   form: <FormDemo />,

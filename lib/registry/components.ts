@@ -237,6 +237,7 @@ import { formatToman } from "@/lib/utils"
     props: [
       { name: "clearable", type: "boolean", default: "true", desc: "دکمه‌ی × برای پاک کردن." },
       { name: "placeholder", type: "string", desc: "متن وقتی تاریخی انتخاب نشده." },
+      { name: "weekday", type: "boolean", default: "true", desc: "نمایش روز هفته قبل از تاریخ." },
     ],
     promptBullets: ["An input-like button that shows the date as «چهارشنبه، ۲۵ شهریور ۱۴۰۵».", "Popover closes on outside click and Escape; start-0 under the field."],
   },
@@ -765,5 +766,96 @@ const form = useForm({
       { name: "FormField", type: "component", desc: "برچسب، ستاره‌ی الزامی، پیام خطا با role=alert." },
     ],
     promptBullets: ["Hook with useState; validate a field after blur and every field on submit; the first failing rule supplies the message.", "field(name) returns id/name/value/onChange/onBlur/error so it spreads onto Input.", "FormErrors is a summary of errors with links to the fields."],
+  },
+  {
+    slug: "national-id-input", name: "کد ملی", cat: "form", file: ui("national-id-input"), deps: ["lucide-react"], registryDeps: ["persian"],
+    desc: "ده رقم با گروه‌بندی ۳-۶-۱ مثل روی کارت، اعتبارسنجی رقم کنترل، و نگه‌داشتن صفر اول.",
+    usage: `import { NationalIdInput } from "@/components/ui/national-id-input"
+
+<NationalIdInput onChange={(digits, valid) => setNationalId(valid ? digits : null)} />`,
+    props: [
+      { name: "value", type: "string", desc: "ده رقم لاتین؛ رشته بماند تا صفر اول حذف نشود." },
+      { name: "onChange", type: "(digits, valid) => void", desc: "رقم‌های نرمال‌شده و نتیجه‌ی اعتبارسنجی." },
+    ],
+    notes: ["الگوریتم: جمع رقم‌ها ضرب در وزن ۱۰ تا ۲، باقی‌مانده بر ۱۱؛ کدهای یکنواخت مثل ۱۱۱۱۱۱۱۱۱۱ رد می‌شوند.", "خطا فقط بعد از رقم دهم نشان داده می‌شود تا هنگام تایپ مزاحم نباشد."],
+    promptBullets: ["dir=ltr field; digits shown in Persian with the 3-6-1 grouping «۰۰۱-۲۳۴۵۶۷-۸»; store the value as a string.", "Checksum: weights 10…2, sum mod 11; reject all-same digits. Show the error only once ten digits are typed, a check icon when valid."],
+  },
+  {
+    slug: "card-number-input", name: "شماره‌ی کارت", cat: "form", file: ui("card-number-input"), deps: ["lucide-react"], registryDeps: ["persian"],
+    desc: "چهار گروه چهارتایی، تشخیص بانک از شش رقم اول، و اعتبارسنجی Luhn بعد از رقم شانزدهم.",
+    usage: `import { CardNumberInput } from "@/components/ui/card-number-input"
+
+<CardNumberInput onChange={(digits, valid, bank) => valid && setCard({ digits, bank })} />`,
+    props: [
+      { name: "onChange", type: "(digits, valid, bank) => void", desc: "شانزده رقم لاتین، نتیجه‌ی Luhn و نام بانک (یا null)." },
+    ],
+    notes: ["جدول پیش‌شماره‌ها در lib/persian.ts است؛ بانک‌های ادغام‌شده (انصار، قوامین، حکمت، مهر اقتصاد، کوثر) زیر نام سپه می‌آیند.", "autoComplete=\"cc-number\" را نگه دارید تا مرورگر کارت ذخیره‌شده را پیشنهاد کند."],
+    promptBullets: ["dir=ltr field; Persian digits grouped in fours; inputMode=numeric and autoComplete=cc-number.", "Bank name from the first six digits (BIN table for Iranian banks) shown under the field with a bank icon; Luhn error only when all 16 digits are in."],
+  },
+  {
+    slug: "plate-input", name: "پلاک خودرو", cat: "form", file: ui("plate-input"), registryDeps: ["persian"],
+    desc: "چیدمان ۲ رقم، حرف، ۳ رقم و کد شهر مثل پلاک واقعی؛ انتخاب حرف از فهرست با معنی هر حرف؛ تایپ پیوسته بین جعبه‌ها.",
+    usage: `import { PlateInput } from "@/components/ui/plate-input"
+import { stringifyPlate } from "@/lib/persian"
+
+<PlateInput onChange={(plate, complete) => complete && setPlate(stringifyPlate(plate))} />
+
+// فقط تاکسی:
+<PlateInput letters={["ت"]} />`,
+    props: [
+      { name: "value / defaultValue", type: "PlateValue", desc: "{ left, letter, middle, region } با رقم‌های لاتین." },
+      { name: "onChange", type: "(value, complete) => void", desc: "complete وقتی هر چهار بخش پر و حرف مجاز باشد." },
+      { name: "letters", type: "string[]", desc: "محدود کردن حرف‌های مجاز، مثلاً [\"ت\"] برای تاکسی." },
+      { name: "name", type: "string", desc: "ورودی مخفی با مقدار «12ب345-11» برای فرم معمولی." },
+    ],
+    notes: ["خود پلاک dir=\"ltr\" است چون روی فلز از چپ خوانده می‌شود؛ فهرست حرف‌ها rtl است و کلیدهای چپ/راست در آن برعکس می‌شوند.", "تایپ حرف روی جعبه‌ی حرف هم کار می‌کند: ي و ك عربی به ی و ک، و «ا» به «الف» تبدیل می‌شود.", "چسباندن کل پلاک در جعبه‌ی اول همه‌ی بخش‌ها را پر می‌کند."],
+    promptBullets: ["Plate frame dir=ltr: a dark «I.R. IRAN» strip, a 2-digit box, a letter button, a 3-digit box, then a divided «ایران» box with the 2-digit region code.", "The letter button opens an RTL listbox grid of legal plate letters with a footer naming the class (تاکسی، دولتی، شخصی…); arrow keys, typeahead, Escape, and focus return.", "Typing auto-advances between boxes, Backspace on an empty box goes back, and pasting «12ب345-11» fills everything."],
+  },
+  {
+    slug: "date-range-picker", name: "بازه‌ی تاریخ شمسی", cat: "form", file: ui("date-range-picker"), wide: true, deps: ["lucide-react"], registryDeps: ["jalali"],
+    desc: "دو ماه شمسی کنار هم، پیش‌نمایش بازه با هاور، بازه‌های آماده (۷ روز گذشته، این ماه) و شمارش روزها.",
+    usage: `import { DateRangePicker, RangeCalendar, formatJalaliRange } from "@/components/ui/date-range-picker"
+
+<DateRangePicker onChange={(r) => r.from && r.to && load(r)} min={new Date()} />
+
+// تقویم بدون فیلد:
+<RangeCalendar months={2} defaultValue={{ from, to }} />`,
+    props: [
+      { name: "value / defaultValue", type: "{ from: Date | null; to: Date | null }", desc: "دو سر بازه با Date معمولی؛ اگر پایان قبل از شروع انتخاب شود جابه‌جا می‌شوند." },
+      { name: "months", type: "1 | 2", default: "۲ در فیلد، ۱ در تقویم", desc: "تعداد ماه‌های کنار هم؛ زیر ۶۴۰ پیکسل زیر هم می‌روند." },
+      { name: "presets", type: "RangePreset[]", default: "defaultRangePresets", desc: "چیپ‌های بالای تقویم؛ [] برای حذف." },
+      { name: "min / max", type: "Date", desc: "روزهای خارج از بازه غیرفعال می‌شوند." },
+    ],
+    notes: ["نوار بین دو سر بازه با rounded-s و rounded-e گرد می‌شود، نه left/right؛ چون هفته از راست به چپ می‌رود.", "نمایش متنی بازه کوتاه می‌شود: «۱۲ تا ۲۵ مهر ۱۴۰۵»، و فقط وقتی سال فرق کند سال هر دو سر می‌آید."],
+    promptBullets: ["RangeCalendar: first click = start, second = end (swap if earlier), third starts over; hovering previews the band before the end is chosen.", "Band cells use bg-accent with rounded-s-md on the start and rounded-e-md on the end; ends use bg-primary. Week starts Saturday, Fridays muted.", "DateRangePicker field shows «۱۲ تا ۲۵ مهر ۱۴۰۵», closes once both ends are picked, has preset chips (امروز، ۷ روز گذشته، ۳۰ روز گذشته، این ماه) and a clear button."],
+  },
+  {
+    slug: "time-picker", name: "انتخاب ساعت", cat: "form", file: ui("time-picker"), deps: ["lucide-react"],
+    desc: "ساعت ۲۴ساعته با دو بخش تایپی، ارقام فارسی، بالا/پایین برای تغییر، و فهرست ساعت و دقیقه برای ماوس.",
+    usage: `import { TimePicker } from "@/components/ui/time-picker"
+
+<TimePicker step={15} min="09:00" max="18:00" onChange={(t) => setTime(t)} /> // "14:30"`,
+    props: [
+      { name: "value", type: "string | null", desc: "«HH:mm» با رقم لاتین، مثل \"14:30\"." },
+      { name: "step", type: "1 | 5 | 10 | 15 | 30", default: "5", desc: "گام ستون دقیقه؛ تایپ هر دقیقه‌ای را می‌پذیرد." },
+      { name: "min / max", type: "string", desc: "بازه‌ی مجاز؛ گزینه‌های بیرون از آن غیرفعال و مقدار تایپی بیرون از آن خطا می‌گیرد." },
+    ],
+    notes: ["ایران ساعت ۲۴ساعته می‌نویسد؛ صبح/عصر ندارد.", "فیلد dir=\"ltr\" است چون ساعت:دقیقه در متن فارسی هم از چپ خوانده می‌شود؛ برچسب‌ها فارسی می‌مانند."],
+    promptBullets: ["Two segments (hour, minute) that behave like a native time input: a high first digit pads itself, «:» or → moves to minutes, ↑/↓ steps, Backspace on an empty minute goes back.", "Dropdown with an hours column and a minutes column (step), selected item scrolled into view; footer with «الان» and «تأیید».", "Value is \"HH:mm\" in Latin digits; display uses Persian digits, 24-hour clock."],
+  },
+  {
+    slug: "amount-input", name: "مبلغ", cat: "form", file: ui("amount-input"), registryDeps: ["number-to-words"],
+    desc: "جداکننده‌ی هزارگان هنگام تایپ، واحد بعد از عدد، و مبلغ به حروف زیر فیلد: «یک میلیون و دویست و پنجاه هزار تومان».",
+    usage: `import { AmountInput } from "@/components/ui/amount-input"
+
+<AmountInput min={10_000} max={50_000_000} quick={[100_000, 500_000, 1_000_000]} onChange={setAmount} />`,
+    props: [
+      { name: "value / defaultValue", type: "number | null", desc: "مقدار عددی خام؛ نمایش با «٬» و ارقام فارسی." },
+      { name: "unit", type: "string", default: "«تومان»", desc: "واحد در انتهای فیلد و آخر جمله‌ی حروفی." },
+      { name: "words", type: "boolean", default: "true", desc: "نمایش مبلغ به حروف زیر فیلد." },
+      { name: "quick", type: "number[]", desc: "چیپ‌های مبلغ آماده با برچسب کوتاه: «۵۰۰ هزار»، «۱ میلیون»." },
+    ],
+    notes: ["تبدیل عدد به حروف در lib/number-to-words.ts است و جدا هم قابل استفاده است: numberToWords، tomanToWords، rialToWords.", "«هزار» بدون «یک» می‌آید (هزار تومان، نه یک هزار تومان)؛ از میلیون به بالا «یک میلیون»."],
+    promptBullets: ["Numeric text field; strip non-digits (Persian digits accepted), keep a plain number in state, render with «٬» and Persian digits; unit at the end.", "Under the field spell the amount in Persian words with the unit; min/max errors replace it.", "Optional quick chips that set common amounts, labelled «۱۰۰ هزار» / «۱ میلیون»."],
   },
 ];

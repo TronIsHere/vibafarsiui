@@ -32,4 +32,35 @@ JALALI_WEEKDAYS[0] // شنبه`,
       "Take month and weekday names from this file; do not translate them.",
     ],
   },
+  {
+    slug: "persian",
+    name: "اعتبارسنجی ایرانی",
+    desc: "موبایل، شبا، کد ملی، شماره‌ی کارت با جدول بانک‌ها، پلاک خودرو و زمان نسبی. پیش‌نیاز فیلدهای ایرانی.",
+    file: "lib/persian.ts",
+    usage: `import { isNationalId, cardBank, isIban, ibanBank, parsePlate, formatPlate } from "@/lib/persian"
+
+isNationalId("0499370899") // true
+cardBank("6037 9911")      // ملی
+formatPlate(parsePlate("12ب345-11")) // ۱۲ ب ۳۴۵ ایران ۱۱`,
+    promptBullets: [
+      "Every function accepts Persian or Latin digits; normalize with en() before validating.",
+      "Bank names come from two tables: IBAN bank code (digits 5–7) and card BIN (first 6 digits); bankLabel() adds «بانک» unless the name already has it.",
+      "Plate helpers: PLATE_LETTERS with class labels, parsePlate / stringifyPlate («12ب345-11») / formatPlate («۱۲ ب ۳۴۵ ایران ۱۱»).",
+    ],
+  },
+  {
+    slug: "number-to-words",
+    name: "عدد به حروف",
+    desc: "۱٬۲۵۰٬۰۰۰ → «یک میلیون و دویست و پنجاه هزار تومان». برای فاکتور، چک و تأیید پرداخت.",
+    file: "lib/number-to-words.ts",
+    usage: `import { numberToWords, tomanToWords, rialToWords } from "@/lib/number-to-words"
+
+tomanToWords(1_250_000) // یک میلیون و دویست و پنجاه هزار تومان
+numberToWords("۱۴۰۵")   // هزار و چهارصد و پنج`,
+    promptBullets: [
+      "Groups of three digits with scales هزار، میلیون، میلیارد، تریلیون; join groups with « و »; «هزار» alone for 1000, «یک میلیون» for 1e6.",
+      "Accept number, bigint, or a string with Persian digits and «٬» separators; negative → «منفی»; decimals → «ممیز» then digit by digit.",
+      "amountToWords(n, unit) appends the unit; tomanToWords and rialToWords are shortcuts.",
+    ],
+  },
 ];

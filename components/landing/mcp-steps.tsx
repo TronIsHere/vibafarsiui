@@ -65,7 +65,7 @@ export function McpSteps() {
             d="یک‌بار در تنظیمات ادیتور؛ بعد دیگر کاری نیست."
           />
           <div className="m-4 mt-0 overflow-hidden rounded-lg border border-border bg-background">
-            <CodeBlock code={CONFIG} className="p-4 text-[12px]" />
+            <CodeBlock code={CONFIG} lang="json" className="p-4 text-[12px]" />
           </div>
         </li>
         <li className="flex flex-col border-b border-border lg:border-b-0 lg:border-e">

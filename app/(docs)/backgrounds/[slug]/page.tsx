@@ -21,7 +21,12 @@ export default async function Page({ params }: PageProps<"/backgrounds/[slug]">)
   if (i < 0) notFound();
   const item = backgrounds[i];
   const code = readSource(item.file);
-  const files = [{ name: item.file.split("/").pop()!, code }, ...(item.css ? [{ name: "globals.css", code: item.css, lang: "css" as const }] : [])];
+  const files = [
+    { name: item.file.split("/").pop()!, code },
+    ...(item.css ? [{ name: "globals.css", code: item.css, lang: "css" as const }] : []),
+    // Shader items ship with the primitive they import.
+    ...(item.registryDeps?.includes("shader") ? [{ name: "shader.tsx", code: readSource("registry/backgrounds/shader.tsx") }] : []),
+  ];
 
   return (
     <article className="space-y-12">

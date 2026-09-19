@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Check, FileCode2, Terminal } from "lucide-react";
 import { CodeBlock } from "@/components/shared/code-block";
+import type { Lang } from "@/lib/highlight";
 import { CopyButton } from "@/components/shared/copy-button";
 import { DocSection, Notes } from "@/components/docs/blocks";
 import { readSource } from "@/lib/source";
@@ -177,7 +178,7 @@ function Cmd({ cmd, className }: { cmd: string; className?: string }) {
   );
 }
 
-function Code({ name, code }: { name: string; code: string }) {
+function Code({ name, code, lang }: { name: string; code: string; lang?: Lang }) {
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card">
       <div className="flex items-center justify-between border-b border-border px-3 py-1.5">
@@ -186,7 +187,7 @@ function Code({ name, code }: { name: string; code: string }) {
         </span>
         <CopyButton text={code} />
       </div>
-      <CodeBlock code={code} className="max-h-[420px] overflow-auto" />
+      <CodeBlock code={code} lang={lang} className="max-h-[420px] overflow-auto" />
     </div>
   );
 }
@@ -457,7 +458,7 @@ export default function DocsPage() {
               <Inline>next/font/local</Inline> همان متغیر را بسازید. در Vite به‌جای next/font، این خط را بالای
               CSS بگذارید:
             </Note>
-            <Code name="globals.css (فقط Vite)" code={GOOGLE_FONT} />
+            <Code name="globals.css (فقط Vite)" code={GOOGLE_FONT} lang="css" />
           </Step>
 
           <Step
@@ -469,7 +470,7 @@ export default function DocsPage() {
               </>
             }
           >
-            <Code name="app/globals.css (تم گرافیت)" code={theme} />
+            <Code name="app/globals.css (تم گرافیت)" code={theme} lang="css" />
             <Note>
               تم‌های دیگر (فیروزه، زعفران، انار، لاجورد، کاغذ) در{" "}
               <Link href="/themes" className="underline underline-offset-4 hover:text-foreground">
@@ -490,7 +491,7 @@ export default function DocsPage() {
               </>
             }
           >
-            <Code name="app/globals.css (نگاشت Tailwind)" code={TAILWIND_MAP} />
+            <Code name="app/globals.css (نگاشت Tailwind)" code={TAILWIND_MAP} lang="css" />
           </Step>
 
           <Step
@@ -557,7 +558,7 @@ export default function DocsPage() {
         <p className="mb-3 text-sm leading-7 text-muted-foreground">
           ابزارهای هوش مصنوعی به انگلیسی فکر می‌کنند. این پنج ابزار قوانین فارسی و کد رجیستری را به Cursor، Claude Code و Windsurf می‌دهند تا به‌جای Inter و چیدمان چپ‌چین، قطعه‌ی وایب‌فارسی بسازند.
         </p>
-        <Code name="mcp.json" code={MCP} />
+        <Code name="mcp.json" code={MCP} lang="json" />
         <ul className="mt-4 space-y-2 text-sm leading-7">
           <li><Inline>get_design_rules</Inline> قوانین راست‌چین، فونت، ارقام، فرم و توکن. این را قبل از ساخت هر صفحه صدا بزنید.</li>
           <li><Inline>search_registry</Inline> جست‌وجو در کامپوننت، بلاک، انیمیشن، پس‌زمینه، قالب و تم؛ فارسی یا انگلیسی.</li>

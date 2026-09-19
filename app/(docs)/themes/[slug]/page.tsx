@@ -4,6 +4,7 @@ import { buildThemePrompt, themes } from "@/lib/registry";
 import { readSource } from "@/lib/source";
 import { DocHeader, DocSection, Notes, PrevNext } from "@/components/docs/blocks";
 import { ThemeDetail } from "@/components/docs/theme-detail";
+import { CodeBlock } from "@/components/shared/code-block";
 
 export function generateStaticParams() {
   return themes.map((t) => ({ slug: t.slug }));
@@ -33,7 +34,7 @@ export default async function ThemePage({ params }: PageProps<"/themes/[slug]">)
   return (
     <article className="space-y-12">
       <DocHeader section="themes" sectionLabel="سیستم‌های طراحی" item={{ name: item.name, slug: item.slug, desc: item.desc }} kind="سیستم طراحی" />
-      <ThemeDetail theme={item} css={css} prompt={prompt} />
+      <ThemeDetail theme={item} css={css} codeBlock={<CodeBlock code={css} lang="css" />} prompt={prompt} />
       <DocSection id="notes" title="نکته‌ها"><Notes notes={THEME_RULES} /></DocSection>
       <PrevNext base="themes" prev={themes[i - 1]} next={themes[i + 1]} />
     </article>

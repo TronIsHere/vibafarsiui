@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Check, Landmark } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { formatIban, ibanBank, isIban, normalizeIban } from "@/lib/persian";
+import { bankLabel, formatIban, ibanBank, isIban, normalizeIban } from "@/lib/persian";
 
 export interface IbanInputProps {
   value?: string;
@@ -43,7 +43,7 @@ export function IbanInput({ value, onChange, className, id }: IbanInputProps) {
         {valid && <Check className="size-4 text-success" />}
       </div>
       <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-        {bank ? (<><Landmark className="size-3" />بانک {bank}</>) : complete && !valid ? <span className="text-destructive">شماره‌ی شبا معتبر نیست</span> : "۲۴ رقم بعد از IR"}
+        {bank ? (<><Landmark className="size-3" />{bankLabel(bank)}</>) : complete && !valid ? <span className="text-destructive">شماره‌ی شبا معتبر نیست</span> : "۲۴ رقم بعد از IR"}
       </p>
     </div>
   );

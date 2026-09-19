@@ -10,12 +10,14 @@ import { Templates } from "@/components/landing/templates";
 import { Blocks } from "@/components/landing/blocks";
 import { DesignSystems } from "@/components/landing/design-systems";
 import { McpSteps } from "@/components/landing/mcp-steps";
+import { CodeBlock } from "@/components/shared/code-block";
 import { MonoFooter } from "@/components/landing/footer";
 import { buildPrompt, components } from "@/lib/registry";
 import { readSource } from "@/lib/source";
 
 export default function Home() {
   const button = components.find((c) => c.slug === "button")!;
+  const code = readSource(button.file);
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <TopBar />
@@ -26,7 +28,11 @@ export default function Home() {
           <HatchBand />
           <Catalog />
           <HatchBand />
-          <PromptCode code={readSource(button.file)} prompt={buildPrompt(button)} />
+          <PromptCode
+            code={code}
+            codeBlock={<CodeBlock code={code} className="max-h-[440px] overflow-auto" />}
+            prompt={buildPrompt(button)}
+          />
           <HatchBand />
           <Blocks />
           <HatchBand />

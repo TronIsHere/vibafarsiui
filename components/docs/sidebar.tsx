@@ -15,7 +15,7 @@ import {
 
 const lists = { components, blocks, animations, backgrounds, templates, themes } as const;
 
-export function DocsSidebar() {
+export function DocsSidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   const link = (
     href: string,
@@ -25,6 +25,7 @@ export function DocsSidebar() {
   ) => (
     <Link
       href={href}
+      onClick={onNavigate}
       aria-current={active ? "page" : undefined}
       className={cn(
         "flex items-center justify-between rounded-md px-2.5 py-1.5 text-[13px] transition-colors",

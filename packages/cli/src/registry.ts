@@ -131,6 +131,8 @@ export function implicitLibSlugs(content: string) {
   const slugs: string[] = [];
   if (content.includes("@/lib/utils")) slugs.push("utils");
   if (content.includes("@/lib/jalali")) slugs.push("jalali");
+  if (content.includes("@/lib/persian")) slugs.push("persian");
+  if (content.includes("@/lib/number-to-words")) slugs.push("number-to-words");
   return slugs;
 }
 

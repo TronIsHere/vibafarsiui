@@ -1,5 +1,6 @@
 /**
- * Iranian-specific validation and formatting: mobile numbers, شبا (IBAN), کد ملی.
+ * Iranian-specific validation and formatting: mobile numbers, شبا (IBAN), کد ملی,
+ * bank cards (with BIN → bank), and car plates (پلاک).
  * Dependency-free; accepts Persian or Latin digits everywhere.
  */
 import { en, fa } from "./utils";
@@ -79,7 +80,23 @@ export function ibanBank(input: string): string | null {
   return BANKS[iban.slice(4, 7)] ?? null;
 }
 
+/** «ملت» → «بانک ملت»; names that already carry بانک/مؤسسه («پست بانک», «مؤسسه ملل») are left alone. */
+export function bankLabel(name: string): string {
+  return /بانک|مؤسسه/.test(name) ? name : `بانک ${name}`;
+}
+
 /* ---------- کد ملی ---------- */
+
+/** Digits only (Persian accepted), capped at 10. Keep it a string: codes may start with 0. */
+export function normalizeNationalId(input: string): string {
+  return en(input).replace(/\D/g, "").slice(0, 10);
+}
+
+/** «۰۰۱-۲۳۴۵۶۷-۸» — the 3-6-1 grouping printed on the card. */
+export function formatNationalId(input: string): string {
+  const d = normalizeNationalId(input);
+  return fa([d.slice(0, 3), d.slice(3, 9), d.slice(9, 10)].filter(Boolean).join("-"));
+}
 
 export function isNationalId(input: string): boolean {
   const d = en(input).replace(/\D/g, "");
@@ -92,15 +109,39 @@ export function isNationalId(input: string): boolean {
 
 /* ---------- card ---------- */
 
+/** 16 Latin digits at most; Persian digits, spaces and dashes are stripped. */
+export function normalizeCardNumber(input: string): string {
+  return en(input).replace(/\D/g, "").slice(0, 16);
+}
+
 /** «۶۰۳۷ ۹۹۱۱ ۲۲۳۳ ۴۴۵۵» — Persian digits, four groups. */
 export function formatCardNumber(input: string): string {
-  const d = en(input).replace(/\D/g, "").slice(0, 16);
+  const d = normalizeCardNumber(input);
   return fa(d.replace(/(.{4})/g, "$1 ").trim());
+}
+
+/** First six digits (BIN / پیش‌شماره) of Iranian bank cards. Merged banks (انصار، قوامین، حکمت، مهر اقتصاد، کوثر) now issue under سپه. */
+const CARD_BINS: Record<string, string> = {
+  "603799": "ملی", "589210": "سپه", "627381": "سپه", "639599": "سپه", "636949": "سپه", "639370": "سپه", "505801": "سپه",
+  "627648": "توسعه صادرات", "207177": "توسعه صادرات", "627961": "صنعت و معدن", "603770": "کشاورزی", "639217": "کشاورزی",
+  "628023": "مسکن", "627760": "پست بانک", "502908": "توسعه تعاون", "627412": "اقتصاد نوین", "622106": "پارسیان", "639194": "پارسیان",
+  "627884": "پارسیان", "502229": "پاسارگاد", "639347": "پاسارگاد", "627488": "کارآفرین", "502910": "کارآفرین", "621986": "سامان",
+  "639346": "سینا", "639607": "سرمایه", "636214": "آینده", "502806": "شهر", "504706": "شهر", "502938": "دی", "603769": "صادرات",
+  "610433": "ملت", "991975": "ملت", "627353": "تجارت", "585983": "تجارت", "589463": "رفاه کارگران", "504172": "رسالت",
+  "606373": "قرض‌الحسنه مهر ایران", "628157": "مؤسسه توسعه", "505785": "ایران زمین", "505416": "گردشگری", "606256": "مؤسسه ملل",
+  "585947": "خاورمیانه", "581874": "ایران‌ونزوئلا", "636795": "بانک مرکزی", "507677": "مؤسسه نور",
+};
+
+/** Bank name from the first six digits of the card, or null while fewer than six are typed / unknown. */
+export function cardBank(input: string): string | null {
+  const d = normalizeCardNumber(input);
+  if (d.length < 6) return null;
+  return CARD_BINS[d.slice(0, 6)] ?? null;
 }
 
 /** Luhn check for 16-digit bank cards. */
 export function isCardNumber(input: string): boolean {
-  const d = en(input).replace(/\D/g, "");
+  const d = normalizeCardNumber(input);
   if (d.length !== 16) return false;
   let sum = 0;
   for (let i = 0; i < 16; i++) {
@@ -109,6 +150,69 @@ export function isCardNumber(input: string): boolean {
     sum += n;
   }
   return sum % 10 === 0;
+}
+
+/* ---------- پلاک خودرو ---------- */
+
+export type PlateValue = { left: string; letter: string; middle: string; region: string };
+
+export const EMPTY_PLATE: PlateValue = { left: "", letter: "", middle: "", region: "" };
+
+/**
+ * Letters that appear on Iranian car plates and what they stand for.
+ * «شخصی» letters come first; the rest mark a vehicle class.
+ */
+export const PLATE_LETTERS: { letter: string; label: string }[] = [
+  ...["ب", "ج", "د", "س", "ص", "ط", "ق", "ل", "م", "ن", "و", "ه", "ی"].map((letter) => ({ letter, label: "شخصی" })),
+  { letter: "الف", label: "دولتی" },
+  { letter: "ت", label: "تاکسی" },
+  { letter: "ع", label: "حمل‌ونقل عمومی" },
+  { letter: "ک", label: "کشاورزی" },
+  { letter: "ژ", label: "جانبازان و معلولان" },
+  { letter: "پ", label: "نیروی انتظامی" },
+  { letter: "ث", label: "ارتش" },
+  { letter: "ز", label: "وزارت دفاع" },
+  { letter: "ش", label: "سپاه" },
+  { letter: "ف", label: "ستاد کل نیروهای مسلح" },
+  { letter: "گ", label: "گذر موقت" },
+  { letter: "D", label: "دیپلماتیک" },
+  { letter: "S", label: "کارکنان سفارت" },
+];
+
+const PLATE_LETTER_SET = new Set(PLATE_LETTERS.map((l) => l.letter));
+
+/** Maps a typed key to a plate letter: Arabic ي/ك → ی/ک, «ا» → «الف», d/s → D/S. Null if not a plate letter. */
+export function plateLetterFromKey(key: string): string | null {
+  const k = key.replace("ي", "ی").replace("ك", "ک").replace(/^ا$/, "الف");
+  const up = k.toUpperCase();
+  if (PLATE_LETTER_SET.has(k)) return k;
+  if (PLATE_LETTER_SET.has(up)) return up;
+  return null;
+}
+
+/** All four parts filled: 2 digits, a known letter, 3 digits, 2 digits. */
+export function isPlate(value: PlateValue): boolean {
+  return /^\d{2}$/.test(value.left) && PLATE_LETTER_SET.has(value.letter) && /^\d{3}$/.test(value.middle) && /^\d{2}$/.test(value.region);
+}
+
+/** Canonical storage form «12ب345-11» (Latin digits). Empty parts stay empty. */
+export function stringifyPlate(value: PlateValue): string {
+  return `${value.left}${value.letter}${value.middle}${value.region ? "-" + value.region : ""}`;
+}
+
+/** Parses «12ب345-11», «۱۲ ب ۳۴۵ ایران ۱۱» or «12 الف 345 11». Missing parts come back empty. */
+export function parsePlate(input: string): PlateValue {
+  const s = en(input).replace(/ایران/g, " ").replace(/[\s\-_/]+/g, "");
+  const m = /^(\d{0,2})(الف|[^\d]?)(\d{0,3})(\d{0,2})$/.exec(s);
+  if (!m) return { ...EMPTY_PLATE };
+  const letter = m[2] ? (plateLetterFromKey(m[2]) ?? "") : "";
+  return { left: m[1], letter, middle: m[3], region: m[4] };
+}
+
+/** Display form «۱۲ ب ۳۴۵ ایران ۱۱». */
+export function formatPlate(value: PlateValue): string {
+  if (!value.left && !value.letter && !value.middle && !value.region) return "";
+  return `${fa(value.left)} ${value.letter} ${fa(value.middle)} ایران ${fa(value.region)}`.replace(/\s+/g, " ").trim();
 }
 
 /* ---------- relative time ---------- */

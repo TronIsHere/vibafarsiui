@@ -39,7 +39,7 @@ export function Combobox({ options, value = "", onChange, placeholder = "جست�
 
   return (
     <div className={cn("relative", className)}>
-      <div className="flex h-10 items-center rounded-lg border border-input bg-background/60 pe-2 ps-3 transition-colors focus-within:border-transparent focus-within:ring-2 focus-within:ring-ring/60">
+      <div className="flex h-10 w-full items-center rounded-lg border border-input bg-background/60 pe-2 ps-3 transition-colors focus-within:border-transparent focus-within:ring-2 focus-within:ring-ring/60">
         <input
           role="combobox"
           aria-expanded={open}

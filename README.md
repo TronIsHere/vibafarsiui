@@ -1,36 +1,196 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div dir="rtl">
 
-## Getting Started
+# وایب‌فارسی
 
-First, run the development server:
+**کامپوننت‌های فارسی، برای توسعه‌دهنده‌ها و وایب‌کدرها.**
+
+ابزارهای هوش مصنوعی و کتابخانه‌های انگلیسی به انگلیسی فکر می‌کنند: فونت Inter می‌گذارند، ارقام را لاتین می‌نویسند و دکمه را چپ‌چین می‌کنند. وایب‌فارسی یک رجیستری از قطعه‌های React + Tailwind است که از پایه راست‌چین‌اند؛ فونت، ارقام فارسی، تومان و تقویم شمسی داخل خود قطعه است.
+
+چیزی نصب نمی‌کنید؛ فایل را کپی می‌کنید. هر قطعه دو خروجی دارد: کد TypeScript که در پروژه می‌گذارید، و یک پرامپت انگلیسی که قوانین راست‌چین و فارسی داخلش است و به Cursor یا Claude می‌دهید. سرور MCP هم هست تا ادیتور خودش این‌ها را بگیرد و لازم نباشد چیزی یادآوری کنید.
+
+سایت و مستندات: [vibefarsi.dev](https://vibefarsi.dev)
+
+Next.js و Vite · Tailwind v4 · بدون وابستگی اضافه · رایگان و متن‌باز
+
+</div>
+
+> Persian RTL components for React + Tailwind. Copy the file, run `npx vibefarsi add`, or let Cursor / Claude Code pull it over MCP. The rest of this README is in Persian; the commands are not.
+
+<div dir="rtl">
+
+## چرا راست‌چین کردن کل صفحه کافی نیست
+
+- **راست‌چین واقعی.** چیدمان و آیکون‌ها از پایه راست‌چین‌اند و فقط از ویژگی‌های منطقی CSS استفاده می‌شود (مثلاً `text-start` به‌جای `text-left`).
+- **تایپوگرافی فارسی.** وزن فونت و ارتفاع خط برای فارسی تنظیم شده؛ `letter-spacing` صفر است تا حروف از هم جدا نشوند.
+- **اعداد و تقویم شمسی.** ارقام فارسی، جداکننده‌ی هزارگان، تومان و تاریخ شمسی داخل خود قطعه است. هفته از شنبه شروع می‌شود.
+- **رنگ از توکن.** هر رنگ از یک متغیر CSS می‌آید. تم تیره پیش‌فرض است؛ با یک دستور عوضش می‌کنید.
+
+## شروع سریع
+
+روی یک پروژه‌ی Next.js یا Vite که Tailwind v4 دارد:
+
+</div>
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx vibefarsi init
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<div dir="rtl">
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`init` این کارها را می‌کند و بعد کاری با آن ندارید:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- <code dir="ltr">lang="fa" dir="rtl"</code> روی <code dir="ltr">&lt;html&gt;</code>؛ در Next.js داخل `app/layout.tsx` و در Vite داخل `index.html`
+- فونت Vazirmatn؛ در Next.js از `next/font/google` با `app/fonts.ts`، در بقیه‌ی پروژه‌ها import از Google Fonts داخل CSS
+- توکن‌های تم گرافیت و نگاشت Tailwind در `globals.css`
+- `lib/utils.ts` (ارقام فارسی، `formatToman`، `cn`) و `lib/jalali.ts` (تبدیل شمسی) از رجیستری
+- `vibefarsi.json` و مسیر <code dir="ltr">@/*</code> در tsconfig
 
-## Learn More
+بعد قطعه‌ها را بکشید:
 
-To learn more about Next.js, take a look at the following resources:
+</div>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npx vibefarsi add button calendar price
+npx vibefarsi list
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+<div dir="rtl">
 
-## Deploy on Vercel
+وابستگی‌های رجیستری خودکار می‌آیند (`calendar` خودش `lib/jalali.ts` را می‌آورد) و پکیج‌های npm لازم نصب می‌شوند. مقصد فایل‌ها:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| نوع | مسیر |
+| --- | --- |
+| کامپوننت | `components/ui` |
+| بلاک | `components/blocks` |
+| انیمیشن | `components/animations` |
+| پس‌زمینه | `components/backgrounds` |
+| قالب | `components/templates` |
+| تم | `app/globals.css` |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+فلگ‌های پرکاربرد:
+
+| فلگ | کار |
+| --- | --- |
+| <code dir="ltr">--font iransans</code> | اگر `IRANSans-Reg.woff` در پوشه‌ی `fonts` یا `public` باشد، همان را به‌جای Vazirmatn وصل می‌کند |
+| <code dir="ltr">--theme saffron</code> | تم دیگری به‌جای گرافیت. بعداً هم با `npx vibefarsi add saffron` عوضش کنید |
+| <code dir="ltr">--registry &lt;url&gt;</code> | رجیستری دیگری، مثلاً <code dir="ltr">http://localhost:3000/r</code> وقتی روی خود مخزن کار می‌کنید |
+| <code dir="ltr">--dry-run</code> | فقط نشان می‌دهد چه فایل‌هایی نوشته می‌شوند؛ چیزی تغییر نمی‌کند |
+| <code dir="ltr">--overwrite</code> | فایل‌های موجود را جایگزین می‌کند |
+| <code dir="ltr">--no-install</code> | پکیج‌های npm را نصب نمی‌کند |
+
+نصب دستی هم ممکن است: فایل را از سایت کپی کنید و `globals.css` را طبق [مستندات](https://vibefarsi.dev/docs) تنظیم کنید.
+
+## MCP
+
+سرور MCP وایب‌فارسی قوانین طراحی فارسی و کد قطعه‌ها را مستقیم به Cursor، Claude Code و Windsurf می‌دهد. یک‌بار اضافه کنید؛ بعد مثل همیشه پرامپت بدهید.
+
+</div>
+
+```json
+{
+  "mcpServers": {
+    "vibefarsi": {
+      "command": "npx",
+      "args": ["-y", "@vibefarsi/mcp"]
+    }
+  }
+}
+```
+
+<div dir="rtl">
+
+| ادیتور | کجا |
+| --- | --- |
+| Cursor | <code dir="ltr">.cursor/mcp.json</code> در پروژه، یا <code dir="ltr">~/.cursor/mcp.json</code> |
+| Claude Code | <code dir="ltr">.mcp.json</code> در ریشه‌ی پروژه، یا <code dir="ltr">claude mcp add vibefarsi -- npx -y @vibefarsi/mcp</code> |
+| Windsurf | <code dir="ltr">~/.codeium/windsurf/mcp_config.json</code> |
+
+ابزارهایی که مدل در اختیار دارد:
+
+| ابزار | کار |
+| --- | --- |
+| `get_design_rules` | قوانین راست‌چین، فونت، ارقام و توکن |
+| `search_registry` | جست‌وجو در قطعه‌ها؛ فارسی یا انگلیسی |
+| `get_component` | کد و پرامپت همان قطعه، با وابستگی‌هایش |
+| `get_theme` | توکن‌های رنگ و شعاع گوشه |
+| `scaffold_page` | از توضیح صفحه، یک ترکیب آماده |
+
+یک پرامپت معمولی مثل «یک صفحه‌ی پرداخت با خلاصه‌ی سبد و فرم آدرس بساز» این مسیر را می‌رود:
+
+</div>
+
+```
+get_design_rules()
+scaffold_page("صفحه‌ی پرداخت")
+get_component(["input", "price", "button"])
+```
+
+<div dir="rtl">
+
+خروجی همان بار اول درست است: فونت پروژه، چیدمان راست‌چین، مبلغ‌ها با ارقام فارسی و تومان، و رنگ‌ها از توکن‌های تم، نه رنگ دلخواه مدل.
+
+## چه چیزهایی داخلش هست
+
+| بخش | تعداد | |
+| --- | --- | --- |
+| [کامپوننت‌ها](https://vibefarsi.dev/components) | ۵۳ | دکمه، فرم، جدول داده، تقویم شمسی، شماره‌ی موبایل، کد تأیید، شماره‌ی شبا، قیمت به تومان |
+| [بلاک‌ها](https://vibefarsi.dev/blocks) | ۸ | هیرو، ویژگی‌ها، ردیف قیمت، پرسش‌های متداول، آمار، نظر مشتریان، کارت ورود، فراخوان پایانی |
+| [انیمیشن‌ها](https://vibefarsi.dev/animations) | ۲۴ | حرکت با CSS و React؛ بدون کتابخانه‌ی اضافه |
+| [پس‌زمینه‌ها](https://vibefarsi.dev/backgrounds) | ۲۰ | الگو و نور کم‌کنتراست؛ متن خوانا می‌ماند |
+| [قالب‌ها](https://vibefarsi.dev/templates) | ۱۶ | صفحه‌های کامل، از همین قطعه‌ها |
+| [سیستم‌های طراحی](https://vibefarsi.dev/themes) | ۶ | گرافیت (پیش‌فرض)، فیروزه، زعفران، انار، لاجورد، کاغذ (روشن) |
+
+## توسعه روی همین مخزن
+
+سایت، رجیستری، CLI و سرور MCP همه در همین مخزن‌اند. منبع حقیقت پوشه‌ی `registry` است؛ سایت همان فایل‌ها را نشان می‌دهد و مسیر <code dir="ltr">/r</code> همان‌ها را به CLI و MCP می‌دهد.
+
+</div>
+
+```
+registry/         ui/  blocks/  animations/  backgrounds/  templates/  themes/
+lib/registry/     names, descriptions, prompts, catalog builder
+app/r/            GET /r  (catalog)    GET /r/{type}/{slug}.json  (item)
+packages/cli/     npx vibefarsi
+mcp/              @vibefarsi/mcp
+app/  components/ the site
+```
+
+```bash
+npm install
+npm run dev        # site + registry at http://localhost:3000
+```
+
+<div dir="rtl">
+
+CLI از سورس:
+
+</div>
+
+```bash
+npm run build:cli
+npm run vibefarsi -- init --cwd ../my-app --registry http://localhost:3000/r
+```
+
+<div dir="rtl">
+
+سرور MCP از سورس:
+
+</div>
+
+```bash
+npm install --prefix mcp
+npm run mcp        # stdio server via tsx
+npm run mcp:smoke
+```
+
+<div dir="rtl">
+
+سرور MCP رجیستری را از `VIBEFARSI_URL` می‌خواند (پیش‌فرض <code dir="ltr">https://vibefarsi.dev</code>)؛ برای رجیستری محلی آن را روی <code dir="ltr">http://localhost:3000</code> بگذارید. `VIBEFARSI_ROOT` هم برای وقتی است که فایل‌های رجیستری جای دیگری باشند.
+
+> پکیج‌های `vibefarsi` و <code dir="ltr">@vibefarsi/mcp</code> هنوز روی npm منتشر نشده‌اند. تا آن موقع، CLI را با دستور بالا از همین مخزن اجرا کنید و برای MCP، بعد از <code dir="ltr">npm run build --prefix mcp</code>، در تنظیمات ادیتور به‌جای `npx` فایل `mcp/dist/index.js` را با `node` اجرا کنید.
+
+## لایسنس
+
+MIT. پلن پولی نیست و هیچ قطعه‌ای قفل نیست؛ می‌خواهیم ساخت رابط فارسی خوب ساده باشد.
+
+</div>

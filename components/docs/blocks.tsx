@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { CodeBlock } from "@/components/shared/code-block";
 import { CopyButton } from "@/components/shared/copy-button";
 import { Breadcrumb } from "@/registry/ui/breadcrumb";
-import type { DocBase, PropDoc } from "@/lib/registry";
+import { animations, backgrounds, blocks, type DocBase, type PropDoc } from "@/lib/registry";
 import { cn } from "@/lib/utils";
 
 export function DocHeader({
@@ -98,6 +98,14 @@ export function PropsTable({ props }: { props: PropDoc[] }) {
   );
 }
 
+/** Docs URL for a registry dependency slug; components are the default section. */
+export function depHref(slug: string) {
+  if (backgrounds.some((i) => i.slug === slug)) return `/backgrounds/${slug}`;
+  if (animations.some((i) => i.slug === slug)) return `/animations/${slug}`;
+  if (blocks.some((i) => i.slug === slug)) return `/blocks/${slug}`;
+  return `/components/${slug}`;
+}
+
 export function InstallSteps({
   item,
   targetDir,
@@ -114,7 +122,7 @@ export function InstallSteps({
   const deps = ["lucide-react", ...(item.deps ?? [])].filter(
     (d, i, a) => a.indexOf(d) === i,
   );
-  const inner = item.registryDeps?.filter((d) => d !== "jalali") ?? [];
+  const inner = item.registryDeps?.filter((d) => !["jalali", "persian", "utils", "number-to-words"].includes(d)) ?? [];
   return (
     <ol className="space-y-4">
       <li className="rounded-xl border border-border bg-card p-4">
@@ -150,7 +158,7 @@ export function InstallSteps({
                 <span key={d}>
                   {i > 0 && "، "}
                   <Link
-                    href={`/components/${d}`}
+                    href={depHref(d)}
                     className="underline underline-offset-4"
                     dir="ltr"
                   >

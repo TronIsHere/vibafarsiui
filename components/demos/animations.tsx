@@ -37,6 +37,25 @@ import { Meteors } from "@/registry/animations/meteors";
 import { SpotlightCard } from "@/registry/animations/spotlight-card";
 import { GridReveal } from "@/registry/animations/grid-reveal";
 import { Badge } from "@/registry/ui/badge";
+import { Button } from "@/registry/ui/button";
+import { Skeleton } from "@/registry/ui/skeleton";
+import { TextReveal } from "@/registry/animations/text-reveal";
+import { HighlightText } from "@/registry/animations/highlight-text";
+import { GradientText } from "@/registry/animations/gradient-text";
+import { FlipCard } from "@/registry/animations/flip-card";
+import { AnimatedBeam } from "@/registry/animations/animated-beam";
+import { Confetti } from "@/registry/animations/confetti";
+import { SwipeToConfirm } from "@/registry/animations/swipe-to-confirm";
+import { Terminal } from "@/registry/animations/terminal";
+import { CardStack } from "@/registry/animations/card-stack";
+import { MorphButton } from "@/registry/animations/morph-button";
+import { CompareSlider } from "@/registry/animations/compare-slider";
+import { ScratchCard } from "@/registry/animations/scratch-card";
+import { Sparkles as SparklesFx } from "@/registry/animations/sparkles";
+import { ScrollProgress } from "@/registry/animations/scroll-progress";
+import { PulseButton } from "@/registry/animations/pulse-button";
+import { Avatar } from "@/registry/ui/avatar";
+import { fa, faNumber } from "@/lib/utils";
 
 function OdometerDemo() {
   const prices = [12_450_000, 12_980_000, 9_870_000, 13_120_000];
@@ -47,6 +66,62 @@ function OdometerDemo() {
   }, [prices.length]);
   return <Odometer value={prices[i]} unit="تومان" className="text-3xl font-bold" />;
 }
+
+function BeamDemo() {
+  const box = React.useRef<HTMLDivElement>(null);
+  const hub = React.useRef<HTMLDivElement>(null);
+  const a = React.useRef<HTMLDivElement>(null);
+  const b = React.useRef<HTMLDivElement>(null);
+  const c = React.useRef<HTMLDivElement>(null);
+  const node = "flex size-11 items-center justify-center rounded-xl border border-border bg-card shadow-sm";
+  return (
+    <div ref={box} className="relative isolate flex h-40 w-full max-w-xs items-center justify-between">
+      <div className="flex flex-col gap-5">
+        <div ref={a} className={node}><Bell className="size-4" /></div>
+        <div ref={b} className={node}><MessageSquare className="size-4" /></div>
+        <div ref={c} className={node}><Calendar className="size-4" /></div>
+      </div>
+      <div ref={hub} className="flex size-14 items-center justify-center rounded-2xl bg-foreground text-background shadow-lg"><Sparkles className="size-5" /></div>
+      <AnimatedBeam containerRef={box} fromRef={a} toRef={hub} curvature={-30} />
+      <AnimatedBeam containerRef={box} fromRef={b} toRef={hub} delay={0.7} />
+      <AnimatedBeam containerRef={box} fromRef={c} toRef={hub} curvature={30} delay={1.4} />
+    </div>
+  );
+}
+
+function ConfettiDemo() {
+  const [n, setN] = React.useState(0);
+  return (
+    <div className="relative flex h-40 w-full items-end justify-center overflow-hidden rounded-xl border border-border bg-card pb-5">
+      {n > 0 && <Confetti key={n} />}
+      <Button onClick={() => setN((x) => x + 1)}>پرداخت انجام شد</Button>
+    </div>
+  );
+}
+
+function ScrollProgressDemo() {
+  const box = React.useRef<HTMLDivElement>(null);
+  return (
+    <div ref={box} className="relative h-40 w-full max-w-xs overflow-auto rounded-xl border border-border bg-card text-xs leading-6 text-muted-foreground">
+      <ScrollProgress targetRef={box} className="sticky inset-x-auto top-0 h-1" />
+      <div className="space-y-3 p-4">
+        <p className="font-semibold text-foreground">برای دیدن نوار، این جعبه را اسکرول کنید.</p>
+        {Array.from({ length: 6 }, (_, i) => <p key={i}>بند {fa(i + 1)}: متن نمونه برای پر کردن جعبه. تا پایین که برسید نوار بالای جعبه کامل می‌شود و از راست پر شده است.</p>)}
+      </div>
+    </div>
+  );
+}
+
+const mockCard = (filled: boolean) => (
+  <div className="h-44 w-full bg-card p-4">
+    <div className="flex items-center gap-3">
+      {filled ? <Avatar name="سارا محمدی" size="sm" /> : <Skeleton className="size-7 rounded-full" />}
+      <div className="flex-1 space-y-1.5">{filled ? <><p className="text-sm font-semibold">سارا محمدی</p><p className="text-xs text-muted-foreground">۲ دقیقه پیش</p></> : <><Skeleton className="h-3 w-24" /><Skeleton className="h-2.5 w-14" /></>}</div>
+    </div>
+    <div className="mt-4 space-y-2">{filled ? <><p className="text-sm">سفارش #{fa(14052)} پرداخت شد.</p><p className="text-xs text-muted-foreground">{faNumber(2_480_000)} تومان · درگاه زرین‌پال</p></> : <><Skeleton className="h-3 w-full" /><Skeleton className="h-3 w-2/3" /></>}</div>
+    <div className="mt-4 flex gap-2">{filled ? <><Button size="sm">مشاهده</Button><Button size="sm" variant="outline">رسید</Button></> : <><Skeleton className="h-8 w-16" /><Skeleton className="h-8 w-16" /></>}</div>
+  </div>
+);
 
 /** Demos that restart when `k` changes (the docs page passes a replay counter). */
 export const animationDemos: Record<string, (k: number) => React.ReactNode> = {
@@ -213,6 +288,64 @@ export const animationDemos: Record<string, (k: number) => React.ReactNode> = {
       ))}
     </div>
   ),
+  "text-reveal": (k) => (
+    <h2 key={k} className="text-center text-2xl font-bold leading-snug">
+      <TextReveal lines={["زیرساخت پرداخت", "برای محصول دیجیتال شما"]} />
+    </h2>
+  ),
+  "highlight-text": (k) => (
+    <p key={k} className="text-center text-xl font-bold">قیمت‌ها <HighlightText>ساده و شفاف</HighlightText> هستند</p>
+  ),
+  "gradient-text": () => <p className="text-center text-2xl font-bold"><GradientText>به‌زودی راه می‌افتیم</GradientText></p>,
+  "flip-card": () => (
+    <FlipCard
+      className="h-36 w-full max-w-[240px]"
+      front={<div className="flex h-36 flex-col justify-between rounded-xl border border-border bg-card p-4"><span className="text-sm font-semibold">پلن حرفه‌ای</span><span className="text-xs text-muted-foreground">برای دیدن قیمت، ماوس را روی کارت ببرید</span></div>}
+      back={<div className="flex h-36 flex-col justify-between rounded-xl border border-foreground/30 bg-foreground p-4 text-background"><span className="text-sm font-semibold">{faNumber(290_000)} تومان / ماه</span><span className="text-xs opacity-70">همه‌ی کامپوننت‌ها و قالب‌ها</span></div>}
+    />
+  ),
+  "animated-beam": () => <BeamDemo />,
+  confetti: () => <ConfettiDemo />,
+  "swipe-to-confirm": (k) => <SwipeToConfirm key={k} />,
+  terminal: (k) => (
+    <Terminal
+      key={k}
+      className="max-w-xs"
+      lines={[
+        { type: "cmd", text: "npx vibefarsi add otp-field" },
+        { type: "out", text: "در حال دریافت از رجیستری…" },
+        { type: "ok", text: "otp-field به components/ui اضافه شد" },
+        { type: "ok", text: "وابستگی input از قبل بود" },
+      ]}
+    />
+  ),
+  "card-stack": () => (
+    <CardStack
+      className="h-40 max-w-[280px]"
+      items={[
+        { name: "مریم احمدی", role: "مدیر محصول", text: "مهاجرت یک بعدازظهر طول کشید و تقویم شمسی از روز اول درست بود." },
+        { name: "علی رضایی", role: "بنیان‌گذار", text: "اولین کامپوننتی که دیدم اعداد را فارسی می‌نویسد بدون این‌که خودم چیزی بنویسم." },
+        { name: "نگار کریمی", role: "طراح", text: "توکن‌ها را عوض کردم و همه‌ی صفحه‌ها با هم عوض شدند." },
+      ].map((r) => (
+        <div key={r.name} className="flex h-full flex-col justify-between p-4">
+          <p className="text-sm leading-6">«{r.text}»</p>
+          <div className="flex items-center gap-2"><Avatar name={r.name} size="sm" /><div className="text-xs"><p className="font-semibold">{r.name}</p><p className="text-muted-foreground">{r.role}</p></div></div>
+        </div>
+      ))}
+    />
+  ),
+  "morph-button": () => <MorphButton loadingText="در حال ثبت…" doneText="ثبت شد">خبرم کن</MorphButton>,
+  "compare-slider": () => <CompareSlider className="max-w-sm" before={mockCard(false)} after={mockCard(true)} beforeLabel="اسکلت" afterLabel="محتوا" />,
+  "scratch-card": (k) => (
+    <ScratchCard key={k} className="w-full max-w-[260px]" coverText="برای دیدن کد تخفیف، بخراشید">
+      <div className="p-6 text-center"><p className="text-xs text-muted-foreground">کد تخفیف نوروزی</p><p className="mt-1 text-xl font-bold tracking-wider" dir="ltr">NOWRUZ40</p><p className="mt-1 text-xs text-success">{fa(40)}٪ تخفیف</p></div>
+    </ScratchCard>
+  ),
+  sparkles: () => (
+    <SparklesFx count={8}><Badge variant="brand" className="rounded-full border border-brand/30 px-3 text-sm">جدید</Badge></SparklesFx>
+  ),
+  "scroll-progress": () => <ScrollProgressDemo />,
+  "pulse-button": () => <PulseButton size="lg">شروع رایگان</PulseButton>,
 };
 
 export const replayable = new Set([
@@ -221,4 +354,9 @@ export const replayable = new Set([
   "blur-text",
   "animated-list",
   "reveal",
+  "text-reveal",
+  "highlight-text",
+  "swipe-to-confirm",
+  "terminal",
+  "scratch-card",
 ]);

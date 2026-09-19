@@ -83,6 +83,10 @@ export function implicitLibSlugs(content) {
         slugs.push("utils");
     if (content.includes("@/lib/jalali"))
         slugs.push("jalali");
+    if (content.includes("@/lib/persian"))
+        slugs.push("persian");
+    if (content.includes("@/lib/number-to-words"))
+        slugs.push("number-to-words");
     return slugs;
 }
 export function lucideNeeded(content) {

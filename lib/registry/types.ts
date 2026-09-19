@@ -24,7 +24,10 @@ export type DocBase = {
 export type ComponentCat = "form" | "display" | "feedback" | "nav" | "overlay" | "data";
 export type ComponentDoc = DocBase & { cat: ComponentCat };
 export type AnimationDoc = DocBase;
-export type BackgroundDoc = DocBase;
+export type BackgroundDoc = DocBase & {
+  /** Rendered with WebGL through the `shader` primitive instead of CSS. */
+  engine?: "webgl";
+};
 export type TemplateDoc = DocBase & { tags: string[]; pages: number };
 export type BlockDoc = DocBase & { tags: string[] };
 export type ThemeDoc = {

@@ -1,13 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Bot, Code2 } from "lucide-react";
-import { CodeBlock } from "@/components/shared/code-block";
 import { CopyButton } from "@/components/shared/copy-button";
 import { cn } from "@/lib/utils";
 import { Section } from "./frame";
 
-export function PromptCode({ code, prompt }: { code: string; prompt: string }) {
+export function PromptCode({
+  code,
+  codeBlock,
+  prompt,
+}: {
+  /** Raw source, for the copy button. */
+  code: string;
+  /** `<CodeBlock>` rendered by the server parent (it can't be imported here). */
+  codeBlock: ReactNode;
+  prompt: string;
+}) {
   const [tab, setTab] = useState<"code" | "prompt">("code");
 
   return (
@@ -74,7 +83,7 @@ export function PromptCode({ code, prompt }: { code: string; prompt: string }) {
             </div>
             <div className="min-h-[400px]">
               {tab === "code" ? (
-                <CodeBlock code={code} className="max-h-[440px] overflow-auto" />
+                codeBlock
               ) : (
                 <pre
                   className="whitespace-pre-wrap p-5 font-sans text-[15px] leading-7 text-foreground/90 animate-fade-in"

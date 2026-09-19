@@ -10,6 +10,7 @@ import {
 import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
 import { fa, faNumber, formatToman } from "@/lib/utils";
+import { tomanToWords } from "@/lib/number-to-words";
 import { formatJalali } from "@/lib/jalali";
 
 const items = [
@@ -110,6 +111,9 @@ export function InvoicePage() {
               <dt>قابل پرداخت</dt>
               <dd>{formatToman(total)}</dd>
             </div>
+            <p className="text-xs text-muted-foreground">
+              به حروف: {tomanToWords(total)}
+            </p>
           </dl>
 
           <p className="mt-8 text-center text-xs text-muted-foreground">

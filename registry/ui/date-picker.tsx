@@ -11,11 +11,13 @@ export interface DatePickerProps extends Omit<CalendarProps, "value" | "onChange
   onChange?: (date: Date | null) => void;
   placeholder?: string;
   clearable?: boolean;
+  /** Include the weekday, e.g. «شنبه، ۳۱ شهریور ۱۴۰۵». */
+  weekday?: boolean;
   className?: string;
 }
 
 /** انتخاب تاریخ: a field that opens the Jalali calendar in a popover. */
-export function DatePicker({ value, onChange, placeholder = "انتخاب تاریخ", clearable = true, className, ...cal }: DatePickerProps) {
+export function DatePicker({ value, onChange, placeholder = "انتخاب تاریخ", clearable = true, weekday = true, className, ...cal }: DatePickerProps) {
   const [internal, setInternal] = React.useState<Date | null>(null);
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
@@ -36,20 +38,20 @@ export function DatePicker({ value, onChange, placeholder = "انتخاب تار
   }
 
   return (
-    <div ref={ref} className={cn("relative", className)}>
+    <div ref={ref} className={cn("relative min-w-0", className)}>
       <button
         type="button"
         aria-haspopup="dialog"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          "flex h-10 w-full cursor-pointer items-center justify-between gap-2 rounded-lg border border-input bg-background/60 px-3 text-sm transition-colors",
+          "flex h-10 w-full min-w-0 cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border border-input bg-background/60 px-3 text-sm transition-colors",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60",
         )}
       >
-        <span className={cn("flex items-center gap-2", !date && "text-muted-foreground/70")}>
-          <CalendarDays className="size-4 text-muted-foreground" />
-          {date ? formatJalali(date, { weekday: true }) : placeholder}
+        <span className={cn("flex min-w-0 items-center gap-2", !date && "text-muted-foreground/70")}>
+          <CalendarDays className="size-4 shrink-0 text-muted-foreground" />
+          <span className="truncate whitespace-nowrap">{date ? formatJalali(date, { weekday }) : placeholder}</span>
         </span>
         {clearable && date && (
           <span role="button" aria-label="پاک کردن" onClick={(e) => { e.stopPropagation(); set(null); }} className="rounded p-0.5 text-muted-foreground hover:text-foreground">

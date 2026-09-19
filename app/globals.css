@@ -203,10 +203,13 @@
   }
 }
 
+/* Code blocks stay graphite in every design system (a dark well on paper);
+   Shiki token colors in lib/highlight.ts are tuned for this surface and its
+   `fg` must equal this color. */
 @utility code-well {
   color-scheme: dark;
-  background: oklch(0.16 0.012 260);
-  color: oklch(0.93 0.01 260);
+  background: oklch(0.14 0.002 285);
+  color: #d7d7d9;
 }
 
 /* Mask utilities for fades. */
@@ -611,4 +614,29 @@
 @keyframes stripes {
   from { background-position: 0 0; }
   to { background-position: 56px 0; }
+}
+@keyframes wipe-in {
+  from { clip-path: inset(0 0 0 100%); transform: translateY(0.35em); opacity: 0; }
+  to { clip-path: inset(0 0 0 0); transform: translateY(0); opacity: 1; }
+}
+@keyframes gradient-pan {
+  from { background-position: 0% 50%; }
+  to { background-position: 150% 50%; }
+}
+@keyframes beam-travel {
+  from { stroke-dashoffset: 28; }
+  to { stroke-dashoffset: -100; }
+}
+@keyframes confetti {
+  0% { transform: translate(-50%, 0) rotate(0deg); opacity: 1; }
+  60% { transform: translate(calc(-50% + var(--cx)), var(--cy)) rotate(calc(var(--cr) * 0.6)); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--cx) * 1.3), 40px) rotate(var(--cr)); opacity: 0; }
+}
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(90deg); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.4); opacity: 0; }
 }

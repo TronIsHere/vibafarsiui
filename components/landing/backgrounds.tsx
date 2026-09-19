@@ -12,7 +12,7 @@ export function Backgrounds({ standalone }: { standalone?: boolean }) {
     <SectionHead
       eyebrow={<>{fa(backgrounds.length)} پس‌زمینه</>}
       title={standalone ? "پس‌زمینه‌ها" : "پس‌زمینه‌هایی که متن را خفه نمی‌کنند"}
-      desc="کم‌کنتراست و آرام، تا خط فارسی خوانا بماند. هر کدام یک کامپوننت کوچک است؛ داخل والد relative بگذارید."
+      desc="کم‌کنتراست و آرام، تا خط فارسی خوانا بماند. هر کدام یک کامپوننت کوچک است؛ داخل والد relative بگذارید. شیدرهای WebGL هم رنگ را از تم می‌گیرند و بدون کتابخانه کار می‌کنند."
       href="/backgrounds"
       standalone={standalone}
     />
@@ -39,6 +39,11 @@ export function Backgrounds({ standalone }: { standalone?: boolean }) {
                 <span className="  text-[11px] text-muted-foreground" dir="ltr">
                   {b.slug}
                 </span>
+                {b.engine === "webgl" && (
+                  <span className="ms-auto rounded-full border border-border px-1.5 text-[10px] leading-4 text-muted-foreground" dir="ltr">
+                    WebGL
+                  </span>
+                )}
               </div>
               <p className="mt-1 text-xs leading-5 text-muted-foreground">
                 {b.desc}
