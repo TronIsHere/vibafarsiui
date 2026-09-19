@@ -1,8 +1,10 @@
+import { DEFAULT_REGISTRY } from "./registry.js";
 export function parseArgs(argv) {
     const flags = {
         command: "",
         positionals: [],
         cwd: process.cwd(),
+        registry: process.env.VIBEFARSI_REGISTRY || process.env.VIBEFARSI_URL || DEFAULT_REGISTRY,
         font: "vazirmatn",
         theme: "graphite",
         yes: false,
@@ -42,7 +44,7 @@ export function parseArgs(argv) {
                 flags.cwd = next() ?? flags.cwd;
                 break;
             case "--registry":
-                flags.registry = next();
+                flags.registry = next() ?? flags.registry;
                 break;
             case "--font": {
                 const v = (next() ?? "").toLowerCase();

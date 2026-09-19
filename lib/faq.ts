@@ -24,7 +24,7 @@ export const PRODUCT_FAQ: { id: string; q: string; a: string }[] = [
   {
     id: "install",
     q: "چطور نصب کنم؟",
-    a: "دو دستور: npx vibefarsi init بعد npx vibefarsi add button calendar. راهنمای کامل در صفحه‌ی شروع سریع است.",
+    a: "دو دستور: npx vibefarsi@latest init بعد npx vibefarsi add button calendar. راهنمای کامل در صفحه‌ی شروع سریع است.",
   },
   {
     id: "mcp",

@@ -32,7 +32,7 @@ Next.js و Vite · Tailwind v4 · بدون وابستگی اضافه · رایگ
 </div>
 
 ```bash
-npx vibefarsi init
+npx vibefarsi@latest init
 ```
 
 <div dir="rtl">

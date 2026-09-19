@@ -32,7 +32,7 @@ VibeFarsi is a copy-into-your-repo RTL UI kit for Persian (Farsi) React and Next
 
 ## Install
 \`\`\`
-npx vibefarsi init
+npx vibefarsi@latest init
 npx vibefarsi add button calendar price
 npx vibefarsi list
 \`\`\`

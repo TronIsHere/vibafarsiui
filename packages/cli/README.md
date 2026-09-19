@@ -3,7 +3,7 @@
 Persian RTL components for React + Tailwind. Copy files into your app from the [VibeFarsi registry](https://vibefarsi.ir).
 
 ```bash
-npx vibefarsi init
+npx vibefarsi@latest init
 npx vibefarsi add button calendar price
 npx vibefarsi list
 ```

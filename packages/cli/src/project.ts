@@ -70,18 +70,34 @@ function firstExisting(cwd: string, candidates: string[]) {
   return candidates.map((f) => path.join(cwd, f)).find((f) => existsSync(f));
 }
 
+/** Drop undefined keys so `{ registry: undefined }` does not wipe defaults. */
+function defined<T extends Record<string, unknown>>(obj: T | undefined | null): Partial<T> {
+  if (!obj) return {};
+  return Object.fromEntries(Object.entries(obj).filter(([, v]) => v !== undefined)) as Partial<T>;
+}
+
 export function loadProject(cwd: string, overrides: Partial<VibefarsiConfig> = {}): Project {
   const pkgPath = path.join(cwd, "package.json");
   const pkg = readJson(pkgPath);
   const src = existsSync(path.join(cwd, "src", "app")) || existsSync(path.join(cwd, "src", "pages"));
   const configPath = path.join(cwd, "vibefarsi.json");
   const saved = existsSync(configPath) ? (readJson(configPath) as Partial<VibefarsiConfig>) : {};
+  const cleanOverrides = defined(overrides as Record<string, unknown>) as Partial<VibefarsiConfig>;
+  const cleanSaved = defined(saved as Record<string, unknown>) as Partial<VibefarsiConfig>;
   const config: VibefarsiConfig = {
     ...defaultConfig(),
-    ...saved,
-    ...overrides,
-    aliases: { ...defaultConfig().aliases, ...saved?.aliases, ...overrides.aliases },
-    tailwind: { ...defaultConfig().tailwind, ...saved?.tailwind, ...overrides.tailwind },
+    ...cleanSaved,
+    ...cleanOverrides,
+    aliases: {
+      ...defaultConfig().aliases,
+      ...defined(cleanSaved.aliases as Record<string, unknown> | undefined),
+      ...defined(cleanOverrides.aliases as Record<string, unknown> | undefined),
+    },
+    tailwind: {
+      ...defaultConfig().tailwind,
+      ...defined(cleanSaved.tailwind as Record<string, unknown> | undefined),
+      ...defined(cleanOverrides.tailwind as Record<string, unknown> | undefined),
+    },
   };
 
   let framework: Framework = "unknown";

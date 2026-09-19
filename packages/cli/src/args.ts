@@ -1,8 +1,10 @@
+import { DEFAULT_REGISTRY } from "./registry.js";
+
 export type Flags = {
   command: string;
   positionals: string[];
   cwd: string;
-  registry?: string;
+  registry: string;
   font: "vazirmatn" | "iransans";
   theme: string;
   yes: boolean;
@@ -18,6 +20,7 @@ export function parseArgs(argv: string[]): Flags {
     command: "",
     positionals: [],
     cwd: process.cwd(),
+    registry: process.env.VIBEFARSI_REGISTRY || process.env.VIBEFARSI_URL || DEFAULT_REGISTRY,
     font: "vazirmatn",
     theme: "graphite",
     yes: false,
@@ -58,7 +61,7 @@ export function parseArgs(argv: string[]): Flags {
         flags.cwd = next() ?? flags.cwd;
         break;
       case "--registry":
-        flags.registry = next();
+        flags.registry = next() ?? flags.registry;
         break;
       case "--font": {
         const v = (next() ?? "").toLowerCase();

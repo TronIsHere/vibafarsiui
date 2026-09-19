@@ -157,7 +157,7 @@ export function docsHowToJsonLd() {
         "@type": "HowToStep",
         position: 1,
         name: "پروژه را آماده کنید",
-        text: "یک‌بار در ریشه‌ی پروژه npx vibefarsi init را اجرا کنید تا جهت راست‌چین، فونت و توکن‌های تم نوشته شوند.",
+        text: "یک‌بار در ریشه‌ی پروژه npx vibefarsi@latest init را اجرا کنید تا جهت راست‌چین، فونت و توکن‌های تم نوشته شوند.",
         url: absUrl("/docs#cli"),
       },
       {

@@ -47,6 +47,9 @@ export type RegistryClient = {
 };
 
 export function makeClient(registry: string): RegistryClient {
+  if (!registry) {
+    throw new Error(`Registry URL is missing. Pass --registry ${DEFAULT_REGISTRY}`);
+  }
   const trimmed = registry.replace(/\/$/, "");
   const catalogUrl = trimmed.endsWith("/r") ? trimmed : `${trimmed}/r`;
   const origin = catalogUrl.replace(/\/r$/, "");

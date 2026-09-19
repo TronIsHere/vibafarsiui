@@ -1,5 +1,8 @@
 export const DEFAULT_REGISTRY = "https://vibefarsi.ir/r";
 export function makeClient(registry) {
+    if (!registry) {
+        throw new Error(`Registry URL is missing. Pass --registry ${DEFAULT_REGISTRY}`);
+    }
     const trimmed = registry.replace(/\/$/, "");
     const catalogUrl = trimmed.endsWith("/r") ? trimmed : `${trimmed}/r`;
     const origin = catalogUrl.replace(/\/r$/, "");

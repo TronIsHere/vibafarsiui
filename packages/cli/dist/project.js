@@ -38,18 +38,34 @@ function detectPm(cwd) {
 function firstExisting(cwd, candidates) {
     return candidates.map((f) => path.join(cwd, f)).find((f) => existsSync(f));
 }
+/** Drop undefined keys so `{ registry: undefined }` does not wipe defaults. */
+function defined(obj) {
+    if (!obj)
+        return {};
+    return Object.fromEntries(Object.entries(obj).filter(([, v]) => v !== undefined));
+}
 export function loadProject(cwd, overrides = {}) {
     const pkgPath = path.join(cwd, "package.json");
     const pkg = readJson(pkgPath);
     const src = existsSync(path.join(cwd, "src", "app")) || existsSync(path.join(cwd, "src", "pages"));
     const configPath = path.join(cwd, "vibefarsi.json");
     const saved = existsSync(configPath) ? readJson(configPath) : {};
+    const cleanOverrides = defined(overrides);
+    const cleanSaved = defined(saved);
     const config = {
         ...defaultConfig(),
-        ...saved,
-        ...overrides,
-        aliases: { ...defaultConfig().aliases, ...saved?.aliases, ...overrides.aliases },
-        tailwind: { ...defaultConfig().tailwind, ...saved?.tailwind, ...overrides.tailwind },
+        ...cleanSaved,
+        ...cleanOverrides,
+        aliases: {
+            ...defaultConfig().aliases,
+            ...defined(cleanSaved.aliases),
+            ...defined(cleanOverrides.aliases),
+        },
+        tailwind: {
+            ...defaultConfig().tailwind,
+            ...defined(cleanSaved.tailwind),
+            ...defined(cleanOverrides.tailwind),
+        },
     };
     let framework = "unknown";
     if (hasDep(pkg, "next"))

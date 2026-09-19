@@ -18,7 +18,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/docs",
 });
 
-const CLI_INIT = "npx vibefarsi init";
+const CLI_INIT = "npx vibefarsi@latest init";
 const CLI_ADD = "npx vibefarsi add button calendar price";
 const CLI_LIST = "npx vibefarsi list";
 
