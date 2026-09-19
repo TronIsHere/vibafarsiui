@@ -1,7 +1,5 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
 import { animations, backgrounds, blocks, buildPrompt, buildThemePrompt, components, libs, templates, themes } from "@/lib/registry";
-import { toUserSource } from "@/lib/source";
+import { readSource } from "@/lib/source";
 
 const lists = { components, animations, backgrounds, templates, blocks, themes, lib: libs } as const;
 type Type = keyof typeof lists;
@@ -32,14 +30,14 @@ export async function GET(_req: Request, ctx: RouteContext<"/r/[type]/[slug]">) 
   const item = list?.find((i) => i.slug === slug);
   if (!item) return Response.json({ error: "not_found" }, { status: 404 });
 
-  const content = toUserSource(readFileSync(path.join(process.cwd(), item.file), "utf8"));
+  const content = readSource(item.file);
   const isTheme = type === "themes";
   const kind = (type === "lib" ? "lib" : type.replace(/s$/, "")) as "component" | "animation" | "background" | "template" | "block" | "lib";
-  const prompt = "promptBullets" in item
-    ? isTheme
-      ? buildThemePrompt(item)
-      : buildPrompt(item as Parameters<typeof buildPrompt>[0], kind)
-    : undefined;
+  const prompt = "swatches" in item
+    ? buildThemePrompt(item)
+    : "promptBullets" in item
+      ? buildPrompt(item, kind)
+      : undefined;
 
   const isLib = type === "lib";
   const fileKind = isTheme ? "registry:style" : isLib ? "registry:lib" : "registry:component";

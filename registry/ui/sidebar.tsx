@@ -10,7 +10,7 @@ export interface SidebarItemProps {
   href?: string;
   active?: boolean;
   badge?: number | string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 export function SidebarItem({ icon: Icon, label, href = "#", active, badge, onClick }: SidebarItemProps) {

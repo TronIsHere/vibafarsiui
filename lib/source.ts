@@ -15,6 +15,6 @@ export function toUserSource(src: string): string {
 
 /** Reads a registry file so the docs always show the code that actually runs. */
 export function readSource(file: string): string {
-  const abs = path.join(process.cwd(), file);
+  const abs = path.join(/* turbopackIgnore: true */ process.cwd(), file);
   return toUserSource(readFileSync(abs, "utf8"));
 }
