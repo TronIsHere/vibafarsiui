@@ -144,12 +144,15 @@ export function ShaderCanvas({
     if (!host) return;
     const scale = dpr ?? defaultScale();
     const apply = () => {
-      const r = host.getBoundingClientRect();
-      if (r.width < 2 || r.height < 2) return;
-      canvas.style.width = `${r.width}px`;
-      canvas.style.height = `${r.height}px`;
-      const w = Math.max(1, Math.round(r.width * scale));
-      const h = Math.max(1, Math.round(r.height * scale));
+      const cssW = host.clientWidth;
+      const cssH = host.clientHeight;
+      if (cssW < 2 || cssH < 2) return;
+      // Keep layout at 100% of the parent. Pinning getBoundingClientRect()
+      // pixels overflowed the card by subpixels and shifted the RTL page in Safari.
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      const w = Math.max(1, Math.round(cssW * scale));
+      const h = Math.max(1, Math.round(cssH * scale));
       if (canvas.width !== w) canvas.width = w;
       if (canvas.height !== h) canvas.height = h;
     };
@@ -212,12 +215,11 @@ export function ShaderCanvas({
       // Measure the parent. After canvas.width is set, WebKit may report the drawing
       // buffer as the canvas layout size, so reading the canvas itself stays stuck at 300×150.
       const hostEl = canvas.parentElement ?? canvas;
-      const rect = hostEl.getBoundingClientRect();
-      const cssW = Math.max(1, rect.width);
-      const cssH = Math.max(1, rect.height);
+      const cssW = Math.max(1, hostEl.clientWidth);
+      const cssH = Math.max(1, hostEl.clientHeight);
       if (cssW < 2 && cssH < 2) return;
-      canvas.style.width = `${cssW}px`;
-      canvas.style.height = `${cssH}px`;
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
       const max = (!gl.isContextLost() && gl.getParameter(gl.MAX_RENDERBUFFER_SIZE)) || 8192;
       const w = Math.max(1, Math.min(max, Math.round(cssW * scale)));
       const h = Math.max(1, Math.min(max, Math.round(cssH * scale)));
@@ -378,5 +380,5 @@ export function ShaderCanvas({
     };
   }, [fragment, colorKey, uniformKey, speed, pointer, dpr]);
 
-  return <canvas ref={ref} aria-hidden className={cn("pointer-events-none absolute inset-0 block size-full transform-gpu", className)} {...rest} />;
+  return <canvas ref={ref} aria-hidden className={cn("pointer-events-none absolute inset-0 block size-full", className)} {...rest} />;
 }

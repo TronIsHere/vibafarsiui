@@ -4,8 +4,10 @@ import { useState } from "react";
 import { cn, fa } from "@/lib/utils";
 import { componentCats, components, type ComponentCat } from "@/lib/registry";
 import { componentCardDemos, componentDemos } from "@/components/demos/components";
+import { goldSponsors } from "@/lib/sponsors";
 import { Section } from "./frame";
 import { ItemCard, SectionFoot, SectionHead } from "./section-head";
+import { SponsorCatalogCard } from "./sponsor-card";
 
 export function Catalog({ standalone }: { standalone?: boolean }) {
   const [active, setActive] = useState<ComponentCat | "all">("all");
@@ -33,6 +35,13 @@ export function Catalog({ standalone }: { standalone?: boolean }) {
 
   const grid = (
     <ul className={cn("grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4", standalone ? "xl:grid-cols-3" : "p-3 sm:p-4 xl:grid-cols-4")}>
+      {!standalone &&
+        active === "all" &&
+        goldSponsors.map((sponsor) => (
+          <li key={sponsor.name}>
+            <SponsorCatalogCard sponsor={sponsor} />
+          </li>
+        ))}
       {visible.map((it) => (
         <li key={it.slug} className={cn(it.wide && "sm:col-span-2")}>
           <ItemCard href={`/components/${it.slug}`} name={it.name} slug={it.slug} desc={it.desc}>

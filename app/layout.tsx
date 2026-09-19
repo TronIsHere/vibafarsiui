@@ -1,6 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { iranSans, geistMono } from "./fonts";
+import { JsonLd } from "@/components/shared/json-ld";
 import { THEME_STORAGE_KEY } from "@/lib/registry";
+import {
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+  siteJsonLd,
+} from "@/lib/site";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -8,9 +16,51 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "کامپوننت‌های فارسی راست‌چین برای React · وایب‌فارسی",
-  description:
-    "کامپوننت‌های راست‌چین رایگان برای Next.js و React. فایل را کپی کنید یا پرامپت انگلیسی را به Cursor بدهید. فونت و اعداد فارسی داخل خود کامپوننت است.",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: [
+    "وایب‌فارسی",
+    "VibeFarsi",
+    "کامپوننت فارسی",
+    "راست‌چین",
+    "RTL",
+    "React",
+    "Next.js",
+    "تقویم شمسی",
+  ],
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "fa_IR",
+    url: "/",
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  category: "technology",
   manifest: "/icons/site.webmanifest",
   icons: {
     icon: [
@@ -31,12 +81,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="fa"
       dir="rtl"
       suppressHydrationWarning
-      className={`${iranSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${iranSans.variable} ${geistMono.variable} h-full max-w-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
+      <body className="flex min-h-full w-full max-w-full flex-col bg-background font-sans text-foreground">
+        <JsonLd data={siteJsonLd()} />
         {children}
       </body>
     </html>

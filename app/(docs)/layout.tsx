@@ -4,7 +4,7 @@ import { DocsSidebar } from "@/components/docs/sidebar";
 
 export default function DocsLayout({ children }: LayoutProps<"/">) {
   return (
-    <div className="flex min-h-full flex-1 flex-col">
+    <div className="flex min-h-full min-w-0 flex-1 flex-col">
       <TopBar />
       <DocsMobileNav />
       <div className="mx-auto flex w-full max-w-7xl flex-1 gap-10 px-4 sm:px-6">

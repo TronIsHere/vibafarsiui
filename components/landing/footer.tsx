@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Button } from "@/registry/ui/button";
 import { Logo } from "@/components/shared/logo";
 import { GithubIcon } from "@/components/shared/icons";
+import { GITHUB_URL } from "@/lib/site";
 import { Section } from "./frame";
 
 export function MonoFooter() {
@@ -16,11 +16,18 @@ export function MonoFooter() {
             </p>
           </div>
           <div className="flex gap-2">
-            <Button className="cursor-pointer rounded-full px-5">شروع کنید</Button>
-            <Button variant="secondary" className="cursor-pointer rounded-full px-5">
+            <Link href="/docs" className="inline-flex h-10 cursor-pointer items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">
+              شروع کنید
+            </Link>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-full border border-border bg-secondary px-5 text-sm font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80"
+            >
               <GithubIcon />
               گیت‌هاب
-            </Button>
+            </a>
           </div>
         </div>
       </Section>
@@ -28,7 +35,7 @@ export function MonoFooter() {
         <div className="flex flex-col gap-4 px-5 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <Logo />
           <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="پاورقی">
-            {[["مستندات", "/docs"], ["کامپوننت‌ها", "/components"], ["بلاک‌ها", "/blocks"], ["انیمیشن‌ها", "/animations"], ["پس‌زمینه‌ها", "/backgrounds"], ["قالب‌ها", "/templates"], ["سیستم‌های طراحی", "/themes"], ["MCP", "/docs#mcp"]].map(([l, h]) => (
+            {[["مستندات", "/docs"], ["کامپوننت‌ها", "/components"], ["بلاک‌ها", "/blocks"], ["انیمیشن‌ها", "/animations"], ["پس‌زمینه‌ها", "/backgrounds"], ["قالب‌ها", "/templates"], ["سیستم‌های طراحی", "/themes"], ["MCP", "/docs#mcp"], ["حامیان", "/#sponsors"]].map(([l, h]) => (
               <Link key={l} href={h} className="cursor-pointer transition-colors hover:text-foreground">
                 {l}
               </Link>

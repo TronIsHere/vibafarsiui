@@ -51,8 +51,7 @@ export const MCP_CONFIG = `
 {
   "mcpServers": {
     "vibefarsi": {
-      "command": "npx",
-      "args": ["-y", "@vibefarsi/mcp"]
+      "url": "https://vibefarsi.ir/mcp"
     }
   }
 }
@@ -89,7 +88,7 @@ export const FEATURES = [
   {
     id: "mcp",
     title: "سرور MCP",
-    body: "قوانین طراحی فارسی، مستقیم داخل Cursor، Claude Code یا Windsurf.",
+    body: "قوانین طراحی فارسی، مستقیم داخل Cursor، Claude Code یا Codex.",
   },
 ] as const;
 

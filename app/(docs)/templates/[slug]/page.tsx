@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { buildPrompt, templates } from "@/lib/registry";
+import { itemMetadata } from "@/lib/site";
 import { readSource } from "@/lib/source";
 import { ItemTabs } from "@/components/docs/item-tabs";
 import {
@@ -21,10 +22,7 @@ export async function generateMetadata({
 }: PageProps<"/templates/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const item = templates.find((c) => c.slug === slug);
-  return {
-    title: item ? `${item.name} · قالب‌ها · وایب‌فارسی` : "یافت نشد",
-    description: item?.desc,
-  };
+  return itemMetadata(item, "قالب‌ها", `/templates/${slug}`);
 }
 
 export default async function TemplatePage({

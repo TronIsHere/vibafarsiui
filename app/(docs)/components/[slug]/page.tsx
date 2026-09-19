@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { buildPrompt, components } from "@/lib/registry";
+import { itemMetadata } from "@/lib/site";
 import { readSource } from "@/lib/source";
 import { ItemTabs } from "@/components/docs/item-tabs";
 import { DocHeader, DocSection, InstallSteps, Notes, PrevNext, PropsTable, UsageBlock } from "@/components/docs/blocks";
@@ -12,7 +13,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/components/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const item = components.find((c) => c.slug === slug);
-  return { title: item ? `${item.name} · کامپوننت‌ها · وایب‌فارسی` : "یافت نشد", description: item?.desc };
+  return itemMetadata(item, "کامپوننت‌ها", `/components/${slug}`);
 }
 
 export default async function ComponentPage({ params }: PageProps<"/components/[slug]">) {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { buildPrompt, animations } from "@/lib/registry";
+import { itemMetadata } from "@/lib/site";
 import { readSource } from "@/lib/source";
 import { ItemTabs } from "@/components/docs/item-tabs";
 import { DocHeader, DocSection, InstallSteps, Notes, PrevNext, PropsTable, UsageBlock } from "@/components/docs/blocks";
@@ -12,7 +13,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/animations/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const item = animations.find((c) => c.slug === slug);
-  return { title: item ? `${item.name} · انیمیشن‌ها · وایب‌فارسی` : "یافت نشد", description: item?.desc };
+  return itemMetadata(item, "انیمیشن‌ها", `/animations/${slug}`);
 }
 
 export default async function Page({ params }: PageProps<"/animations/[slug]">) {

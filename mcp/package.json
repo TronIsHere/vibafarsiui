@@ -8,9 +8,23 @@
     "vibefarsi-mcp": "./dist/index.js"
   },
   "main": "./dist/index.js",
-  "files": [
-    "dist"
-  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./server": "./dist/server.js"
+  },
+  "files": ["dist"],
+  "homepage": "https://vibefarsi.ir",
+  "bugs": {
+    "url": "https://github.com/TronIsHere/vibafarsiui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TronIsHere/vibafarsiui.git",
+    "directory": "mcp"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsc",
@@ -20,10 +34,6 @@
   },
   "engines": {
     "node": ">=20"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vibefarsi/ui"
   },
   "keywords": [
     "mcp",

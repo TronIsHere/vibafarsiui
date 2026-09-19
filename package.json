@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "predev": "node -e \"process.exit(require('fs').existsSync('mcp/dist/server.js')?0:1)\" || npm run build --prefix mcp",
+    "build": "npm run build --prefix mcp && next build",
     "build:cli": "tsc -p packages/cli/tsconfig.json",
     "start": "next start",
     "lint": "eslint",
@@ -16,12 +17,14 @@
     "vibefarsi": "node packages/cli/dist/index.js"
   },
   "dependencies": {
+    "@modelcontextprotocol/server": "^2.0.0",
     "lucide-react": "^1.46.0",
     "next": "16.3.5",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "server-only": "^0.0.1",
-    "shiki": "^4.4.3"
+    "shiki": "^4.4.3",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

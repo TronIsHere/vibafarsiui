@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { blocks, buildPrompt } from "@/lib/registry";
+import { itemMetadata } from "@/lib/site";
 import { readSource } from "@/lib/source";
 import { ItemTabs } from "@/components/docs/item-tabs";
 import { DocHeader, DocSection, InstallSteps, PrevNext, PropsTable, UsageBlock } from "@/components/docs/blocks";
@@ -13,7 +14,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/blocks/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const item = blocks.find((b) => b.slug === slug);
-  return { title: item ? `${item.name} · بلاک‌ها · وایب‌فارسی` : "یافت نشد", description: item?.desc };
+  return itemMetadata(item, "بلاک‌ها", `/blocks/${slug}`);
 }
 
 export default async function BlockPage({ params }: PageProps<"/blocks/[slug]">) {

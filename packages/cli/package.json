@@ -12,10 +12,17 @@
   "engines": {
     "node": ">=18"
   },
+  "homepage": "https://vibefarsi.ir",
+  "bugs": {
+    "url": "https://github.com/TronIsHere/vibafarsiui/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vibefarsi/ui",
+    "url": "git+https://github.com/TronIsHere/vibafarsiui.git",
     "directory": "packages/cli"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

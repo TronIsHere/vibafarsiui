@@ -7,8 +7,7 @@ const CONFIG = `
 {
   "mcpServers": {
     "vibefarsi": {
-      "command": "npx",
-      "args": ["-y", "@vibefarsi/mcp"]
+      "url": "https://vibefarsi.ir/mcp"
     }
   }
 }
@@ -35,7 +34,7 @@ export function McpSteps() {
         <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground sm:text-base">
           ابزارهای هوش مصنوعی به انگلیسی فکر می‌کنن: فونت Inter می‌گذارن، اعداد را
           لاتین می‌نویسن و دکمه را چپ‌چین می‌کنن. سرور MCP وایب‌فارسی قوانین طراحی
-          فارسی و کد کامپوننت‌ها را مستقیم به Cursor، Claude Code و Windsurf می‌ده.
+          فارسی و کد کامپوننت‌ها را مستقیم به Cursor، Claude Code و Codex می‌ده.
         </p>
       </div>
 
@@ -61,7 +60,7 @@ export function McpSteps() {
           <StepHead
             n="۱"
             t="سرور را اضافه کنید"
-            d="یک‌بار در تنظیمات ادیتور، بعدش دیگه کاری ندارید."
+            d="یک URL؛ Node روی سیستم لازم نیست."
           />
           <div className="m-4 mt-0 overflow-hidden rounded-lg border border-border bg-background">
             <CodeBlock code={CONFIG} lang="json" className="p-4 text-[12px]" />

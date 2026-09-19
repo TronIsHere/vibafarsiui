@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/shared/logo";
-import { GithubIcon } from "@/components/shared/icons";
 import { ThemeToggle } from "./theme-toggle";
+import { GithubButton } from "./github-stars";
 import { SiteSearch } from "./site-search";
 
 const links = [
@@ -44,14 +44,7 @@ export function TopBar() {
 
         <div className="flex items-center gap-2">
           <SiteSearch />
-          <a
-            href="#"
-            className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-md border border-border px-2.5 text-[13px] text-muted-foreground transition-colors duration-200 hover:border-foreground/20 hover:text-foreground"
-            aria-label="گیت‌هاب"
-          >
-            <GithubIcon className="size-3.5" />
-            <span className="hidden   text-xs sm:inline">star</span>
-          </a>
+          <GithubButton />
           <ThemeToggle />
         </div>
       </div>

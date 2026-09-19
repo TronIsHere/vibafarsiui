@@ -82,7 +82,7 @@ npx vibefarsi list
 
 ## MCP
 
-سرور MCP وایب‌فارسی قوانین طراحی فارسی و کد قطعه‌ها را مستقیم به Cursor، Claude Code و Windsurf می‌دهد. یک‌بار اضافه کنید؛ بعد مثل همیشه پرامپت بدهید.
+سرور MCP وایب‌فارسی قوانین طراحی فارسی و کد قطعه‌ها را مستقیم به Cursor، Claude Code و Codex می‌دهد. یک‌بار آدرس <code dir="ltr">https://vibefarsi.ir/mcp</code> را اضافه کنید؛ بعد مثل همیشه پرامپت بدهید.
 
 </div>
 
@@ -90,8 +90,7 @@ npx vibefarsi list
 {
   "mcpServers": {
     "vibefarsi": {
-      "command": "npx",
-      "args": ["-y", "@vibefarsi/mcp"]
+      "url": "https://vibefarsi.ir/mcp"
     }
   }
 }
@@ -101,9 +100,11 @@ npx vibefarsi list
 
 | ادیتور | کجا |
 | --- | --- |
-| Cursor | <code dir="ltr">.cursor/mcp.json</code> در پروژه، یا <code dir="ltr">~/.cursor/mcp.json</code> |
-| Claude Code | <code dir="ltr">.mcp.json</code> در ریشه‌ی پروژه، یا <code dir="ltr">claude mcp add vibefarsi -- npx -y @vibefarsi/mcp</code> |
-| Windsurf | <code dir="ltr">~/.codeium/windsurf/mcp_config.json</code> |
+| Cursor | <code dir="ltr">.cursor/mcp.json</code> در پروژه، یا [افزودن به Cursor](https://cursor.com/en/install-mcp?name=vibefarsi&config=eyJ1cmwiOiJodHRwczovL3ZpYmVmYXJzaS5pci9tY3AifQ==) |
+| Claude Code | <code dir="ltr">claude mcp add --transport http vibefarsi https://vibefarsi.ir/mcp</code> |
+| Codex | <code dir="ltr">codex mcp add vibefarsi --url https://vibefarsi.ir/mcp</code> |
+
+اگر بخواهید سرور روی سیستم خودتان اجرا شود: <code dir="ltr">npx -y @vibefarsi/mcp</code>.
 
 ابزارهایی که مدل در اختیار دارد:
 
@@ -185,9 +186,9 @@ npm run mcp:smoke
 
 <div dir="rtl">
 
-سرور MCP رجیستری را از `VIBEFARSI_URL` می‌خواند (پیش‌فرض <code dir="ltr">https://vibefarsi.dev</code>)؛ برای رجیستری محلی آن را روی <code dir="ltr">http://localhost:3000</code> بگذارید. `VIBEFARSI_ROOT` هم برای وقتی است که فایل‌های رجیستری جای دیگری باشند.
+سرور MCP رجیستری را از `VIBEFARSI_URL` می‌خواند (پیش‌فرض <code dir="ltr">https://vibefarsi.ir</code>)؛ برای رجیستری محلی آن را روی <code dir="ltr">http://localhost:3000</code> بگذارید. `VIBEFARSI_ROOT` هم برای وقتی است که فایل‌های رجیستری جای دیگری باشند.
 
-> پکیج‌های `vibefarsi` و <code dir="ltr">@vibefarsi/mcp</code> هنوز روی npm منتشر نشده‌اند. تا آن موقع، CLI را با دستور بالا از همین مخزن اجرا کنید و برای MCP، بعد از <code dir="ltr">npm run build --prefix mcp</code>، در تنظیمات ادیتور به‌جای `npx` فایل `mcp/dist/index.js` را با `node` اجرا کنید.
+روی npm هر دو پکیج هست: `npx vibefarsi` و <code dir="ltr">npx -y @vibefarsi/mcp</code>. دستورهای بالا برای وقتی است که روی سورس همین مخزن کار می‌کنید.
 
 ## لایسنس
 

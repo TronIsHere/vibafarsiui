@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { buildThemePrompt, themes } from "@/lib/registry";
+import { itemMetadata } from "@/lib/site";
 import { readSource } from "@/lib/source";
 import { DocHeader, DocSection, Notes, PrevNext } from "@/components/docs/blocks";
 import { ThemeDetail } from "@/components/docs/theme-detail";
@@ -13,7 +14,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/themes/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const item = themes.find((t) => t.slug === slug);
-  return { title: item ? `${item.name} · سیستم‌های طراحی · وایب‌فارسی` : "یافت نشد", description: item?.desc };
+  return itemMetadata(item, "سیستم‌های طراحی", `/themes/${slug}`);
 }
 
 const THEME_RULES = [

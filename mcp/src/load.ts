@@ -77,9 +77,26 @@ async function catalogFromHttp(): Promise<Catalog | undefined> {
 
 let cached: Catalog | undefined;
 
+type LocalRegistry = {
+  catalog: () => Catalog | Promise<Catalog>;
+  readFile: (file: string) => string | undefined;
+};
+
+let local: LocalRegistry | undefined;
+
+/** The hosted Next.js route injects the in-process registry so /mcp does not HTTP-fetch itself. */
+export function useLocalRegistry(access: LocalRegistry) {
+  local = access;
+  cached = undefined;
+}
+
 export async function loadCatalog(): Promise<Catalog> {
   if (cached) return cached;
-  cached = (await catalogFromRepo()) ?? (await catalogFromJson()) ?? (await catalogFromHttp());
+  cached =
+    (local ? await local.catalog() : undefined) ??
+    (await catalogFromRepo()) ??
+    (await catalogFromJson()) ??
+    (await catalogFromHttp());
   if (!cached) {
     throw new Error(
       `Could not load the VibeFarsi registry. Run this inside the vibefarsi-ui repo, or set VIBEFARSI_URL (tried ${registryUrl()}).`,
@@ -116,8 +133,10 @@ async function itemFromHttp(hit: CatalogItem): Promise<RegistryItem | undefined>
 }
 
 export async function loadItem(hit: CatalogItem): Promise<RegistryItem> {
-  const local = readLocalFile(hit.file);
-  if (local) return metaItem(hit, local);
+  const hooked = local?.readFile(hit.file);
+  if (hooked) return metaItem(hit, hooked);
+  const fromDisk = readLocalFile(hit.file);
+  if (fromDisk) return metaItem(hit, fromDisk);
   const remote = await itemFromHttp(hit);
   if (remote) return { ...remote, prompt: remote.prompt ?? hit.prompt };
   return metaItem(hit);

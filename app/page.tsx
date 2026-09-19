@@ -10,6 +10,7 @@ import { Templates } from "@/components/landing/templates";
 import { Blocks } from "@/components/landing/blocks";
 import { DesignSystems } from "@/components/landing/design-systems";
 import { McpSteps } from "@/components/landing/mcp-steps";
+import { Sponsors } from "@/components/landing/sponsors";
 import { CodeBlock } from "@/components/shared/code-block";
 import { MonoFooter } from "@/components/landing/footer";
 import { buildPrompt, components } from "@/lib/registry";
@@ -19,9 +20,9 @@ export default function Home() {
   const button = components.find((c) => c.slug === "button")!;
   const code = readSource(button.file);
   return (
-    <div className="flex min-h-full flex-1 flex-col">
+    <div className="flex min-h-full min-w-0 flex-1 flex-col">
       <TopBar />
-      <main className="flex-1">
+      <main className="min-w-0 flex-1 overflow-x-clip">
         <Frame>
           <Hero />
           <Principles />
@@ -45,6 +46,8 @@ export default function Home() {
           <DesignSystems />
           <HatchBand />
           <McpSteps />
+          <HatchBand />
+          <Sponsors />
           <HatchBand />
           <MonoFooter />
         </Frame>

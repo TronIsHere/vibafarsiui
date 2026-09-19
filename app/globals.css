@@ -94,6 +94,11 @@
 
   html {
     scroll-behavior: smooth;
+    /* clip on <html> is not propagated to the viewport in Safari; only hidden
+       is. With dir=rtl, leftover overflow (marquees, canvases, corner marks)
+       becomes a horizontal scroll origin on the inline-start edge and the
+       column sits off-center. hidden is the value that actually clips. */
+    overflow-x: hidden;
   }
 
   body {

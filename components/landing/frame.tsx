@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 /** Hairline-framed content column. Sections stack inside and draw their own bottom rule. */
 export function Frame({ className, children }: { className?: string; children: React.ReactNode }) {
   return (
-    <div className={cn("mx-auto w-full max-w-6xl sm:border-x sm:border-border", className)}>{children}</div>
+    <div className={cn("mx-auto w-full max-w-6xl contain-inline-size sm:border-x sm:border-border", className)}>{children}</div>
   );
 }
 

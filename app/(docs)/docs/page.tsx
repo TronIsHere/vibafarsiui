@@ -2,17 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Check, FileCode2, Terminal } from "lucide-react";
 import { CodeBlock } from "@/components/shared/code-block";
+import { JsonLd } from "@/components/shared/json-ld";
 import type { Lang } from "@/lib/highlight";
 import { CopyButton } from "@/components/shared/copy-button";
 import { DocSection, Notes } from "@/components/docs/blocks";
 import { readSource } from "@/lib/source";
 import { sections } from "@/lib/registry";
+import { docsHowToJsonLd, pageMetadata } from "@/lib/site";
 import { cn, fa } from "@/lib/utils";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "شروع سریع · وایب‌فارسی",
   description: "نصب وایب‌فارسی در پروژه‌ی Next.js یا React با Tailwind، خودکار با CLI یا دستی با کپی کردن فایل‌ها.",
-};
+  path: "/docs",
+});
 
 const CLI_INIT = "npx vibefarsi init";
 const CLI_ADD = "npx vibefarsi add button calendar price";
@@ -81,6 +84,14 @@ const TAILWIND_MAP = `/* app/globals.css */
 }`;
 
 const MCP = `{
+  "mcpServers": {
+    "vibefarsi": {
+      "url": "https://vibefarsi.ir/mcp"
+    }
+  }
+}`;
+
+const MCP_NPX = `{
   "mcpServers": {
     "vibefarsi": {
       "command": "npx",
@@ -292,6 +303,7 @@ export default function DocsPage() {
 
   return (
     <article className="space-y-16">
+      <JsonLd data={docsHowToJsonLd()} />
       <header>
         <p className="text-xs text-muted-foreground">مستندات</p>
         <h1 className="mt-2 text-3xl font-bold sm:text-4xl">شروع سریع</h1>
@@ -547,7 +559,7 @@ export default function DocsPage() {
       <DocSection id="prompts" title="کار با هوش مصنوعی">
         <Notes
           notes={[
-            "هر صفحه یک تب «پرامپت» داره که همان کامپوننت را به انگلیسی توضیح میده، با قوانین راست‌چین، فونت، اعداد و توکن‌ها. آن را در Cursor، Claude Code یا Windsurf پیست کنید تا مدل همان کامپوننت را با سبک پروژه‌تون بسازه.",
+            "هر صفحه یک تب «پرامپت» داره که همان کامپوننت را به انگلیسی توضیح میده، با قوانین راست‌چین، فونت، اعداد و توکن‌ها. آن را در Cursor، Claude Code یا Codex پیست کنید تا مدل همان کامپوننت را با سبک پروژه‌تون بسازه.",
             "اگر خروجی چپ‌چین شد یا اعداد لاتین ماند، همان پرامپت را یک‌بار دیگر بفرستید و بگید re-check the Persian RTL rules. قوانین داخل همان پرامپت هست.",
             "نسخه‌ی ماشین‌خوان هر مورد در /r/<بخش>/<slug>.json هست و CLI هم همان را می‌خونه.",
           ]}
@@ -556,9 +568,26 @@ export default function DocsPage() {
 
       <DocSection id="mcp" title="سرور MCP">
         <p className="mb-3 text-sm leading-7 text-muted-foreground">
-          ابزارهای هوش مصنوعی به انگلیسی فکر می‌کنن. این پنج ابزار قوانین فارسی و کد رجیستری را به Cursor، Claude Code و Windsurf میدن تا به‌جای Inter و چیدمان چپ‌چین، کامپوننت وایب‌فارسی بسازن.
+          ابزارهای هوش مصنوعی به انگلیسی فکر می‌کنن. این پنج ابزار قوانین فارسی و کد رجیستری را به Cursor، Claude Code و Codex میدن تا به‌جای Inter و چیدمان چپ‌چین، کامپوننت وایب‌فارسی بسازن. آدرس سرور <Inline>https://vibefarsi.ir/mcp</Inline> است؛ Node روی سیستم لازم نیست.
         </p>
         <Code name="mcp.json" code={MCP} lang="json" />
+        <ul className="mt-4 space-y-2 text-sm leading-7 text-muted-foreground">
+          <li>
+            Cursor: همین JSON را در <Inline>.cursor/mcp.json</Inline> پروژه، یا <Inline>~/.cursor/mcp.json</Inline> بگذارید.{" "}
+            <a
+              href="https://cursor.com/en/install-mcp?name=vibefarsi&config=eyJ1cmwiOiJodHRwczovL3ZpYmVmYXJzaS5pci9tY3AifQ=="
+              className="underline underline-offset-4 hover:text-foreground"
+            >
+              افزودن به Cursor
+            </a>
+          </li>
+          <li>
+            Claude Code: <Inline>claude mcp add --transport http vibefarsi https://vibefarsi.ir/mcp</Inline>
+          </li>
+          <li>
+            Codex: <Inline>codex mcp add vibefarsi --url https://vibefarsi.ir/mcp</Inline>
+          </li>
+        </ul>
         <ul className="mt-4 space-y-2 text-sm leading-7">
           <li><Inline>get_design_rules</Inline> قوانین راست‌چین، فونت، اعداد، فرم و توکن‌ها. این را قبل از ساخت هر صفحه صدا بزنید.</li>
           <li><Inline>search_registry</Inline> جست‌وجو بین کامپوننت، بلاک، انیمیشن، پس‌زمینه، قالب و تم، به فارسی یا انگلیسی.</li>
@@ -566,8 +595,12 @@ export default function DocsPage() {
           <li><Inline>get_theme</Inline> توکن‌های CSS تم (پیش‌فرض گرافیت). مدل نباید از خودش رنگ بگذاره.</li>
           <li><Inline>scaffold_page</Inline> از توضیح صفحه (پرداخت، ورود پیامکی، نوبت شمسی) یک ترکیب آماده می‌سازه.</li>
         </ul>
+        <p className="mt-4 mb-2 text-sm leading-7 text-muted-foreground">
+          اگر بخواهید سرور روی سیستم خودتان اجرا شود، به‌جای URL از npx استفاده کنید:
+        </p>
+        <Code name="mcp.json (npx)" code={MCP_NPX} lang="json" />
         <p className="mt-3 text-xs leading-6 text-muted-foreground">
-          تا وقتی پکیج روی npm منتشر نشده، در همین مخزن <Inline>npm run mcp</Inline> را به ادیتور بدید. فهرست ماشین‌خوان هم در <Inline>/r/&lt;بخش&gt;/&lt;slug&gt;.json</Inline> هست.
+          برای کار روی همین مخزن، به‌جای npx از <Inline>npm run mcp</Inline> استفاده کنید. فهرست ماشین‌خوان قطعه‌ها در <Inline>/r/&lt;بخش&gt;/&lt;slug&gt;.json</Inline> هست؛ آن مسیر رجیستری CLI است، نه MCP.
         </p>
       </DocSection>
     </article>
