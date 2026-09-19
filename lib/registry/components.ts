@@ -348,7 +348,23 @@ const [open, setOpen] = useState(false)
     props: [
       { name: "side", type: '"start" | "end" | "bottom"', default: '"start"', desc: "start در RTL یعنی راست." },
     ],
-    promptBullets: ["Slide in from the right with inset-y-0 start-0; bottom variant has rounded top corners for mobile.", "Escape and overlay close it; title via aria-labelledby."],
+    css: `@keyframes sheet-from-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes sheet-from-left {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+@keyframes sheet-from-bottom {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}`,
+    promptBullets: ["Slide in from the inline-start edge (right in RTL) with inset-y-0 start-0; use sheet-from-* keyframes so the panel slides rather than fades.", "Bottom variant slides up with rounded top corners for mobile; Escape and overlay close it; title via aria-labelledby."],
   },
   {
     slug: "tabs", name: "تب‌ها", cat: "nav", file: ui("tabs"),

@@ -33,11 +33,6 @@ export function HatchBand({ className }: { className?: string }) {
   return <div aria-hidden className={cn("h-8 border-b border-border bg-hatch sm:h-10", className)} />;
 }
 
-/** Below-fold landing section placeholder while `next/dynamic` loads. */
-export function SectionFallback({ id }: { id?: string }) {
-  return <section id={id} className="min-h-[28rem] border-b border-border" />;
-}
-
 export function Section({
   id,
   className,

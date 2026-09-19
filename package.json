@@ -14,7 +14,8 @@
     "lint": "eslint",
     "mcp": "npm run dev --prefix mcp",
     "mcp:smoke": "npm run smoke --prefix mcp",
-    "vibefarsi": "node packages/cli/dist/index.js"
+    "vibefarsi": "node packages/cli/dist/index.js",
+    "previews": "node scripts/capture-previews.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.0.0",
@@ -33,6 +34,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "playwright-core": "^1.63.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

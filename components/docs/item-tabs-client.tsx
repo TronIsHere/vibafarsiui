@@ -5,9 +5,13 @@ import { Bot, ChevronDown, Code2, Eye, Maximize2, RotateCcw } from "lucide-react
 import { CopyButton } from "@/components/shared/copy-button";
 import { themes } from "@/lib/registry/themes";
 import { cn } from "@/lib/utils";
-import { loadDemo } from "@/components/demos/demo-loaders";
-import { replayable as replayableAnimations } from "@/components/demos/replayable";
-import { LazyMount } from "@/components/shared/lazy-mount";
+import { componentDemos } from "@/components/demos/components";
+import {
+  animationDemos,
+  replayable as replayableAnimations,
+} from "@/components/demos/animations";
+import { backgroundDemos } from "@/components/demos/backgrounds";
+import { blockDemos } from "@/components/demos/blocks";
 
 export type DemoRef = {
   kind: "component" | "animation" | "background" | "template" | "block";
@@ -46,44 +50,19 @@ function TemplateFrame({ slug, theme }: { slug: string; theme: string }) {
   );
 }
 
-function BlockFrame({ slug, theme }: { slug: string; theme: string }) {
-  const ref = React.useRef<HTMLIFrameElement>(null);
-  const src = `/preview/block/${slug}?theme=${encodeURIComponent(theme)}`;
-
-  const apply = React.useCallback(() => {
-    applyThemeTo(ref.current?.contentDocument?.documentElement, theme);
-  }, [theme]);
-
-  React.useEffect(apply, [apply]);
-
-  return (
-    <iframe
-      ref={ref}
-      title="پیش‌نمایش بلاک"
-      src={src}
-      onLoad={apply}
-      className="min-h-[420px] w-full border-0 bg-background"
-    />
-  );
-}
-
-function DemoPreview({ demo, replay, theme }: { demo: DemoRef; replay: number; theme: string }) {
-  if (demo.kind === "template") {
-    return <TemplateFrame key={replay} slug={demo.slug} theme={theme} />;
+function renderDemo(demo: DemoRef, k: number, theme: string): React.ReactNode {
+  switch (demo.kind) {
+    case "component":
+      return componentDemos[demo.slug];
+    case "animation":
+      return animationDemos[demo.slug]?.(k);
+    case "background":
+      return backgroundDemos[demo.slug];
+    case "block":
+      return <div className="w-full">{blockDemos[demo.slug]}</div>;
+    case "template":
+      return <TemplateFrame key={k} slug={demo.slug} theme={theme} />;
   }
-  if (demo.kind === "block") {
-    return <BlockFrame key={replay} slug={demo.slug} theme={theme} />;
-  }
-  const loader = loadDemo(demo.kind, demo.slug);
-  if (!loader) return null;
-  return (
-    <LazyMount
-      id={`docs:${demo.kind}:${demo.slug}`}
-      loader={loader}
-      replay={replay}
-      gate={false}
-    />
-  );
 }
 
 export interface CodeFileView {
@@ -124,7 +103,7 @@ export function ItemTabsClient({
   const [k, setK] = React.useState(0);
   const [scope, setScope] = React.useState("graphite");
   const [file, setFile] = React.useState(0);
-  const rendered = <DemoPreview demo={demo} replay={k} theme={scope} />;
+  const rendered = renderDemo(demo, k, scope);
 
   const tabs = [
     { id: "preview", label: "پیش‌نمایش", I: Eye },

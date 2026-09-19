@@ -4,9 +4,7 @@ import { useState } from "react";
 import { RotateCcw } from "lucide-react";
 import { cn, fa } from "@/lib/utils";
 import { animations } from "@/lib/registry";
-import { loadAnimationDemo } from "@/components/demos/demo-loaders";
-import { replayable } from "@/components/demos/replayable";
-import { LazyMount } from "@/components/shared/lazy-mount";
+import { animationDemos, replayable } from "@/components/demos/animations";
 import { Section } from "./frame";
 import { ItemCard, SectionFoot, SectionHead } from "./section-head";
 
@@ -19,17 +17,12 @@ function AnimationCard({ slug, name, desc }: { slug: string; name: string; desc:
           type="button"
           onClick={() => setK((x) => x + 1)}
           aria-label="پخش دوباره"
-          className="absolute start-2 top-2 flex size-7 cursor-pointer items-center justify-center rounded-md text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:bg-accent hover:text-foreground focus-visible:opacity-100"
+          className="absolute start-2 top-2 z-10 flex size-7 cursor-pointer items-center justify-center rounded-md text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:bg-accent hover:text-foreground focus-visible:opacity-100"
         >
           <RotateCcw className="size-3.5" />
         </button>
       )}
-      <LazyMount
-        id={`animation:${slug}`}
-        loader={loadAnimationDemo(slug)}
-        replay={k}
-        frameClass="flex min-h-[140px] w-full items-center justify-center"
-      />
+      <div className="flex w-full items-center justify-center">{animationDemos[slug]?.(k)}</div>
     </ItemCard>
   );
 }

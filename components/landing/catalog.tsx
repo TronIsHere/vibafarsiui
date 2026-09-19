@@ -45,7 +45,9 @@ export function Catalog({ standalone }: { standalone?: boolean }) {
       {visible.map((it) => (
         <li key={it.slug} className={cn(it.wide && "sm:col-span-2")}>
           <ItemCard href={`/components/${it.slug}`} name={it.name} slug={it.slug} desc={it.desc}>
-            <div className="flex w-full min-w-0 items-center justify-center">{(standalone ? componentDemos : componentCardDemos)[it.slug]}</div>
+            <div className="flex w-full min-w-0 items-center justify-center">
+              {(standalone ? componentDemos : componentCardDemos)[it.slug]}
+            </div>
           </ItemCard>
         </li>
       ))}

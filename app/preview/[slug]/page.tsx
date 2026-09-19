@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { templates } from "@/lib/registry";
 import { pageMetadata } from "@/lib/site";
-import { templateLoaders } from "@/components/demos/demo-loaders";
+import { templateComponents } from "@/components/demos/templates";
 
 export function generateStaticParams() {
   return templates.map((c) => ({ slug: c.slug }));
@@ -21,8 +21,7 @@ export async function generateMetadata({ params }: PageProps<"/preview/[slug]">)
 /** Full-page template preview, no site chrome (used in the docs iframe and «تمام‌صفحه»). */
 export default async function PreviewPage({ params }: PageProps<"/preview/[slug]">) {
   const { slug } = await params;
-  const load = templateLoaders[slug];
-  if (!load) notFound();
-  const { default: Template } = await load();
+  const Template = templateComponents[slug];
+  if (!Template) notFound();
   return <Template />;
 }

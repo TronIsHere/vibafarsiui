@@ -3,9 +3,7 @@
 import Link from "next/link";
 import { cn, fa } from "@/lib/utils";
 import { backgrounds } from "@/lib/registry";
-import { backgroundLoaders } from "@/components/demos/demo-loaders";
-import { LazyMount } from "@/components/shared/lazy-mount";
-import { ViewportGate } from "@/components/shared/viewport-gate";
+import { backgroundDemos } from "@/components/demos/backgrounds";
 import { Section } from "./frame";
 import { SectionFoot, SectionHead } from "./section-head";
 
@@ -26,56 +24,34 @@ export function Backgrounds({ standalone }: { standalone?: boolean }) {
         standalone ? "" : "p-3 sm:p-4 xl:grid-cols-4",
       )}
     >
-      {backgrounds.map((b) => {
-        const loader = backgroundLoaders[b.slug];
-        return (
-          <li key={b.slug}>
-            <Link
-              href={`/backgrounds/${b.slug}`}
-              className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-colors duration-200 hover:border-foreground/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
-            >
-              {loader ? (
-                b.engine === "webgl" ? (
-                  <ViewportGate className="relative h-44 overflow-hidden bg-card">
-                    <LazyMount
-                      id={`background:${b.slug}`}
-                      loader={loader}
-                      gate={false}
-                      className="absolute inset-0"
-                    />
-                  </ViewportGate>
-                ) : (
-                  <LazyMount
-                    id={`background:${b.slug}`}
-                    loader={loader}
-                    gate={false}
-                    className="absolute inset-0"
-                    frameClass="relative h-44 overflow-hidden bg-card"
-                  />
-                )
-              ) : (
-                <div className="relative h-44 overflow-hidden bg-card" />
-              )}
-              <div className="border-t border-border px-4 py-3">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-semibold">{b.name}</h3>
-                  <span className="  text-[11px] text-muted-foreground" dir="ltr">
-                    {b.slug}
+      {backgrounds.map((b) => (
+        <li key={b.slug}>
+          <Link
+            href={`/backgrounds/${b.slug}`}
+            className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-colors duration-200 hover:border-foreground/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+          >
+            <div className="relative h-44 overflow-hidden bg-card">
+              {backgroundDemos[b.slug]}
+            </div>
+            <div className="border-t border-border px-4 py-3">
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm font-semibold">{b.name}</h3>
+                <span className="  text-[11px] text-muted-foreground" dir="ltr">
+                  {b.slug}
+                </span>
+                {b.engine === "webgl" && (
+                  <span className="ms-auto rounded-full border border-border px-1.5 text-[10px] leading-4 text-muted-foreground" dir="ltr">
+                    WebGL
                   </span>
-                  {b.engine === "webgl" && (
-                    <span className="ms-auto rounded-full border border-border px-1.5 text-[10px] leading-4 text-muted-foreground" dir="ltr">
-                      WebGL
-                    </span>
-                  )}
-                </div>
-                <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                  {b.desc}
-                </p>
+                )}
               </div>
-            </Link>
-          </li>
-        );
-      })}
+              <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                {b.desc}
+              </p>
+            </div>
+          </Link>
+        </li>
+      ))}
     </ul>
   );
   if (standalone)

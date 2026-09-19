@@ -264,7 +264,7 @@ export const animations: AnimationDoc[] = [
     desc: "کارت‌هایی روی هم که هر چند ثانیه کارت جلویی به ته صف میره، مناسب نظرات مشتری.",
     usage: `import { CardStack } from "@/components/animations/card-stack"\n\n<CardStack className="h-44" items={reviews.map((r) => <Review key={r.id} {...r} />)} />`,
     props: [{ name: "items", type: "ReactNode[]", desc: "کارت‌ها به ترتیب اولیه." }, { name: "interval", type: "number", default: "3200", desc: "میلی‌ثانیه بین جابه‌جایی‌ها." }, { name: "offset / scale", type: "number", default: "12 / 0.05", desc: "جابه‌جایی و کوچک‌شدن هر لایه." }],
-    promptBullets: ["Keep an order array and rotate it on an interval; each card is absolute inset-0 with transform translateY(depth × offset) scale(1 − depth × scale), origin top, and z-index by depth.", "Pause the interval on hover; cards deeper than two fade out; only the front card is not aria-hidden."],
+    promptBullets: ["Keep an order array and rotate it on an interval; each card is absolute inset-0 with transform translateY(depth × offset) scale(1 − depth × scale), origin top, and z-index by depth.", "Pause the interval on hover; cards deeper than two fade out; only the front card is not aria-hidden.", "Small SVG countdown ring at the top-end corner uses the draw keyframe over `interval` ms and remounts each cycle; animation-play-state pauses on hover."],
   },
   {
     slug: "morph-button", name: "دکمه‌ی سه‌حالته", file: an("morph-button"),

@@ -109,8 +109,8 @@ export function ItemCard({
       </Link>
       <div
         className={cn(
-          "relative flex min-w-0 flex-1 items-center justify-center p-4",
-          previewClass ?? "min-h-[176px]",
+          "relative flex min-w-0 flex-1 items-center justify-center overflow-hidden",
+          previewClass ?? "min-h-44 p-4",
         )}
       >
         {children}

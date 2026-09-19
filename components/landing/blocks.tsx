@@ -1,11 +1,9 @@
-"use client";
-
 import Link from "next/link";
 import { cn, fa } from "@/lib/utils";
 import { blocks } from "@/lib/registry";
-import { ViewportGate } from "@/components/shared/viewport-gate";
 import { Section } from "./frame";
 import { SectionFoot, SectionHead } from "./section-head";
+import { CatalogShot } from "./catalog-shot";
 
 export function Blocks({ standalone }: { standalone?: boolean }) {
   const head = (
@@ -24,22 +22,17 @@ export function Blocks({ standalone }: { standalone?: boolean }) {
       {blocks.map((b) => (
         <li key={b.slug}>
           <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-colors duration-200 hover:border-foreground/25 focus-within:ring-2 focus-within:ring-ring/60">
-            {/* preview is inert and outside any anchor (nested <a> would break hydration) */}
-            <ViewportGate className="relative h-56 overflow-hidden bg-background">
-              <div aria-hidden inert className="absolute inset-0">
-                <div className="pointer-events-none absolute inset-x-0 top-0 origin-top" style={{ width: "200%", transform: "scale(0.5)", transformOrigin: "top right" }}>
-                  <iframe
-                    src={`/preview/block/${b.slug}`}
-                    title={`پیش‌نمایش ${b.name}`}
-                    tabIndex={-1}
-                    loading="lazy"
-                    className="min-h-[640px] w-full border-0 bg-background"
-                  />
-                </div>
-                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card to-transparent" />
-              </div>
-            </ViewportGate>
-            <Link href={`/blocks/${b.slug}`} aria-label={`باز کردن بلاک ${b.name}`} className="absolute inset-x-0 top-0 h-56 outline-none" />
+            <div className="relative h-56 overflow-hidden bg-background">
+              <CatalogShot
+                kind="blocks"
+                slug={b.slug}
+                name={b.name}
+                cover
+                sizes="(max-width: 640px) 100vw, 50vw"
+              />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card to-transparent" />
+              <Link href={`/blocks/${b.slug}`} aria-label={`باز کردن بلاک ${b.name}`} className="absolute inset-0" />
+            </div>
             <Link href={`/blocks/${b.slug}`} className="block border-t border-border px-4 py-3 outline-none">
               <div className="flex items-center justify-between gap-2">
                 <h3 className="text-sm font-semibold">{b.name}</h3>

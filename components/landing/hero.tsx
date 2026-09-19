@@ -29,7 +29,7 @@ export function Hero() {
         <div className="animate-fade-up">
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-[11.5px] text-muted-foreground">
             <span className="size-1.5 animate-pulse-soft rounded-full bg-brand" />
-            v0.1 · پیش‌نمایش عمومی · رایگان و متن‌باز
+            v1 · پیش‌نمایش عمومی · رایگان و متن‌باز
           </span>
         </div>
 
@@ -51,12 +51,9 @@ export function Hero() {
           className="mt-6 max-w-2xl text-base text-muted-foreground sm:text-[17px] animate-fade-up"
           style={{ animationDelay: "120ms" }}
         >
-          وایب‌فارسی مجموعه‌ی کامپوننت راست‌چین برای React و Next.js است؛ پکیج npm
-          از خودِ کامپوننت‌ها نیست. همه‌ی کامپوننت‌ها از پایه راست‌چین هستن و فونت و
-          اعداد فارسی هم داخل خودشون هست. می‌تونید فایل را کپی کنید و در پروژه
-          بگذارید، یا پرامپت انگلیسی‌اش را به Cursor یا Claude بدید تا همان را در
-          پروژه‌تون بسازه. قوانین فارسی داخل پرامپت هست، پس لازم نیست چیزی یادآوری
-          کنید.
+          کامپوننت راست‌چین برای React و Next.js؛ فونت و اعداد فارسی هم داخل
+          خودشون هست. فایل رو کپی کنید، یا پرامپت رو بدید به Cursor، Claude یا
+          Codex.
         </p>
 
         <div

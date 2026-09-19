@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { blocks } from "@/lib/registry";
 import { pageMetadata } from "@/lib/site";
-import { loadBlockDemo } from "@/components/demos/demo-loaders";
+import { BlockDemo } from "@/components/demos/blocks";
 
 export function generateStaticParams() {
   return blocks.map((b) => ({ slug: b.slug }));
@@ -23,10 +23,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlockPreviewPage({ params }: Props) {
   const { slug } = await params;
   if (!blocks.some((b) => b.slug === slug)) notFound();
-  const { default: Demo } = await loadBlockDemo(slug)();
   return (
-    <div className="min-h-dvh bg-background text-foreground">
-      <Demo />
+    <div data-preview-root className="min-h-dvh bg-background text-foreground">
+      <BlockDemo slug={slug} />
     </div>
   );
 }

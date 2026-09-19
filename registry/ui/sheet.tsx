@@ -14,6 +14,15 @@ export interface SheetProps {
   className?: string;
 }
 
+const SLIDE = "0.35s cubic-bezier(0.16, 1, 0.3, 1) both";
+
+function panelAnimation(side: NonNullable<SheetProps["side"]>) {
+  if (side === "bottom") return `sheet-from-bottom ${SLIDE}`;
+  const rtl = typeof document === "undefined" || document.documentElement.dir !== "ltr";
+  if (side === "start") return `${rtl ? "sheet-from-right" : "sheet-from-left"} ${SLIDE}`;
+  return `${rtl ? "sheet-from-left" : "sheet-from-right"} ${SLIDE}`;
+}
+
 /** کشو. A side panel for filters, carts and mobile navigation. */
 export function Sheet({ open, onOpenChange, title, side = "start", children, className }: SheetProps) {
   const titleId = React.useId();
@@ -28,14 +37,19 @@ export function Sheet({ open, onOpenChange, title, side = "start", children, cla
 
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" onClick={() => onOpenChange(false)}>
+    <div
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+      style={{ animation: "fade-in 0.2s ease-out both" }}
+      onClick={() => onOpenChange(false)}
+    >
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? titleId : undefined}
         onClick={(e) => e.stopPropagation()}
+        style={{ animation: panelAnimation(side) }}
         className={cn(
-          "absolute flex flex-col bg-popover text-popover-foreground shadow-2xl animate-fade-in [animation-duration:200ms]",
+          "absolute flex flex-col bg-popover text-popover-foreground shadow-2xl",
           side === "start" && "inset-y-0 start-0 w-full max-w-sm border-e border-border",
           side === "end" && "inset-y-0 end-0 w-full max-w-sm border-s border-border",
           side === "bottom" && "inset-x-0 bottom-0 max-h-[85vh] rounded-t-2xl border-t border-border",

@@ -63,3 +63,7 @@ export const blockDemos: Record<string, React.ReactNode> = {
   "auth-card": <div className="flex justify-center px-6 py-12"><AuthCard /></div>,
   cta: <CtaBlock title="همین امروز شروع کنید" description="بدون کارت بانکی، در کمتر از ده دقیقه. هر وقت خواستید لغو کنید." action="ساخت حساب رایگان" note="بیش از ۲ هزار فروشگاه با دکان کار می‌کنند" />,
 };
+
+export function BlockDemo({ slug }: { slug: string }) {
+  return blockDemos[slug] ?? null;
+}
