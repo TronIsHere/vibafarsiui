@@ -2,8 +2,10 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { CodeBlock } from "@/components/shared/code-block";
 import { CopyButton } from "@/components/shared/copy-button";
+import { JsonLd } from "@/components/shared/json-ld";
 import { Breadcrumb } from "@/registry/ui/breadcrumb";
 import { animations, backgrounds, blocks, type DocBase, type PropDoc } from "@/lib/registry";
+import { breadcrumbJsonLd, itemJsonLd } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export function DocHeader({
@@ -17,8 +19,17 @@ export function DocHeader({
   item: { name: string; slug: string; desc: string };
   kind: string;
 }) {
+  const path = `/${section}/${item.slug}`;
   return (
     <header>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "خانه", path: "/" },
+          { name: sectionLabel, path: `/${section}` },
+          { name: item.name, path },
+        ])}
+      />
+      <JsonLd data={itemJsonLd({ name: item.name, desc: item.desc }, path)} />
       <Breadcrumb
         items={[
           { label: "خانه", href: "/" },

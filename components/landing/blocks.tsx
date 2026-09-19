@@ -3,21 +3,9 @@
 import Link from "next/link";
 import { cn, fa } from "@/lib/utils";
 import { blocks } from "@/lib/registry";
-import { blockDemos } from "@/components/demos/blocks";
+import { ViewportGate } from "@/components/shared/viewport-gate";
 import { Section } from "./frame";
 import { SectionFoot, SectionHead } from "./section-head";
-
-/** Blocks are full sections, so the cards show the real block scaled to fit. */
-function ScaledPreview({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative h-56 overflow-hidden bg-background" aria-hidden inert>
-      <div className="pointer-events-none absolute inset-x-0 top-0 origin-top" style={{ width: "200%", transform: "scale(0.5)", transformOrigin: "top right" }} aria-hidden>
-        <div className="w-full">{children}</div>
-      </div>
-      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card to-transparent" />
-    </div>
-  );
-}
 
 export function Blocks({ standalone }: { standalone?: boolean }) {
   const head = (
@@ -37,7 +25,20 @@ export function Blocks({ standalone }: { standalone?: boolean }) {
         <li key={b.slug}>
           <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-colors duration-200 hover:border-foreground/25 focus-within:ring-2 focus-within:ring-ring/60">
             {/* preview is inert and outside any anchor (nested <a> would break hydration) */}
-            <ScaledPreview>{blockDemos[b.slug]}</ScaledPreview>
+            <ViewportGate className="relative h-56 overflow-hidden bg-background">
+              <div aria-hidden inert className="absolute inset-0">
+                <div className="pointer-events-none absolute inset-x-0 top-0 origin-top" style={{ width: "200%", transform: "scale(0.5)", transformOrigin: "top right" }}>
+                  <iframe
+                    src={`/preview/block/${b.slug}`}
+                    title={`پیش‌نمایش ${b.name}`}
+                    tabIndex={-1}
+                    loading="lazy"
+                    className="min-h-[640px] w-full border-0 bg-background"
+                  />
+                </div>
+                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card to-transparent" />
+              </div>
+            </ViewportGate>
             <Link href={`/blocks/${b.slug}`} aria-label={`باز کردن بلاک ${b.name}`} className="absolute inset-x-0 top-0 h-56 outline-none" />
             <Link href={`/blocks/${b.slug}`} className="block border-t border-border px-4 py-3 outline-none">
               <div className="flex items-center justify-between gap-2">

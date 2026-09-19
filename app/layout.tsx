@@ -35,6 +35,9 @@ export const metadata: Metadata = {
   publisher: SITE_NAME,
   alternates: {
     canonical: "/",
+    types: {
+      "text/plain": "/llms.txt",
+    },
   },
   openGraph: {
     type: "website",

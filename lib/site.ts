@@ -5,7 +5,7 @@ export const SITE_NAME = "وایب‌فارسی";
 export const SITE_NAME_EN = "VibeFarsi";
 export const GITHUB_URL = "https://github.com/TronIsHere/vibafarsiui";
 export const GITHUB_REPO = "TronIsHere/vibafarsiui";
-export const SPONSOR_URL = "https://github.com/sponsors/TronIsHere";
+export const SPONSOR_URL = "https://x.com/Erwinamm";
 export const NPM_URL = "https://www.npmjs.com/package/vibefarsi";
 
 export const SITE_TITLE = "کامپوننت‌های فارسی راست‌چین برای React · وایب‌فارسی";
@@ -58,6 +58,13 @@ export function pageMetadata({
   };
 }
 
+function metaDescription(desc?: string) {
+  const extra = "کد، پرامپت و راهنمای نصب برای React و Next.js.";
+  if (!desc) return extra;
+  if (desc.length >= 110) return desc;
+  return `${desc} ${extra}`;
+}
+
 export function itemMetadata(
   item: { name: string; desc?: string } | undefined,
   section: string,
@@ -67,8 +74,8 @@ export function itemMetadata(
     return pageMetadata({ title: "یافت نشد", path, index: false });
   }
   return pageMetadata({
-    title: `${item.name} · ${section} · وایب‌فارسی`,
-    description: item.desc,
+    title: `${item.name} راست‌چین · ${section} · وایب‌فارسی`,
+    description: metaDescription(item.desc),
     path,
   });
 }
@@ -77,10 +84,18 @@ export function siteJsonLd() {
   const orgId = absUrl("/#organization");
   const siteId = absUrl("/#website");
   const appId = absUrl("/#app");
+  const personId = absUrl("/#maintainer");
 
   return {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "Person",
+        "@id": personId,
+        name: "TronIsHere",
+        url: GITHUB_URL,
+        sameAs: [GITHUB_URL, SPONSOR_URL],
+      },
       {
         "@type": "Organization",
         "@id": orgId,
@@ -91,7 +106,8 @@ export function siteJsonLd() {
           "@type": "ImageObject",
           url: absUrl("/icons/android-chrome-512x512.png"),
         },
-        sameAs: [GITHUB_URL, NPM_URL],
+        sameAs: [GITHUB_URL, NPM_URL, SPONSOR_URL],
+        founder: { "@id": personId },
       },
       {
         "@type": "WebSite",
@@ -151,6 +167,44 @@ export function docsHowToJsonLd() {
         text: "با npx vibefarsi add button calendar price هر قطعه را با وابستگی‌هایش داخل پروژه بنویسید.",
         url: absUrl("/docs#cli"),
       },
+      {
+        "@type": "HowToStep",
+        position: 3,
+        name: "گزینه‌ها (اختیاری)",
+        text: "با --font iransans فونت را عوض کنید، با --theme saffron تم دیگری بگذارید، و با --dry-run فقط ببینید چه فایل‌هایی نوشته می‌شوند.",
+        url: absUrl("/docs#cli"),
+      },
     ],
+  };
+}
+
+export function breadcrumbJsonLd(items: { name: string; path?: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      ...(item.path ? { item: absUrl(item.path) } : {}),
+    })),
+  };
+}
+
+export function itemJsonLd(
+  item: { name: string; desc: string },
+  path: string,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    name: item.name,
+    description: item.desc,
+    url: absUrl(path),
+    inLanguage: "fa-IR",
+    programmingLanguage: "TypeScript",
+    codeRepository: GITHUB_URL,
+    isPartOf: { "@id": absUrl("/#app") },
+    author: { "@id": absUrl("/#organization") },
   };
 }

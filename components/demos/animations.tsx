@@ -289,9 +289,9 @@ export const animationDemos: Record<string, (k: number) => React.ReactNode> = {
     </div>
   ),
   "text-reveal": (k) => (
-    <h2 key={k} className="text-center text-2xl font-bold leading-snug">
+    <p key={k} className="text-center text-2xl font-bold leading-snug">
       <TextReveal lines={["زیرساخت پرداخت", "برای محصول دیجیتال شما"]} />
-    </h2>
+    </p>
   ),
   "highlight-text": (k) => (
     <p key={k} className="text-center text-xl font-bold">قیمت‌ها <HighlightText>ساده و شفاف</HighlightText> هستند</p>
@@ -348,15 +348,4 @@ export const animationDemos: Record<string, (k: number) => React.ReactNode> = {
   "pulse-button": () => <PulseButton size="lg">شروع رایگان</PulseButton>,
 };
 
-export const replayable = new Set([
-  "typewriter",
-  "counter",
-  "blur-text",
-  "animated-list",
-  "reveal",
-  "text-reveal",
-  "highlight-text",
-  "swipe-to-confirm",
-  "terminal",
-  "scratch-card",
-]);
+export { replayable } from "./replayable";

@@ -3,8 +3,8 @@ import { Catalog } from "@/components/landing/catalog";
 import { pageMetadata } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "کامپوننت‌ها · وایب‌فارسی",
-  description: "دکمه، ورودی، جدول، تقویم شمسی و بقیه، همه از پایه راست‌چین. هر کدام کد، پرامپت و راهنما دارد.",
+  title: "کامپوننت‌های راست‌چین React و Next.js · وایب‌فارسی",
+  description: "دکمه، ورودی، جدول و تقویم شمسی، همه از پایه راست‌چین. هر کدام کد، پرامپت انگلیسی و راهنمای نصب برای Next.js و React دارد.",
   path: "/components",
 });
 

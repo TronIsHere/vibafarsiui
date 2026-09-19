@@ -13,7 +13,11 @@ export function WordRotate({ words, interval = 2200, className }: { words: strin
   const longest = words.reduce((a, b) => (b.length > a.length ? b : a), "");
   return (
     <span className={cn("relative inline-grid overflow-hidden align-baseline", className)} aria-live="polite">
-      <span aria-hidden className="invisible col-start-1 row-start-1">{longest}</span>
+      <span
+        aria-hidden
+        className="invisible col-start-1 row-start-1"
+        style={{ width: `${Math.max(longest.length, 1)}ch` }}
+      />
       <span key={i} className="col-start-1 row-start-1" style={{ animation: "word-in 0.6s cubic-bezier(0.16,1,0.3,1) both" }}>
         {words[i]}
       </span>

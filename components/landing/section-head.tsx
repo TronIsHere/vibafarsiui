@@ -27,20 +27,15 @@ export function SectionHead({
     >
       <div>
         <p className="  text-xs text-muted-foreground">{eyebrow}</p>
-        <h2
-          className={cn(
-            "mt-2 font-bold",
-            standalone ? "text-3xl sm:text-4xl" : "text-2xl sm:text-3xl",
-          )}
-        >
-          {standalone ? (
-            title
-          ) : (
+        {standalone ? (
+          <h1 className="mt-2 text-3xl font-bold sm:text-4xl">{title}</h1>
+        ) : (
+          <h2 className="mt-2 text-2xl font-bold sm:text-3xl">
             <Link href={href} className="transition-colors hover:text-brand">
               {title}
             </Link>
-          )}
-        </h2>
+          </h2>
+        )}
         <p className="mt-2 max-w-xl text-sm text-muted-foreground sm:text-[15px]">
           {desc}
         </p>

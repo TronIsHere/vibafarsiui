@@ -9,11 +9,12 @@ import { DocSection, Notes } from "@/components/docs/blocks";
 import { readSource } from "@/lib/source";
 import { sections } from "@/lib/registry";
 import { docsHowToJsonLd, pageMetadata } from "@/lib/site";
+import { PRODUCT_FAQ, faqJsonLd } from "@/lib/faq";
 import { cn, fa } from "@/lib/utils";
 
 export const metadata: Metadata = pageMetadata({
-  title: "شروع سریع · وایب‌فارسی",
-  description: "نصب وایب‌فارسی در پروژه‌ی Next.js یا React با Tailwind، خودکار با CLI یا دستی با کپی کردن فایل‌ها.",
+  title: "نصب وایب‌فارسی در Next.js و React · شروع سریع",
+  description: "نصب وایب‌فارسی در پروژه‌ی Next.js یا React با Tailwind v4: خودکار با CLI یا دستی با کپی فایل. راست‌چین، فونت فارسی و توکن‌های تم از اول آماده می‌شود.",
   path: "/docs",
 });
 
@@ -304,6 +305,7 @@ export default function DocsPage() {
   return (
     <article className="space-y-16">
       <JsonLd data={docsHowToJsonLd()} />
+      <JsonLd data={faqJsonLd()} />
       <header>
         <p className="text-xs text-muted-foreground">مستندات</p>
         <h1 className="mt-2 text-3xl font-bold sm:text-4xl">شروع سریع</h1>
@@ -602,6 +604,19 @@ export default function DocsPage() {
         <p className="mt-3 text-xs leading-6 text-muted-foreground">
           برای کار روی همین مخزن، به‌جای npx از <Inline>npm run mcp</Inline> استفاده کنید. فهرست ماشین‌خوان قطعه‌ها در <Inline>/r/&lt;بخش&gt;/&lt;slug&gt;.json</Inline> هست؛ آن مسیر رجیستری CLI است، نه MCP.
         </p>
+      </DocSection>
+
+      <DocSection id="faq" title="پرسش‌های متداول">
+        <dl className="space-y-6">
+          {PRODUCT_FAQ.map((item) => (
+            <div key={item.id}>
+              <dt>
+                <h3 className="text-base font-bold">{item.q}</h3>
+              </dt>
+              <dd className="mt-2 text-sm leading-7 text-muted-foreground">{item.a}</dd>
+            </div>
+          ))}
+        </dl>
       </DocSection>
     </article>
   );

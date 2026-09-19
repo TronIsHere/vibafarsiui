@@ -28,7 +28,7 @@ export default async function BlockPage({ params }: PageProps<"/blocks/[slug]">)
     <article className="space-y-12">
       <DocHeader section="blocks" sectionLabel="بلاک‌ها" item={item} kind="بلاک" />
       <div className="flex flex-wrap gap-1.5">{item.tags.map((t) => <span key={t} className="rounded-full border border-border px-2 py-0.5 text-[11px] text-muted-foreground">{t}</span>)}</div>
-      <ItemTabs demo={{ kind: "block", slug: item.slug }} files={[{ name: item.file.split("/").pop()!, code }]} prompt={buildPrompt(item, "block")} previewClass="min-h-0" />
+      <ItemTabs demo={{ kind: "block", slug: item.slug }} files={[{ name: item.file.split("/").pop()!, code }]} prompt={buildPrompt(item, "block")} previewClass="min-h-0" previewHref={`/preview/block/${item.slug}`} />
       <DocSection id="install" title="نصب"><InstallSteps item={item} targetDir="components/blocks" code={code} section="blocks" /></DocSection>
       {item.registryDeps && item.registryDeps.length > 0 && (
         <DocSection id="parts" title="ساخته‌شده از">

@@ -14,7 +14,7 @@ export function SponsorMark({
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={sponsor.logo}
-        alt=""
+        alt={sponsor.nameEn ? `${sponsor.name} (${sponsor.nameEn})` : sponsor.name}
         className={
           large
             ? "size-16 rounded-xl object-cover ring-1 ring-border sm:size-20"

@@ -43,6 +43,8 @@ export function DocsSidebar({ onNavigate }: { onNavigate?: () => void }) {
     <nav aria-label="مستندات" className="space-y-6 text-sm">
       <div className="space-y-0.5">
         {link("/docs", "شروع سریع", pathname === "/docs")}
+        {link("/about", "درباره", pathname === "/about")}
+        {link("/docs#faq", "پرسش‌های متداول", false)}
         {link("/docs#cli", "نصب خودکار (CLI)", false)}
         {link("/docs#manual", "نصب دستی", false)}
         {link("/docs#prompts", "کار با هوش مصنوعی", false)}

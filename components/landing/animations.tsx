@@ -4,7 +4,9 @@ import { useState } from "react";
 import { RotateCcw } from "lucide-react";
 import { cn, fa } from "@/lib/utils";
 import { animations } from "@/lib/registry";
-import { animationDemos, replayable } from "@/components/demos/animations";
+import { loadAnimationDemo } from "@/components/demos/demo-loaders";
+import { replayable } from "@/components/demos/replayable";
+import { LazyMount } from "@/components/shared/lazy-mount";
 import { Section } from "./frame";
 import { ItemCard, SectionFoot, SectionHead } from "./section-head";
 
@@ -22,7 +24,12 @@ function AnimationCard({ slug, name, desc }: { slug: string; name: string; desc:
           <RotateCcw className="size-3.5" />
         </button>
       )}
-      <div className="flex w-full items-center justify-center">{animationDemos[slug]?.(k)}</div>
+      <LazyMount
+        id={`animation:${slug}`}
+        loader={loadAnimationDemo(slug)}
+        replay={k}
+        frameClass="flex min-h-[140px] w-full items-center justify-center"
+      />
     </ItemCard>
   );
 }

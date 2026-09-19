@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const indexes: MetadataRoute.Sitemap = [
     { url: absUrl("/"), lastModified, changeFrequency: "weekly", priority: 1 },
     { url: absUrl("/docs"), lastModified, changeFrequency: "weekly", priority: 0.9 },
+    { url: absUrl("/about"), lastModified, changeFrequency: "weekly", priority: 0.8 },
     { url: absUrl("/components"), lastModified, changeFrequency: "weekly", priority: 0.9 },
     { url: absUrl("/blocks"), lastModified, changeFrequency: "weekly", priority: 0.8 },
     { url: absUrl("/animations"), lastModified, changeFrequency: "weekly", priority: 0.8 },

@@ -3,8 +3,8 @@ import { Templates } from "@/components/landing/templates";
 import { pageMetadata } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "قالب‌ها · وایب‌فارسی",
-  description: "صفحه‌های کامل از همین کامپوننت‌ها و توکن‌ها. تم را عوض کنید و همه‌ی صفحه‌ها با هم عوض می‌شوند.",
+  title: "قالب‌های راست‌چین React و Next.js · وایب‌فارسی",
+  description: "صفحه‌های کامل از همین کامپوننت‌ها و توکن‌ها: داشبورد، ورود پیامکی، فروشگاه و فاکتور شمسی. با عوض کردن تم همه با هم عوض می‌شوند.",
   path: "/templates",
 });
 

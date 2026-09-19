@@ -3,8 +3,8 @@ import { Backgrounds } from "@/components/landing/backgrounds";
 import { pageMetadata } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
-  title: "پس‌زمینه‌ها · وایب‌فارسی",
-  description: "الگو و نور کم‌کنتراست که متن فارسی روی آن خوانا می‌ماند.",
+  title: "پس‌زمینه‌های کم‌کنتراست برای متن فارسی · وایب‌فارسی",
+  description: "الگو و نور کم‌کنتراست که خط فارسی روی آن خوانا می‌ماند. شیدرهای WebGL رنگ را از توکن تم می‌گیرند.",
   path: "/backgrounds",
 });
 
