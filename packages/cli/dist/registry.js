@@ -90,6 +90,8 @@ export function implicitLibSlugs(content) {
         slugs.push("persian");
     if (content.includes("@/lib/number-to-words"))
         slugs.push("number-to-words");
+    if (content.includes("@/lib/float"))
+        slugs.push("float");
     return slugs;
 }
 export function lucideNeeded(content) {

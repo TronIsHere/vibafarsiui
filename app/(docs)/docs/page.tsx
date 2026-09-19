@@ -570,7 +570,7 @@ export default function DocsPage() {
 
       <DocSection id="mcp" title="سرور MCP">
         <p className="mb-3 text-sm leading-7 text-muted-foreground">
-          ابزارهای هوش مصنوعی به انگلیسی فکر می‌کنن. این پنج ابزار قوانین فارسی و کد رجیستری را به Cursor، Claude Code و Codex میدن تا به‌جای Inter و چیدمان چپ‌چین، کامپوننت وایب‌فارسی بسازن. آدرس سرور <Inline>https://vibefarsi.ir/mcp</Inline> است؛ Node روی سیستم لازم نیست.
+          ابزارهای هوش مصنوعی به انگلیسی فکر می‌کنن. این پنج ابزار قوانین فارسی و کد رجیستری را به Cursor، Claude Code و Codex میدن تا به‌جای Inter و چیدمان چپ‌چین، کامپوننت وایب‌فارسی بسازن. آدرس سرور <Inline>https://vibefarsi.ir/mcp</Inline> هست و Node روی سیستم لازم نیست.
         </p>
         <Code name="mcp.json" code={MCP} lang="json" />
         <ul className="mt-4 space-y-2 text-sm leading-7 text-muted-foreground">
@@ -598,11 +598,11 @@ export default function DocsPage() {
           <li><Inline>scaffold_page</Inline> از توضیح صفحه (پرداخت، ورود پیامکی، نوبت شمسی) یک ترکیب آماده می‌سازه.</li>
         </ul>
         <p className="mt-4 mb-2 text-sm leading-7 text-muted-foreground">
-          اگر بخواهید سرور روی سیستم خودتان اجرا شود، به‌جای URL از npx استفاده کنید:
+          اگر بخواید سرور روی سیستم خودتون اجرا بشه، به‌جای URL از npx استفاده کنید:
         </p>
         <Code name="mcp.json (npx)" code={MCP_NPX} lang="json" />
         <p className="mt-3 text-xs leading-6 text-muted-foreground">
-          برای کار روی همین مخزن، به‌جای npx از <Inline>npm run mcp</Inline> استفاده کنید. فهرست ماشین‌خوان قطعه‌ها در <Inline>/r/&lt;بخش&gt;/&lt;slug&gt;.json</Inline> هست؛ آن مسیر رجیستری CLI است، نه MCP.
+          برای کار روی همین مخزن، به‌جای npx از <Inline>npm run mcp</Inline> استفاده کنید. فهرست ماشین‌خوان کامپوننت‌ها هم در <Inline>/r/&lt;بخش&gt;/&lt;slug&gt;.json</Inline> هست، ولی این مسیر رجیستری CLI هست، نه MCP.
         </p>
       </DocSection>
 

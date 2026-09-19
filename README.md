@@ -6,7 +6,7 @@
 
 ابزارهای هوش مصنوعی و کتابخانه‌های انگلیسی به انگلیسی فکر می‌کنن: فونت Inter می‌گذارن، اعداد را لاتین می‌نویسن و دکمه را چپ‌چین می‌کنن. وایب‌فارسی یک رجیستری از کامپوننت‌های React + Tailwind هست. همه‌شون از پایه راست‌چین هستن و فونت، اعداد فارسی، تومان و تقویم شمسی داخل خودشون هست.
 
-وایب‌فارسی پکیج npm نیست؛ فایل هر کامپوننت داخل پروژه‌تون نوشته میشه و از همان لحظه مال شماست. هر کامپوننت دو خروجی داره: کد TypeScript که در پروژه می‌گذارید، و یک پرامپت انگلیسی که قوانین راست‌چین و فارسی داخلشه و به Cursor یا Claude می‌دید. سرور MCP هم داره تا ادیتور خودش این قوانین و کدها را بخونه و لازم نباشه چیزی یادآوری کنید.
+وایب‌فارسی پکیج npm نیست. فایل هر کامپوننت داخل پروژه‌تون نوشته میشه و از همان لحظه مال شماست. هر کامپوننت دو خروجی داره: کد TypeScript که در پروژه می‌گذارید، و یک پرامپت انگلیسی که قوانین راست‌چین و فارسی داخلشه و به Cursor یا Claude می‌دید. سرور MCP هم داره تا ادیتور خودش این قوانین و کدها را بخونه و لازم نباشه چیزی یادآوری کنید.
 
 سایت و مستندات: [vibefarsi.ir](https://vibefarsi.ir)
 
@@ -39,8 +39,8 @@ npx vibefarsi@latest init
 
 `init` یک‌بار اجرا میشه و این‌ها را می‌نویسه:
 
-- <code dir="ltr">lang="fa" dir="rtl"</code> روی <code dir="ltr">&lt;html&gt;</code>؛ در Next.js داخل `app/layout.tsx` و در Vite داخل `index.html`
-- فونت Vazirmatn؛ در Next.js از `next/font/google` با `app/fonts.ts`، در بقیه‌ی پروژه‌ها import از Google Fonts داخل CSS
+- <code dir="ltr">lang="fa" dir="rtl"</code> روی <code dir="ltr">&lt;html&gt;</code>، در Next.js داخل `app/layout.tsx` و در Vite داخل `index.html`
+- فونت Vazirmatn، در Next.js با `next/font/google` و `app/fonts.ts`، و در بقیه‌ی پروژه‌ها با import از Google Fonts داخل CSS
 - توکن‌های تم گرافیت و نگاشت Tailwind در `globals.css`
 - `lib/utils.ts` (اعداد فارسی، `formatToman`، `cn`) و `lib/jalali.ts` (تبدیل شمسی) از رجیستری
 - `vibefarsi.json` و مسیر <code dir="ltr">@/*</code> در tsconfig
@@ -56,7 +56,7 @@ npx vibefarsi list
 
 <div dir="rtl">
 
-وابستگی‌های رجیستری خودکار میان (`calendar` خودش `lib/jalali.ts` را می‌آوره) و پکیج‌های npm لازم نصب میشن. مقصد فایل‌ها:
+وابستگی‌های رجیستری خودشون می‌آن (`calendar` خودش `lib/jalali.ts` را می‌آوره) و پکیج‌های npm لازم نصب میشن. مقصد فایل‌ها:
 
 | نوع | مسیر |
 | --- | --- |
@@ -74,7 +74,7 @@ npx vibefarsi list
 | <code dir="ltr">--font iransans</code> | اگر `IRANSans-Reg.woff` در پوشه‌ی `fonts` یا `public` باشه، همان را به‌جای Vazirmatn وصل می‌کنه |
 | <code dir="ltr">--theme saffron</code> | تم دیگری به‌جای گرافیت. بعداً هم می‌تونید با `npx vibefarsi add saffron` عوضش کنید |
 | <code dir="ltr">--registry &lt;url&gt;</code> | رجیستری دیگری، مثلاً <code dir="ltr">http://localhost:3000/r</code> وقتی روی خود مخزن کار می‌کنید |
-| <code dir="ltr">--dry-run</code> | فقط نشون میده چه فایل‌هایی نوشته میشن؛ چیزی تغییر نمی‌کنه |
+| <code dir="ltr">--dry-run</code> | فقط نشون میده چه فایل‌هایی نوشته میشن و چیزی را تغییر نمیده |
 | <code dir="ltr">--overwrite</code> | فایل‌های موجود را جایگزین می‌کنه |
 | <code dir="ltr">--no-install</code> | پکیج‌های npm را نصب نمی‌کنه |
 
@@ -82,7 +82,7 @@ npx vibefarsi list
 
 ## MCP
 
-سرور MCP وایب‌فارسی قوانین طراحی فارسی و کد کامپوننت‌ها را مستقیم به Cursor، Claude Code و Codex می‌ده. یک‌بار آدرس <code dir="ltr">https://vibefarsi.ir/mcp</code> را اضافه کنید؛ بعد مثل همیشه پرامپت بدید.
+سرور MCP وایب‌فارسی قوانین طراحی فارسی و کد کامپوننت‌ها را مستقیم به Cursor، Claude Code و Codex میده. یک‌بار آدرس <code dir="ltr">https://vibefarsi.ir/mcp</code> را اضافه کنید و بعد مثل همیشه پرامپت بدید.
 
 </div>
 
@@ -110,10 +110,10 @@ npx vibefarsi list
 
 | ابزار | کار |
 | --- | --- |
-| `get_design_rules` | قوانین راست‌چین، فونت، اعداد و توکن |
-| `search_registry` | جست‌وجو در کامپوننت‌ها؛ فارسی یا انگلیسی |
+| `get_design_rules` | قوانین راست‌چین، فونت، اعداد و توکن‌ها |
+| `search_registry` | جست‌وجو بین کامپوننت‌ها، به فارسی یا انگلیسی |
 | `get_component` | کد و پرامپت همان کامپوننت، با وابستگی‌هاش |
-| `get_theme` | توکن‌های رنگ و شعاع گوشه |
+| `get_theme` | توکن‌های رنگ و شعاع گوشه‌ی هر تم |
 | `scaffold_page` | از توضیح صفحه، یک ترکیب آماده می‌سازه |
 
 یک پرامپت معمولی مثل «یک صفحه‌ی پرداخت با خلاصه‌ی سبد و فرم آدرس بساز» این مسیر را می‌ره:
@@ -136,14 +136,14 @@ get_component(["input", "price", "button"])
 | --- | --- | --- |
 | [کامپوننت‌ها](https://vibefarsi.ir/components) | ۵۹ | دکمه، فرم، جدول داده، تقویم شمسی، شماره‌ی موبایل، کد تأیید، شماره‌ی شبا، قیمت به تومان |
 | [بلاک‌ها](https://vibefarsi.ir/blocks) | ۸ | هیرو، ویژگی‌ها، ردیف قیمت، پرسش‌های متداول، آمار، نظر مشتریان، کارت ورود، فراخوان پایانی |
-| [انیمیشن‌ها](https://vibefarsi.ir/animations) | ۳۹ | حرکت با CSS و React؛ بدون کتابخانه‌ی اضافه |
-| [پس‌زمینه‌ها](https://vibefarsi.ir/backgrounds) | ۳۲ | الگو و نور کم‌کنتراست؛ متن روشون خوانا می‌مونه |
+| [انیمیشن‌ها](https://vibefarsi.ir/animations) | ۳۹ | انیمیشن با CSS و React، بدون کتابخانه‌ی اضافه |
+| [پس‌زمینه‌ها](https://vibefarsi.ir/backgrounds) | ۳۲ | الگو و نور کم‌کنتراست که متن روشون خوانا می‌مونه |
 | [قالب‌ها](https://vibefarsi.ir/templates) | ۲۴ | صفحه‌های کامل، از همین کامپوننت‌ها |
 | [سیستم‌های طراحی](https://vibefarsi.ir/themes) | ۶ | گرافیت (پیش‌فرض)، فیروزه، زعفران، انار، لاجورد، کاغذ (روشن) |
 
 ## توسعه روی همین مخزن
 
-سایت، رجیستری، CLI و سرور MCP همه در همین مخزن هستن. همه‌چیز از پوشه‌ی `registry` می‌آد؛ سایت همان فایل‌ها را نشون میده و مسیر <code dir="ltr">/r</code> همان‌ها را به CLI و MCP می‌ده.
+سایت، رجیستری، CLI و سرور MCP همه در همین مخزن هستن. همه‌چیز از پوشه‌ی `registry` می‌آد. سایت همان فایل‌ها را نشون میده و مسیر <code dir="ltr">/r</code> هم همان‌ها را به CLI و MCP میده.
 
 </div>
 
@@ -186,9 +186,9 @@ npm run mcp:smoke
 
 <div dir="rtl">
 
-سرور MCP رجیستری را از `VIBEFARSI_URL` می‌خونه (پیش‌فرض <code dir="ltr">https://vibefarsi.ir</code>)؛ برای رجیستری محلی آن را روی <code dir="ltr">http://localhost:3000</code> بگذارید. `VIBEFARSI_ROOT` هم برای وقتی‌ه که فایل‌های رجیستری جای دیگری باشن.
+سرور MCP رجیستری را از `VIBEFARSI_URL` می‌خونه (پیش‌فرض <code dir="ltr">https://vibefarsi.ir</code>). برای رجیستری محلی آن را روی <code dir="ltr">http://localhost:3000</code> بگذارید. `VIBEFARSI_ROOT` هم برای وقتیه که فایل‌های رجیستری جای دیگری باشن.
 
-روی npm هر دو پکیج هست: `npx vibefarsi` و <code dir="ltr">npx -y @vibefarsi/mcp</code>. دستورهای بالا برای وقتی‌ه که روی سورس همین مخزن کار می‌کنید.
+روی npm هر دو پکیج هست: `npx vibefarsi` و <code dir="ltr">npx -y @vibefarsi/mcp</code>. دستورهای بالا برای وقتیه که روی سورس همین مخزن کار می‌کنید.
 
 ## لایسنس
 

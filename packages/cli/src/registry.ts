@@ -136,6 +136,7 @@ export function implicitLibSlugs(content: string) {
   if (content.includes("@/lib/jalali")) slugs.push("jalali");
   if (content.includes("@/lib/persian")) slugs.push("persian");
   if (content.includes("@/lib/number-to-words")) slugs.push("number-to-words");
+  if (content.includes("@/lib/float")) slugs.push("float");
   return slugs;
 }
 

@@ -12,7 +12,7 @@ export default function DocsNotFound() {
       <h1 className="mt-6 text-3xl font-bold sm:text-4xl">این صفحه وجود ندارد</h1>
       <p className="mt-5 text-base text-muted-foreground sm:text-[17px]">
         شاید لینک قدیمی باشد یا آدرس اشتباه تایپ شده. از جست‌وجوی بالای صفحه یا
-        فهرست کنار صفحه ادامه دهید.
+        فهرست کنار صفحه ادامه بدید.
       </p>
       <div className="mt-8 flex flex-wrap items-center gap-2.5">
         <Link

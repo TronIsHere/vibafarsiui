@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Check, ChevronDown, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { FloatPortal, useFloat } from "@/lib/float";
 
 export interface AsyncOption { value: string; label: string; hint?: string }
 
@@ -27,6 +28,9 @@ export function ComboboxAsync({ loadOptions, value = null, onChange, placeholder
   const [state, setState] = React.useState<"idle" | "loading" | "error">("idle");
   const [index, setIndex] = React.useState(0);
   const listId = React.useId();
+  const root = React.useRef<HTMLDivElement>(null);
+  const listOpen = open && q.trim().length >= minChars;
+  const { mounted, style, theme, panel } = useFloat(listOpen, root, { matchWidth: true, gap: 4 });
 
   React.useEffect(() => {
     if (!open || q.trim().length < minChars) return;
@@ -46,7 +50,7 @@ export function ComboboxAsync({ loadOptions, value = null, onChange, placeholder
   function pick(o: AsyncOption) { setQ(o.label); onChange?.(o); setOpen(false); }
 
   return (
-    <div className={cn("relative", className)}>
+    <div ref={root} className={cn("relative", className)}>
       <div className="flex h-10 items-center overflow-visible rounded-lg border border-input bg-background/60 pe-2 ps-3 transition-colors focus-within:border-transparent focus-within:ring-2 focus-within:ring-ring/60">
         <input
           role="combobox"
@@ -68,8 +72,8 @@ export function ComboboxAsync({ loadOptions, value = null, onChange, placeholder
         />
         {state === "loading" ? <Loader2 className="size-4 animate-spin text-muted-foreground" /> : <ChevronDown className={cn("size-4 text-muted-foreground transition-transform", open && "rotate-180")} />}
       </div>
-      {open && q.trim().length >= minChars && (
-        <ul id={listId} role="listbox" className="absolute inset-x-0 top-full z-40 mt-1 max-h-60 overflow-auto rounded-lg border border-border bg-popover p-1.5 text-[14px]/8 shadow-lg">
+      <FloatPortal open={listOpen} mounted={mounted} style={style} theme={theme} panelRef={panel} className="fixed z-50">
+        <ul id={listId} role="listbox" className="max-h-60 overflow-auto rounded-lg border border-border bg-popover p-1.5 text-[14px]/8 shadow-lg">
           {state === "error" && <li className="px-2.5 py-2 text-destructive">{errorText}</li>}
           {state === "loading" && items.length === 0 && <li className="px-2.5 py-2 text-muted-foreground">در حال جست‌وجو…</li>}
           {state === "idle" && items.length === 0 && <li className="px-2.5 py-2 text-muted-foreground">{emptyText}</li>}
@@ -90,7 +94,7 @@ export function ComboboxAsync({ loadOptions, value = null, onChange, placeholder
             </li>
           ))}
         </ul>
-      )}
+      </FloatPortal>
     </div>
   );
 }

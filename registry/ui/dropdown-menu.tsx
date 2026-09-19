@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { eventInside, FloatPortal, useFloat } from "@/lib/float";
 
 export type MenuItem =
   | {
@@ -35,18 +36,17 @@ export function DropdownMenu({
 }: DropdownMenuProps) {
   const [open, setOpen] = React.useState(false);
   const root = React.useRef<HTMLDivElement>(null);
-  const menu = React.useRef<HTMLDivElement>(null);
+  const { mounted, style, theme, panel, update } = useFloat(open, root, { align });
 
   React.useEffect(() => {
     if (!open) return;
-    const onDoc = (e: MouseEvent) =>
-      !root.current?.contains(e.target as Node) && setOpen(false);
+    const onDoc = (e: MouseEvent) => { if (!eventInside(e, root.current, panel.current)) setOpen(false); };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
       if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         e.preventDefault();
         const els = Array.from(
-          menu.current?.querySelectorAll<HTMLElement>(
+          panel.current?.querySelectorAll<HTMLElement>(
             "[role=menuitem]:not([disabled])",
           ) ?? [],
         );
@@ -58,34 +58,36 @@ export function DropdownMenu({
     };
     document.addEventListener("mousedown", onDoc);
     document.addEventListener("keydown", onKey);
-    menu.current?.querySelector<HTMLElement>("[role=menuitem]")?.focus();
+    panel.current?.querySelector<HTMLElement>("[role=menuitem]")?.focus();
     return () => {
       document.removeEventListener("mousedown", onDoc);
       document.removeEventListener("keydown", onKey);
     };
-  }, [open]);
+  }, [open, panel]);
 
   return (
-    <div ref={root} className={cn("relative inline-block", className)}>
+    <div ref={root} className={cn("inline-block", className)}>
       <span
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => { if (!open) update(); setOpen((o) => !o); }}
         aria-haspopup="menu"
         aria-expanded={open}
         className="inline-flex cursor-pointer"
       >
         {trigger}
       </span>
-      {open && (
-        <div
-          ref={menu}
-          role="menu"
-          className={cn(
-            "absolute top-full z-40 mt-1 min-w-44 rounded-lg border border-border bg-popover p-1 text-sm text-popover-foreground shadow-lg",
-            "animate-fade-up [animation-duration:150ms]",
-            align === "start" ? "start-0" : "end-0",
-          )}
-        >
-          {items.map((it, i) => {
+      <FloatPortal
+        open={open}
+        mounted={mounted}
+        style={style}
+        theme={theme}
+        panelRef={panel}
+        role="menu"
+        className={cn(
+          "fixed z-50 min-w-44 rounded-lg border border-border bg-popover p-1 text-sm text-popover-foreground shadow-lg",
+          "animate-fade-up [animation-duration:150ms]",
+        )}
+      >
+        {items.map((it, i) => {
             if (it.type === "separator")
               return <hr key={i} className="my-1 border-border" />;
             if (it.type === "label")
@@ -125,8 +127,7 @@ export function DropdownMenu({
               </button>
             );
           })}
-        </div>
-      )}
+      </FloatPortal>
     </div>
   );
 }

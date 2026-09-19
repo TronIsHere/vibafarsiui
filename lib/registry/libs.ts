@@ -63,4 +63,27 @@ numberToWords("۱۴۰۵")   // هزار و چهارصد و پنج`,
       "amountToWords(n, unit) appends the unit; tomanToWords and rialToWords are shortcuts.",
     ],
   },
+  {
+    slug: "float",
+    name: "لایه‌ی شناور",
+    desc: "پورتال position:fixed برای پاپ‌آور، منو و کمبوباکس تا overflow:hidden آن‌ها را نبرد.",
+    file: "lib/float.tsx",
+    usage: `import { useFloat, FloatPortal } from "@/lib/float"
+
+const root = useRef<HTMLDivElement>(null)
+const { mounted, style, theme, panel } = useFloat(open, root)
+return (
+  <div ref={root}>
+    <button onClick={() => setOpen((o) => !o)}>باز</button>
+    <FloatPortal open={open} mounted={mounted} style={style} theme={theme} panelRef={panel} className="fixed z-50 …">
+      …
+    </FloatPortal>
+  </div>
+)`,
+    promptBullets: [
+      "Portal the panel into document.body with position:fixed from getBoundingClientRect so overflow:hidden ancestors cannot clip it.",
+      "Copy data-theme from the trigger so a themed preview still colors the panel.",
+      "Flip to the opposite side when the panel would go past the viewport; matchWidth for combobox lists.",
+    ],
+  },
 ];

@@ -3,6 +3,7 @@
 import * as React from "react";
 import { CalendarRange, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { cn, fa } from "@/lib/utils";
+import { eventInside, FloatPortal, useFloat } from "@/lib/float";
 import { JALALI_MONTHS, JALALI_WEEKDAYS_SHORT, formatJalali, jalaliMonthLength, jalaliWeekday, toGregorian, toJalali } from "@/lib/jalali";
 
 export type DateRange = { from: Date | null; to: Date | null };
@@ -210,15 +211,16 @@ export function DateRangePicker({ value, defaultValue = EMPTY, onChange, placeho
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
   const range = value ?? internal;
+  const { mounted, style, theme, panel } = useFloat(open, ref);
 
   React.useEffect(() => {
     if (!open) return;
-    const onDoc = (e: MouseEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);
+    const onDoc = (e: MouseEvent) => { if (!eventInside(e, ref.current, panel.current)) setOpen(false); };
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     document.addEventListener("mousedown", onDoc);
     document.addEventListener("keydown", onKey);
     return () => { document.removeEventListener("mousedown", onDoc); document.removeEventListener("keydown", onKey); };
-  }, [open]);
+  }, [open, panel]);
 
   function set(r: DateRange, close = false) {
     if (value === undefined) setInternal(r);
@@ -248,8 +250,7 @@ export function DateRangePicker({ value, defaultValue = EMPTY, onChange, placeho
           </span>
         )}
       </button>
-      {open && (
-        <div role="dialog" className="absolute start-0 top-full z-40 mt-1 rounded-xl border border-border bg-card p-3 shadow-xl">
+      <FloatPortal open={open} mounted={mounted} style={style} theme={theme} panelRef={panel} role="dialog" className="fixed z-50 rounded-xl border border-border bg-card p-3 shadow-xl">
           {presets.length > 0 && (
             <div className="mb-3 flex flex-wrap gap-1.5">
               {presets.map((p) => (
@@ -265,8 +266,7 @@ export function DateRangePicker({ value, defaultValue = EMPTY, onChange, placeho
             </div>
           )}
           <RangeCalendar {...cal} bare months={months} value={range} onChange={(r) => set(r, !!(r.from && r.to))} />
-        </div>
-      )}
+      </FloatPortal>
     </div>
   );
 }

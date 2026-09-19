@@ -45,15 +45,15 @@ export function NotFoundView() {
                 className="mt-6 max-w-xl text-[2.5rem] font-bold leading-[1.18] sm:text-[3.2rem] sm:leading-[1.14] animate-fade-up"
                 style={{ animationDelay: "60ms" }}
               >
-                این صفحه وجود ندارد
+                این صفحه وجود نداره
               </h1>
 
               <p
                 className="mt-5 max-w-lg text-base text-muted-foreground sm:text-[17px] animate-fade-up"
                 style={{ animationDelay: "120ms" }}
               >
-                شاید لینک قدیمی باشد یا آدرس اشتباه تایپ شده. از جست‌وجوی بالای
-                صفحه یا یکی از بخش‌های زیر ادامه دهید.
+                شاید لینک قدیمی باشه یا آدرس اشتباه تایپ شده. از جست‌وجوی بالای
+                صفحه یا یکی از بخش‌های زیر ادامه بدید.
               </p>
 
               <div
@@ -111,9 +111,9 @@ export function NotFoundView() {
           <Section>
             <div className="border-b border-border px-5 py-8 sm:px-8">
               <p className="text-xs text-muted-foreground">کاتالوگ</p>
-              <h2 className="mt-2 text-2xl font-bold sm:text-3xl">از این‌جا ادامه دهید</h2>
+              <h2 className="mt-2 text-2xl font-bold sm:text-3xl">از این‌جا ادامه بدید</h2>
               <p className="mt-2 max-w-xl text-sm text-muted-foreground sm:text-[15px]">
-                کامپوننت‌ها، بلاک‌ها و بقیه‌ی قطعه‌ها سر جاشون هستن.
+                کامپوننت‌ها، بلاک‌ها و بقیه سر جاشون هستن.
               </p>
             </div>
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

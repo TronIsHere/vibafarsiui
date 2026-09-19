@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Clock, X } from "lucide-react";
 import { cn, en, fa } from "@/lib/utils";
+import { eventInside, FloatPortal, useFloat } from "@/lib/float";
 
 export interface TimePickerProps {
   /** «HH:mm» with Latin digits, e.g. "14:30". null when empty. */
@@ -57,6 +58,7 @@ export function TimePicker({ value, defaultValue = null, onChange, step = 5, min
   const hourCol = React.useRef<HTMLDivElement>(null);
   const minuteCol = React.useRef<HTMLDivElement>(null);
   const listId = React.useId();
+  const { mounted, style, theme, panel } = useFloat(open, root);
 
   // When the value changes from outside (and is not what the segments already spell), reset the segments.
   const [prev, setPrev] = React.useState(current);
@@ -109,7 +111,7 @@ export function TimePicker({ value, defaultValue = null, onChange, step = 5, min
 
   React.useEffect(() => {
     if (!open) return;
-    const onDoc = (e: MouseEvent) => !root.current?.contains(e.target as Node) && setOpen(false);
+    const onDoc = (e: MouseEvent) => { if (!eventInside(e, root.current, panel.current)) setOpen(false); };
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     document.addEventListener("mousedown", onDoc);
     document.addEventListener("keydown", onKey);
@@ -194,14 +196,18 @@ export function TimePicker({ value, defaultValue = null, onChange, step = 5, min
         </p>
       )}
 
-      {open && (
-        <div
-          id={listId}
-          role="dialog"
-          aria-label="انتخاب ساعت"
-          dir="ltr"
-          className="absolute start-0 top-full z-40 mt-1 w-40 rounded-xl border border-border bg-popover p-2 text-popover-foreground shadow-[0_20px_50px_-20px_oklch(0_0_0/80%)] animate-fade-up [animation-duration:180ms]"
-        >
+      <FloatPortal
+        open={open}
+        mounted={mounted}
+        style={style}
+        theme={theme}
+        panelRef={panel}
+        id={listId}
+        role="dialog"
+        aria-label="انتخاب ساعت"
+        dir="ltr"
+        className="fixed z-50 w-40 rounded-xl border border-border bg-popover p-2 text-popover-foreground shadow-[0_20px_50px_-20px_oklch(0_0_0/80%)] animate-fade-up [animation-duration:180ms]"
+      >
           <div className="grid grid-cols-2 gap-2">
             {(
               [
@@ -253,8 +259,7 @@ export function TimePicker({ value, defaultValue = null, onChange, step = 5, min
               تأیید
             </button>
           </div>
-        </div>
-      )}
+      </FloatPortal>
     </div>
   );
 }

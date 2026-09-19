@@ -3,6 +3,7 @@
 import * as React from "react";
 import { CalendarDays, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { eventInside, FloatPortal, useFloat } from "@/lib/float";
 import { formatJalali } from "@/lib/jalali";
 import { Calendar, type CalendarProps } from "./calendar";
 
@@ -22,15 +23,16 @@ export function DatePicker({ value, onChange, placeholder = "انتخاب تار
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
   const date = value === undefined ? internal : value;
+  const { mounted, style, theme, panel } = useFloat(open, ref);
 
   React.useEffect(() => {
     if (!open) return;
-    const onDoc = (e: MouseEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);
+    const onDoc = (e: MouseEvent) => { if (!eventInside(e, ref.current, panel.current)) setOpen(false); };
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     document.addEventListener("mousedown", onDoc);
     document.addEventListener("keydown", onKey);
     return () => { document.removeEventListener("mousedown", onDoc); document.removeEventListener("keydown", onKey); };
-  }, [open]);
+  }, [open, panel]);
 
   function set(d: Date | null) {
     if (value === undefined) setInternal(d);
@@ -59,11 +61,9 @@ export function DatePicker({ value, onChange, placeholder = "انتخاب تار
           </span>
         )}
       </button>
-      {open && (
-        <div role="dialog" className="absolute start-0 top-full z-40 mt-1 shadow-xl">
-          <Calendar {...cal} value={date} onChange={(d) => { set(d); setOpen(false); }} />
-        </div>
-      )}
+      <FloatPortal open={open} mounted={mounted} style={style} theme={theme} panelRef={panel} role="dialog" className="fixed z-50 shadow-xl">
+        <Calendar {...cal} value={date} onChange={(d) => { set(d); setOpen(false); }} />
+      </FloatPortal>
     </div>
   );
 }

@@ -78,6 +78,7 @@ export const EXTRA_ALIASES: Record<string, string[]> = {
   "prompt-input": ["chat input", "composer", "پرامپت"],
   card: ["panel", "کارت"],
   utils: ["fa", "digits", "toman", "format"],
+  float: ["portal", "overlay", "fixed"],
   jalali: ["شمسی", "jalaali", "persian date"],
   auth: ["login", "signup", "ورود", "ثبت نام", "ثبت‌نام", "otp login"],
   "shop-dashboard": ["admin", "داشبورد", "فروش"],

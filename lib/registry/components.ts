@@ -670,7 +670,7 @@ const week = jalaliWeekLabels() // ["ش","ی","د","س","چ","پ","ج"] ending t
   …
 </Popover>`,
     props: [{ name: "side / align", type: '"top"|"bottom" / "start"|"center"|"end"', default: "bottom / start", desc: "جهت و تراز نسبت به دکمه." }, { name: "open / onOpenChange", type: "boolean", desc: "حالت کنترل‌شده." }],
-    promptBullets: ["role=dialog and aria-expanded on the button; start-0 means flush with the button's right edge in RTL.", "z-40 and a short enter animation; no positioning library."],
+    promptBullets: ["role=dialog and aria-expanded on the button; start aligns to the trigger's inline-start (right in RTL).", "Portal into document.body with position:fixed from getBoundingClientRect so overflow:hidden ancestors cannot clip it; no positioning library."],
   },
   {
     slug: "context-menu", name: "منوی راست‌کلیک", cat: "overlay", file: ui("context-menu"), registryDeps: ["dropdown-menu"],
@@ -691,7 +691,7 @@ const week = jalaliWeekLabels() // ["ش","ی","د","س","چ","پ","ج"] ending t
   <ProfilePreview />
 </HoverCard>`,
     props: [{ name: "openDelay / closeDelay", type: "number", default: "300 / 150", desc: "تأخیر باز و بسته شدن (میلی‌ثانیه)." }],
-    promptBullets: ["Open/close timers with delay so a fast mouse pass does not open it; open immediately on focus."],
+    promptBullets: ["Open/close timers with delay so a fast mouse pass does not open it; open immediately on focus.", "Portal into document.body with position:fixed so overflow:hidden ancestors cannot clip it; keep the close delay so the pointer can reach the card."],
   },
   {
     slug: "carousel", name: "اسلایدر", cat: "display", file: ui("carousel"), wide: true, deps: ["lucide-react"],

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn, en, fa } from "@/lib/utils";
+import { eventInside, FloatPortal, useFloat } from "@/lib/float";
 import { EMPTY_PLATE, PLATE_LETTERS, isPlate, parsePlate, plateLetterFromKey, stringifyPlate, type PlateValue } from "@/lib/persian";
 
 export interface PlateInputProps {
@@ -48,6 +49,7 @@ export function PlateInput({ value, defaultValue = EMPTY_PLATE, onChange, letter
   const refs = React.useRef<Record<Segment | "letter", HTMLInputElement | HTMLButtonElement | null>>({ left: null, letter: null, middle: null, region: null });
   const optionRefs = React.useRef<(HTMLButtonElement | null)[]>([]);
   const listId = React.useId();
+  const { mounted, style, theme, panel } = useFloat(open, root);
 
   function commit(next: PlateValue) {
     if (value === undefined) setInternal(next);
@@ -150,7 +152,7 @@ export function PlateInput({ value, defaultValue = EMPTY_PLATE, onChange, letter
 
   React.useEffect(() => {
     if (!open) return;
-    const onDoc = (e: MouseEvent) => !root.current?.contains(e.target as Node) && setOpen(false);
+    const onDoc = (e: MouseEvent) => { if (!eventInside(e, root.current, panel.current)) setOpen(false); };
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
@@ -248,16 +250,20 @@ export function PlateInput({ value, defaultValue = EMPTY_PLATE, onChange, letter
 
       {name && <input type="hidden" name={name} value={complete ? stringifyPlate(v) : ""} />}
 
-      {open && (
-        <div
-          id={listId}
-          role="listbox"
-          aria-label="حرف پلاک"
-          dir="rtl"
-          onKeyDown={onListKey}
-          onMouseLeave={() => setHovered(null)}
-          className="absolute start-0 top-full z-40 mt-2 w-[252px] rounded-xl border border-border bg-popover p-2 text-popover-foreground shadow-[0_20px_50px_-20px_oklch(0_0_0/80%)] animate-fade-up [animation-duration:180ms]"
-        >
+      <FloatPortal
+        open={open}
+        mounted={mounted}
+        style={style}
+        theme={theme}
+        panelRef={panel}
+        id={listId}
+        role="listbox"
+        aria-label="حرف پلاک"
+        dir="rtl"
+        onKeyDown={onListKey}
+        onMouseLeave={() => setHovered(null)}
+        className="fixed z-50 w-[252px] rounded-xl border border-border bg-popover p-2 text-popover-foreground shadow-[0_20px_50px_-20px_oklch(0_0_0/80%)] animate-fade-up [animation-duration:180ms]"
+      >
           <div className="grid grid-cols-7 gap-1">
             {options.map((l, i) => {
               const selected = l.letter === v.letter;
@@ -288,8 +294,7 @@ export function PlateInput({ value, defaultValue = EMPTY_PLATE, onChange, letter
           <p className="mt-2 border-t border-border pt-1.5 text-[11px] text-muted-foreground" aria-hidden>
             {describedLabel ? <>{described}<span className="mx-1">·</span>{describedLabel}</> : "حرف پلاک را انتخاب کنید"}
           </p>
-        </div>
-      )}
+      </FloatPortal>
     </div>
   );
 }

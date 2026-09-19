@@ -60,7 +60,7 @@ export function McpSteps() {
           <StepHead
             n="۱"
             t="سرور را اضافه کنید"
-            d="یک URL؛ Node روی سیستم لازم نیست."
+            d="فقط یک URL. حتی Node هم روی سیستم لازم نیست."
           />
           <div className="m-4 mt-0 overflow-hidden rounded-lg border border-border bg-background">
             <CodeBlock code={CONFIG} lang="json" className="p-4 text-[12px]" />

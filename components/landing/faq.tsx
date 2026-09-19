@@ -13,7 +13,7 @@ export function Faq() {
           <p className="text-xs text-muted-foreground">پرسش‌های متداول</p>
           <h2 className="mt-2 text-2xl font-bold sm:text-3xl">قبل از نصب، همین‌ها را بپرسید</h2>
           <p className="mt-2 max-w-md text-sm text-muted-foreground sm:text-[15px]">
-            اگر جواب‌تان این‌جا نیست، در{" "}
+            اگر جواب‌تون این‌جا نیست، در{" "}
             <Link href="/docs" className="text-foreground underline-offset-4 hover:underline">
               شروع سریع
             </Link>{" "}

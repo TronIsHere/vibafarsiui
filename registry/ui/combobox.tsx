@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { FloatPortal, useFloat } from "@/lib/float";
 
 export interface ComboboxProps {
   options: string[];
@@ -22,6 +23,8 @@ export function Combobox({ options, value = "", onChange, placeholder = "جست�
   const [open, setOpen] = React.useState(false);
   const [index, setIndex] = React.useState(0);
   const listId = React.useId();
+  const root = React.useRef<HTMLDivElement>(null);
+  const { mounted, style, theme, panel } = useFloat(open, root, { matchWidth: true, gap: 4 });
 
   const q = query.trim();
   const filtered = React.useMemo(() => {
@@ -38,7 +41,7 @@ export function Combobox({ options, value = "", onChange, placeholder = "جست�
   }
 
   return (
-    <div className={cn("relative", className)}>
+    <div ref={root} className={cn("relative", className)}>
       <div className="flex h-10 w-full items-center rounded-lg border border-input bg-background/60 pe-2 ps-3 transition-colors focus-within:border-transparent focus-within:ring-2 focus-within:ring-ring/60">
         <input
           role="combobox"
@@ -64,8 +67,8 @@ export function Combobox({ options, value = "", onChange, placeholder = "جست�
         />
         <ChevronDown className={cn("size-4 text-muted-foreground transition-transform", open && "rotate-180")} />
       </div>
-      {open && (
-        <ul id={listId} role="listbox" className="absolute inset-x-0 top-full z-40 mt-1 max-h-56 overflow-auto rounded-lg border border-border bg-popover p-1 text-sm leading-7 shadow-lg">
+      <FloatPortal open={open} mounted={mounted} style={style} theme={theme} panelRef={panel} className="fixed z-50">
+        <ul id={listId} role="listbox" className="max-h-56 overflow-auto rounded-lg border border-border bg-popover p-1 text-sm leading-7 shadow-lg">
           {filtered.length === 0 && <li className="px-2.5 py-2 text-muted-foreground">{emptyText}</li>}
           {filtered.map((o, i) => (
             <li
@@ -83,7 +86,7 @@ export function Combobox({ options, value = "", onChange, placeholder = "جست�
             </li>
           ))}
         </ul>
-      )}
+      </FloatPortal>
     </div>
   );
 }

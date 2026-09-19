@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { eventInside, FloatPortal, useFloat } from "@/lib/float";
 
 export interface PopoverProps {
   trigger: React.ReactNode;
@@ -15,6 +16,7 @@ export interface PopoverProps {
 
 /**
  * پاپ‌آور. A small panel anchored to its trigger; closes on outside click and Escape.
+ * Rendered into `document.body` so a parent with overflow hidden cannot clip it.
  * `align="start"` hugs the trigger's inline-start (right in RTL).
  */
 export function Popover({ trigger, children, side = "bottom", align = "start", open, onOpenChange, className }: PopoverProps) {
@@ -23,10 +25,11 @@ export function Popover({ trigger, children, side = "bottom", align = "start", o
   const set = (v: boolean) => { if (open === undefined) setInternal(v); onOpenChange?.(v); };
   const root = React.useRef<HTMLDivElement>(null);
   const id = React.useId();
+  const { mounted, style, theme, panel, update } = useFloat(isOpen, root, { side, align });
 
   React.useEffect(() => {
     if (!isOpen) return;
-    const onDoc = (e: MouseEvent) => !root.current?.contains(e.target as Node) && set(false);
+    const onDoc = (e: MouseEvent) => { if (!eventInside(e, root.current, panel.current)) set(false); };
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && set(false);
     document.addEventListener("mousedown", onDoc);
     document.addEventListener("keydown", onKey);
@@ -35,27 +38,32 @@ export function Popover({ trigger, children, side = "bottom", align = "start", o
   }, [isOpen]);
 
   return (
-    <div ref={root} className="relative inline-block">
-      <span onClick={() => set(!isOpen)} aria-haspopup="dialog" aria-expanded={isOpen} aria-controls={id} className="inline-flex cursor-pointer">
+    <div ref={root} className="inline-block">
+      <span
+        onClick={() => { if (!isOpen) update(); set(!isOpen); }}
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
+        aria-controls={id}
+        className="inline-flex cursor-pointer"
+      >
         {trigger}
       </span>
-      {isOpen && (
-        <div
-          id={id}
-          role="dialog"
-          className={cn(
-            "absolute z-40 min-w-56 rounded-xl border border-border bg-popover p-4 text-sm text-popover-foreground shadow-[0_20px_50px_-20px_oklch(0_0_0/80%)]",
-            "animate-fade-up [animation-duration:180ms]",
-            side === "bottom" ? "top-full mt-2" : "bottom-full mb-2",
-            align === "start" && "start-0",
-            align === "end" && "end-0",
-            align === "center" && "left-1/2 -translate-x-1/2",
-            className,
-          )}
-        >
-          {children}
-        </div>
-      )}
+      <FloatPortal
+        open={isOpen}
+        mounted={mounted}
+        style={style}
+        theme={theme}
+        panelRef={panel}
+        id={id}
+        role="dialog"
+        className={cn(
+          "fixed z-50 min-w-56 rounded-xl border border-border bg-popover p-4 text-sm text-popover-foreground shadow-[0_20px_50px_-20px_oklch(0_0_0/80%)]",
+          "animate-fade-up [animation-duration:180ms]",
+          className,
+        )}
+      >
+        {children}
+      </FloatPortal>
     </div>
   );
 }
