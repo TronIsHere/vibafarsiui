@@ -30,7 +30,7 @@ export function pageMetadata({
   index?: boolean;
 }): Metadata {
   const image = {
-    url: "/opengraph-image",
+    url: "/opengraph-image.png",
     width: 1200,
     height: 630,
     alt: OG_ALT,

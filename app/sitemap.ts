@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absUrl("/backgrounds"), lastModified, changeFrequency: "weekly", priority: 0.8 },
     { url: absUrl("/templates"), lastModified, changeFrequency: "weekly", priority: 0.8 },
     { url: absUrl("/themes"), lastModified, changeFrequency: "weekly", priority: 0.8 },
+    { url: absUrl("/icons"), lastModified, changeFrequency: "monthly", priority: 0.3 },
   ];
 
   const items: MetadataRoute.Sitemap = [

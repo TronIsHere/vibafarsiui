@@ -67,6 +67,7 @@ export function SiteSearch() {
     const pages: CommandItem[] = [
       { id: "page-home", label: "خانه", group: "صفحات", icon: BookOpen, keywords: ["home", "index"], onSelect: go("/") },
       { id: "page-docs", label: "شروع سریع", group: "صفحات", icon: BookOpen, keywords: ["docs", "مستندات", "نصب", "cli", "mcp"], onSelect: go("/docs") },
+      { id: "page-icons", label: "نشان‌ها", group: "صفحات", icon: Sparkles, keywords: ["icons", "logo", "نشان", "آیکون", "شمسه", "favicon", "فاویکون", "png", "svg"], onSelect: go("/icons") },
       { id: "page-sponsors", label: "حامیان", group: "صفحات", icon: Handshake, keywords: ["sponsors", "حامی", "اسپانسر", "حمایت", "sponsor"], onSelect: go("/#sponsors") },
       ...sections.map((s) => ({
         id: `page-${s.key}`,
