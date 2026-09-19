@@ -30,9 +30,8 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files
 .env*
-!.env.example
 
 # first-party analytics
 /data/
@@ -48,10 +47,6 @@ next-env.d.ts
 __pycache__/
 *.pyc
 
-# Claude Code (local)
+# Claude Code / Cursor (local)
 .claude/
-
-# Cursor: local MCP + third-party skills
-.cursor/mcp.json
-.cursor/skills/ui-ux-pro-max/
-.cursor/skills/SEO-GEO-AEO/
+.cursor/
