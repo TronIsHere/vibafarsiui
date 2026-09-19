@@ -43,3 +43,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Claude Code (local)
+.claude/
+
+# Cursor: local MCP + third-party skills
+.cursor/mcp.json
+.cursor/skills/ui-ux-pro-max/
+.cursor/skills/SEO-GEO-AEO/
