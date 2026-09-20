@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { cn, fa } from "@/lib/utils";
 import {
   animations,
@@ -16,8 +17,51 @@ import {
 
 const lists = { components, blocks, animations, backgrounds, templates, themes, skills } as const;
 
+const DOCS_SECTION_IDS = ["cli", "manual", "prompts", "mcp", "faq"] as const;
+
 export function DocsSidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
+  const [hash, setHash] = useState("");
+
+  useEffect(() => {
+    const sync = () => setHash(window.location.hash.replace(/^#/, ""));
+    sync();
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (pathname !== "/docs") return;
+
+    const elements = DOCS_SECTION_IDS.map((id) => document.getElementById(id)).filter(
+      (el): el is HTMLElement => !!el,
+    );
+    if (!elements.length) return;
+
+    const visible = new Map<string, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.set(entry.target.id, entry.intersectionRatio);
+          else visible.delete(entry.target.id);
+        }
+        if (visible.size === 0) {
+          if (window.scrollY < 120) setHash("");
+          return;
+        }
+        const top = [...visible.entries()].sort((a, b) => b[1] - a[1])[0];
+        if (top) setHash(top[0]);
+      },
+      { rootMargin: "-15% 0px -55% 0px", threshold: [0, 0.25, 0.5, 1] },
+    );
+
+    for (const el of elements) observer.observe(el);
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  const docsSection = pathname === "/docs" ? hash : "";
+  const isDocsTop = pathname === "/docs" && !DOCS_SECTION_IDS.includes(docsSection as (typeof DOCS_SECTION_IDS)[number]);
+
   const link = (
     href: string,
     label: React.ReactNode,
@@ -26,7 +70,11 @@ export function DocsSidebar({ onNavigate }: { onNavigate?: () => void }) {
   ) => (
     <Link
       href={href}
-      onClick={onNavigate}
+      onClick={() => {
+        const nextHash = href.includes("#") ? href.split("#")[1] ?? "" : "";
+        if (href === "/docs" || href.startsWith("/docs#")) setHash(nextHash);
+        onNavigate?.();
+      }}
       aria-current={active ? "page" : undefined}
       className={cn(
         "flex items-center justify-between rounded-md px-2.5 py-1.5 text-[13px] transition-colors",
@@ -43,14 +91,13 @@ export function DocsSidebar({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <nav aria-label="مستندات" className="space-y-6 text-sm">
       <div className="space-y-0.5">
-        {link("/docs", "شروع سریع", pathname === "/docs")}
+        {link("/docs", "شروع سریع", isDocsTop)}
         {link("/about", "درباره", pathname === "/about")}
-        {link("/docs#faq", "پرسش‌های متداول", false)}
-        {link("/docs#cli", "نصب خودکار (CLI)", false)}
-        {link("/docs#manual", "نصب دستی", false)}
-        {link("/docs#prompts", "کار با هوش مصنوعی", false)}
-        {link("/docs#mcp", "سرور MCP", false)}
-        {link("/icons", "نشان‌ها", pathname === "/icons")}
+        {link("/docs#faq", "پرسش‌های متداول", docsSection === "faq")}
+        {link("/docs#cli", "نصب خودکار (CLI)", docsSection === "cli")}
+        {link("/docs#manual", "نصب دستی", docsSection === "manual")}
+        {link("/docs#prompts", "کار با هوش مصنوعی", docsSection === "prompts")}
+        {link("/docs#mcp", "سرور MCP", docsSection === "mcp")}
       </div>
       {sections.map((s) => (
         <div key={s.key}>
