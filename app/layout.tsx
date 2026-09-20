@@ -86,6 +86,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="fa"
       dir="rtl"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${iranSans.variable} ${geistMono.variable} h-full max-w-full antialiased`}
     >
