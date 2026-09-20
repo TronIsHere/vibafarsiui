@@ -348,27 +348,14 @@ const [open, setOpen] = useState(false)
     props: [
       { name: "side", type: '"start" | "end" | "bottom"', default: '"start"', desc: "start در RTL یعنی راست." },
     ],
-    css: `@keyframes sheet-from-right {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-@keyframes sheet-from-left {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
-}
-@keyframes sheet-from-bottom {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}`,
-    promptBullets: ["Slide in from the inline-start edge (right in RTL) with inset-y-0 start-0; use sheet-from-* keyframes so the panel slides rather than fades.", "Bottom variant slides up with rounded top corners for mobile; Escape and overlay close it; title via aria-labelledby."],
+    promptBullets: [
+      "Keep mounted while closing so enter and exit both animate; panel uses a spring-like cubic-bezier slide (≈ Animate UI stiffness 150 / damping 22), overlay fades with a short blur clear.",
+      "Slide from inline-start (right in RTL) with inset-y-0 start-0; bottom variant slides up with rounded top corners; Escape and overlay close it; title via aria-labelledby.",
+    ],
   },
   {
     slug: "tabs", name: "تب‌ها", cat: "nav", file: ui("tabs"),
-    desc: "تب‌های بخش‌بندی‌شده یا خطی که با کیبورد کار می‌کنن و جهت راست‌چین را رعایت می‌کنن.",
+    desc: "تب‌های بخش‌بندی‌شده یا خطی که با کیبورد کار می‌کنن و جهت راست‌چین را رعایت می‌کنن. در حالت segmented یک قرص زیر تب فعال سر می‌خوره.",
     usage: `import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 
 <Tabs defaultValue="preview">
@@ -383,7 +370,7 @@ const [open, setOpen] = useState(false)
       { name: "variant", type: '"segmented" | "underline"', default: '"segmented"', desc: "ظاهر فهرست تب‌ها." },
       { name: "value / defaultValue / onValueChange", type: "string", desc: "کنترل تب فعال." },
     ],
-    promptBullets: ["role=\"tablist\"/\"tab\"/\"tabpanel\" with aria-controls; only the active tab is tabIndex=0.", "In RTL ArrowLeft moves to the next tab (to the left)."],
+    promptBullets: ["role=\"tablist\"/\"tab\"/\"tabpanel\" with aria-controls; only the active tab is tabIndex=0.", "In RTL ArrowLeft moves to the next tab (to the left).", "segmented: measure the active tab's offsetLeft/offsetWidth and slide an absolute bg-background pill with translateX; re-measure on ResizeObserver."],
   },
   {
     slug: "pagination", name: "صفحه‌بندی", cat: "nav", file: ui("pagination"), deps: ["lucide-react"],
@@ -946,8 +933,8 @@ import { Bold, Italic, Underline } from "lucide-react"
       { name: "variant", type: '"default" | "outline"', default: '"default"', desc: "outline دور دکمه یا دور کل گروه خط می‌کشه." },
       { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', desc: "ارتفاع ۳۲، ۳۶ یا ۴۰ پیکسل." },
     ],
-    notes: ["با Switch فرق داره. Switch یک تنظیم را روشن و خاموش می‌کنه و همان لحظه اعمال میشه، ولی Toggle یک حالت نمایش یا فیلتر را می‌گیره.", "کلیدهای چپ و راست بین اعضای گروه می‌گردن و در RTL چپ یعنی بعدی."],
-    promptBullets: ["Button with aria-pressed; pressed state uses bg-secondary text-foreground, unpressed is text-muted-foreground with a hover background.", "ToggleGroup: role=group, type single (one or none) or multiple; ArrowLeft moves to the next item in RTL, ArrowRight to the previous.", "Sizes sm/md/lg (h-8/h-9/h-10) and an outline variant that boxes the whole group."],
+    notes: ["با Switch فرق داره. Switch یک تنظیم را روشن و خاموش می‌کنه و همان لحظه اعمال میشه، ولی Toggle یک حالت نمایش یا فیلتر را می‌گیره.", "کلیدهای چپ و راست بین اعضای گروه می‌گردن و در RTL چپ یعنی بعدی.", "در type=single یک قرص لغزان زیر گزینه‌ی فعال می‌نشینه، مثل کنترل بخشی."],
+    promptBullets: ["Button with aria-pressed; pressed state uses bg-secondary text-foreground, unpressed is text-muted-foreground with a hover background.", "ToggleGroup: role=group, type single (one or none) or multiple; ArrowLeft moves to the next item in RTL, ArrowRight to the previous.", "Sizes sm/md/lg (h-8/h-9/h-10) and an outline variant that boxes the whole group.", "single: sliding highlight pill measured from data-value button offsetLeft/offsetWidth; multiple keeps per-button bg-secondary."],
   },
   {
     slug: "segmented-control", name: "کنترل بخشی", cat: "form", file: ui("segmented-control"),

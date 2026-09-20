@@ -177,7 +177,7 @@ async function main() {
     : null;
 
   for (const slug of blocks) {
-    if (only) continue;
+    if (only && !only.has(slug)) continue;
     const dest = path.join(OUT, "blocks", `${slug}.webp`);
     try {
       const png = await shot(
@@ -214,7 +214,8 @@ async function main() {
   const templateCount = only
     ? templates.filter((s) => only.has(s)).length
     : templates.length;
-  const total = (only ? 0 : blocks.length) + templateCount;
+  const blockCount = only ? blocks.filter((s) => only.has(s)).length : blocks.length;
+  const total = blockCount + templateCount;
   console.log(`\nWrote ${total - failed}/${total} snapshots under public/previews`);
   if (failed) process.exit(1);
 }

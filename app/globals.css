@@ -566,18 +566,6 @@
   from { opacity: 0; transform: translateX(-14px); }
   to { opacity: 1; transform: translateX(0); }
 }
-@keyframes sheet-from-right {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-@keyframes sheet-from-left {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
-}
-@keyframes sheet-from-bottom {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
 @keyframes beam {
   to { --beam-angle: 360deg; }
 }
@@ -669,4 +657,16 @@
 @keyframes pulse-ring {
   0% { transform: scale(1); opacity: 0.6; }
   100% { transform: scale(1.4); opacity: 0; }
+}
+@keyframes particle-burst {
+  from { opacity: 1; transform: translate(0, 0) scale(1); }
+  to { opacity: 0; transform: translate(var(--burst-x), var(--burst-y)) scale(0.35); }
+}
+@keyframes radial-orbit {
+  from { transform: rotate(var(--start-angle, 0deg)); }
+  to { transform: rotate(calc(var(--start-angle, 0deg) + 360deg)); }
+}
+@keyframes radial-counter {
+  from { transform: translate(-50%, calc(-50% - var(--orbit-r, 80px))) rotate(calc(var(--start-angle, 0deg) * -1)); }
+  to { transform: translate(-50%, calc(-50% - var(--orbit-r, 80px))) rotate(calc(var(--start-angle, 0deg) * -1 - 360deg)); }
 }
