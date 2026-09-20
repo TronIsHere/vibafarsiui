@@ -92,9 +92,11 @@ function BeamDemo() {
 function ConfettiDemo() {
   const [n, setN] = React.useState(0);
   return (
-    <div className="relative flex h-40 w-full items-end justify-center overflow-hidden rounded-xl border border-border bg-card pb-5">
-      {n > 0 && <Confetti key={n} />}
-      <Button onClick={() => setN((x) => x + 1)}>پرداخت انجام شد</Button>
+    <div className="flex h-40 w-full items-end justify-center overflow-hidden rounded-xl border border-border bg-card pb-5">
+      <div className="relative isolate">
+        {n > 0 && <Confetti key={n} />}
+        <Button onClick={() => setN((x) => x + 1)}>پرداخت انجام شد</Button>
+      </div>
     </div>
   );
 }

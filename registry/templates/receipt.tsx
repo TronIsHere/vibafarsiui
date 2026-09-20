@@ -29,7 +29,6 @@ export function PaymentReceipt() {
   ];
   return (
     <div className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-background p-4 text-foreground">
-      <Confetti key={burst} count={70} />
       <div className="relative w-full max-w-sm">
         <div className="rounded-t-3xl border border-b-0 border-border bg-card px-6 pb-6 pt-8 text-center">
           <SuccessCheck size={80} />
@@ -53,7 +52,10 @@ export function PaymentReceipt() {
             <Button variant="outline"><Download />دانلود رسید</Button>
             <Button variant="outline"><Share2 />اشتراک‌گذاری</Button>
           </div>
-          <Button className="mt-2 w-full" onClick={() => setBurst((b) => b + 1)}>بازگشت به فروشگاه<ArrowLeft /></Button>
+          <div className="relative isolate overflow-visible">
+            <Confetti key={burst} count={70} />
+            <Button className="mt-2 w-full" onClick={() => setBurst((b) => b + 1)}>بازگشت به فروشگاه<ArrowLeft /></Button>
+          </div>
           <p className="mt-4 text-center text-[11px] leading-5 text-muted-foreground">این رسید تا ۳۰ روز در بخش «سفارش‌های من» نگه‌داری می‌شود. برای پیگیری، شماره‌ی پیگیری را همراه داشته باشید.</p>
         </div>
       </div>
