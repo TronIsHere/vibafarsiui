@@ -658,9 +658,9 @@
   to { stroke-dashoffset: -100; }
 }
 @keyframes confetti {
-  0% { transform: translate(-50%, 0) rotate(0deg); opacity: 1; }
-  60% { transform: translate(calc(-50% + var(--cx)), var(--cy)) rotate(calc(var(--cr) * 0.6)); opacity: 1; }
-  100% { transform: translate(calc(-50% + var(--cx) * 1.3), 40px) rotate(var(--cr)); opacity: 0; }
+  0% { transform: translate(-50%, 0) translate(0, 0) rotate(0deg); opacity: 1; animation-timing-function: cubic-bezier(0.15, 0.6, 0.4, 1); }
+  40% { transform: translate(-50%, 0) translate(calc(var(--spread-x) * 0.7), var(--peak-y)) rotate(var(--rotate-mid)); opacity: 1; animation-timing-function: cubic-bezier(0.6, 0, 0.9, 0.4); }
+  100% { transform: translate(-50%, 0) translate(var(--spread-x), var(--fall-y)) rotate(var(--rotate)); opacity: 0; }
 }
 @keyframes sparkle {
   0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
