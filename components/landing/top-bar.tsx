@@ -1,7 +1,8 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { Logo } from "@/components/shared/logo";
 import { ThemeToggle } from "./theme-toggle";
-import { GithubButton } from "./github-stars";
+import { GithubButton, GithubStarsButton } from "./github-stars";
 import { SiteSearch } from "./site-search";
 
 const links = [
@@ -12,6 +13,7 @@ const links = [
   { href: "/backgrounds", label: "پس‌زمینه‌ها" },
   { href: "/templates", label: "قالب‌ها" },
   { href: "/themes", label: "سیستم‌های طراحی" },
+  { href: "/skills", label: "مهارت‌ها" },
 ];
 
 export function TopBar() {
@@ -44,7 +46,9 @@ export function TopBar() {
 
         <div className="flex items-center gap-2">
           <SiteSearch />
-          <GithubButton />
+          <Suspense fallback={<GithubButton />}>
+            <GithubStarsButton />
+          </Suspense>
           <ThemeToggle />
         </div>
       </div>

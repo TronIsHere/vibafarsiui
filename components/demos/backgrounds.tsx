@@ -32,6 +32,18 @@ import { WaterRippleBackground } from "@/registry/backgrounds/water-ripple";
 import { DitherBackground } from "@/registry/backgrounds/dither";
 import { HalftoneBackground } from "@/registry/backgrounds/halftone";
 import { WavesBackground } from "@/registry/backgrounds/waves";
+import { PlasmaBackground } from "@/registry/backgrounds/plasma";
+import { TruchetBackground } from "@/registry/backgrounds/truchet";
+import { HexGridBackground } from "@/registry/backgrounds/hex-grid";
+import { MarbleBackground } from "@/registry/backgrounds/marble";
+import { MetaballsBackground } from "@/registry/backgrounds/metaballs";
+import { KaleidoscopeBackground } from "@/registry/backgrounds/kaleidoscope";
+import { CursorTrailBackground } from "@/registry/backgrounds/cursor-trail";
+import { ParticlesBackground } from "@/registry/backgrounds/particles";
+import { MoireBackground } from "@/registry/backgrounds/moire";
+import { ScanlinesBackground } from "@/registry/backgrounds/scanlines";
+import { IsoCubesBackground } from "@/registry/backgrounds/iso-cubes";
+import { LiquidGradientBackground } from "@/registry/backgrounds/liquid-gradient";
 
 /** The shader primitive's own demo: the usage example from its docs page. */
 const HELLO_SHADER = /* glsl */ `
@@ -76,4 +88,16 @@ export const backgroundDemos: Record<string, React.ReactNode> = {
   dither: <DitherBackground />,
   halftone: <HalftoneBackground />,
   waves: <WavesBackground />,
+  plasma: <PlasmaBackground />,
+  truchet: <TruchetBackground />,
+  "hex-grid": <HexGridBackground />,
+  marble: <MarbleBackground />,
+  metaballs: <MetaballsBackground />,
+  kaleidoscope: <KaleidoscopeBackground />,
+  "cursor-trail": <CursorTrailBackground />,
+  particles: <ParticlesBackground />,
+  moire: <MoireBackground />,
+  scanlines: <ScanlinesBackground />,
+  "iso-cubes": <IsoCubesBackground />,
+  "liquid-gradient": <LiquidGradientBackground />,
 };

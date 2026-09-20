@@ -82,6 +82,15 @@ const TAILWIND_MAP = `/* app/globals.css */
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
+
+  /* iOS Safari zooms into any focused field smaller than 16px; only iOS matches this query. */
+  @supports (-webkit-touch-callout: none) {
+    input, textarea, select {
+      --text-xs: 1rem;
+      --text-sm: 1rem;
+      font-size: max(1rem, 1em);
+    }
+  }
 }`;
 
 const MCP = `{
@@ -128,6 +137,7 @@ const ADD_TARGETS: [string, string][] = [
   ["پس‌زمینه", "components/backgrounds/"],
   ["قالب", "components/templates/"],
   ["تم", "globals.css"],
+  ["مهارت", ".claude/skills/"],
 ];
 
 const FLAGS: [string, React.ReactNode][] = [

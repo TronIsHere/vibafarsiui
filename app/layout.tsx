@@ -3,7 +3,7 @@ import { iranSans, geistMono } from "./fonts";
 import { JsonLd } from "@/components/shared/json-ld";
 import { THEME_STORAGE_KEY } from "@/lib/registry";
 import {
-  OG_ALT,
+  OG_IMAGE,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_TITLE,
@@ -14,13 +14,6 @@ import "./globals.css";
 
 export const viewport: Viewport = {
   themeColor: "#111111",
-};
-
-const ogImage = {
-  url: "/opengraph-image.png",
-  width: 1200,
-  height: 630,
-  alt: OG_ALT,
 };
 
 export const metadata: Metadata = {
@@ -54,13 +47,13 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [ogImage],
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [ogImage],
+    images: [OG_IMAGE],
   },
   robots: {
     index: true,

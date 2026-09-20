@@ -40,6 +40,7 @@ const SECTIONS: Record<Exclude<Topic, "all">, string> = {
 - OTP: separate cells, \`dir="ltr"\` on the group, Persian glyphs on screen, Latin string on submit. \`autoComplete="one-time-code"\`. Paste fills all cells.
 - Email / URL / password / IBAN / card: LTR input, RTL label.
 - Errors go under the field, \`aria-invalid\`, red from \`--destructive\`, not a toast-only error.
+- Fields must compute to ≥16px on iOS or Safari zooms the page on focus. Keep \`text-sm\` on desktop; in globals.css raise controls under \`@supports (-webkit-touch-callout: none)\` (set \`--text-sm: 1rem\` and \`font-size: max(1rem, 1em)\` on input/textarea/select). \`vibefarsi init\` writes this rule.
 - Primary action at the start (right in RTL) in button groups, unless it is a full-width stack (then primary on top or full width).
 - Use VibeFarsi \`Field\` + \`Input\` + \`Select\` + \`OtpField\` + \`DatePicker\`. Do not invent a shadcn form.
 `,
@@ -109,6 +110,10 @@ Almost every screen needs:
 - Jalali if dates appear (\`jalali\`)
 
 Then the specific components \`search_registry\` / \`scaffold_page\` named.
+
+## Skills (deeper rules, same registry)
+
+\`get_component\` also returns agent skills you can read or copy into \`.claude/skills/\`: \`persian-rtl-ui\`, \`persian-ui-copy\`, \`persian-conversational\`, \`persian-formal\`, \`jalali-calendar\`, \`iran-validation\`, \`persian-seo\`. Read \`persian-ui-copy\` before writing any Persian string, and \`iran-validation\` before any national ID / IBAN / card field.
 `;
 
 export function designRules(topic: Topic = "all"): string {

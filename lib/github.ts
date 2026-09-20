@@ -3,9 +3,10 @@ import { GITHUB_REPO } from "@/lib/site";
 
 /**
  * Live stargazer count from the GitHub REST API.
- * Cached for an hour. Returns null if GitHub is unreachable (common on
- * some Iranian networks) so the UI can fall back to a plain Star button.
- * Set GITHUB_TOKEN to raise the unauthenticated 60 req/hour cap.
+ * Cached for one minute so the header stays close to live without
+ * burning the unauthenticated 60 req/hour cap. Returns null if GitHub
+ * is unreachable (common on some Iranian networks) so the UI can fall
+ * back to a plain Star button. Set GITHUB_TOKEN to raise that cap.
  */
 export async function getGithubStars(): Promise<number | null> {
   try {
@@ -21,7 +22,7 @@ export async function getGithubStars(): Promise<number | null> {
       headers,
       signal: AbortSignal.timeout(3000),
       cache: "force-cache",
-      next: { revalidate: 3600, tags: ["github-stars"] },
+      next: { revalidate: 60, tags: ["github-stars"] },
     });
     if (!res.ok) return null;
     const data: { stargazers_count?: unknown } = await res.json();

@@ -1,4 +1,4 @@
-export const REGISTRY_TYPES = ["component", "animation", "background", "template", "block", "theme", "lib"] as const;
+export const REGISTRY_TYPES = ["component", "animation", "background", "template", "block", "theme", "lib", "skill"] as const;
 export type RegistryType = (typeof REGISTRY_TYPES)[number];
 
 export type CatalogItem = {

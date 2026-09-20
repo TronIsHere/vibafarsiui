@@ -3,6 +3,7 @@ import {
   backgrounds,
   blocks,
   components,
+  skills,
   templates,
   themes,
 } from "@/lib/registry";
@@ -23,6 +24,7 @@ VibeFarsi is a copy-into-your-repo RTL UI kit for Persian (Farsi) React and Next
 - Native RTL components (layout, icons, focus), not a \`dir="rtl"\` wrapper on a LTR kit
 - Persian digits, toman, Jalali calendar, IBAN/Sheba, national ID, Iranian plate
 - English prompts plus an MCP server so coding agents follow Persian rules
+- Agent skills (SKILL.md) and guides for Persian writing, RTL UI, Jalali dates, Iranian validation, SEO, ParsPack S3 upload, Zarinpal payments and Kavenegar OTP
 - Free and open source
 
 ## What it is not
@@ -47,6 +49,7 @@ MCP: ${SITE_URL}/mcp  (also \`npx -y @vibefarsi/mcp\`)
 - ${backgrounds.length} backgrounds
 - ${templates.length} templates
 - ${themes.length} design systems
+- ${skills.length} skills and guides
 
 ## Site map
 - Home: ${SITE_URL}/
@@ -58,6 +61,7 @@ MCP: ${SITE_URL}/mcp  (also \`npx -y @vibefarsi/mcp\`)
 - Backgrounds: ${SITE_URL}/backgrounds
 - Templates: ${SITE_URL}/templates
 - Themes: ${SITE_URL}/themes
+- Skills: ${SITE_URL}/skills
 - Full catalog: ${SITE_URL}/llms-full.txt
 `;
 }
@@ -81,5 +85,8 @@ ${list(templates, "/templates")}
 
 ## Themes
 ${list(themes, "/themes")}
+
+## Skills
+${list(skills, "/skills")}
 `;
 }

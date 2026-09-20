@@ -5,10 +5,11 @@ import { components } from "./components";
 import { libs } from "./libs";
 import { buildPrompt, buildThemePrompt } from "./prompt";
 import { templates } from "./templates";
+import { hostedSkills, skillTarget } from "./skills";
 import { themes } from "./themes";
-import type { DocBase, ThemeDoc } from "./types";
+import type { DocBase, SkillDoc, ThemeDoc } from "./types";
 
-export const REGISTRY_TYPES = ["component", "animation", "background", "template", "block", "theme", "lib"] as const;
+export const REGISTRY_TYPES = ["component", "animation", "background", "template", "block", "theme", "lib", "skill"] as const;
 export type RegistryType = (typeof REGISTRY_TYPES)[number];
 
 export type CatalogItem = {
@@ -37,6 +38,17 @@ export type Catalog = {
 
 export const EXTRA_ALIASES: Record<string, string[]> = {
   button: ["btn", "cta", "دکمه"],
+  // skills
+  "persian-conversational": ["محاوره", "محاوره‌ای", "خودمونی", "عامیانه", "colloquial", "casual persian", "کپشن", "لحن دوستانه"],
+  "persian-formal": ["رسمی", "اداری", "نامه", "نامه اداری", "پروپوزال", "قرارداد", "formal", "official letter"],
+  "persian-ui-copy": ["microcopy", "ui copy", "متن دکمه", "پیام خطا", "لیبل", "ترجمه رابط", "فارسی‌سازی", "واژه‌نامه"],
+  "persian-rtl-ui": ["rtl", "راست چین", "راست‌چین", "design rules", "قوانین طراحی", "logical properties", "tailwind rtl"],
+  "jalali-calendar": ["jalali", "شمسی", "تقویم", "تاریخ", "هجری خورشیدی", "شنبه", "نوروز", "asia/tehran", "date"],
+  "iran-validation": ["validation", "اعتبارسنجی", "کد ملی", "شبا", "iban", "شماره کارت", "luhn", "موبایل", "کد پستی", "پلاک"],
+  "persian-seo": ["seo", "سئو", "متادیتا", "metadata", "hreflang", "اسلاگ", "slug", "json-ld", "گوگل"],
+  "agents-md-persian": ["claude.md", "agents.md", "cursor rules", "قوانین", "rules", "system prompt", "راهنما"],
+  "persian-typography": ["typography", "تایپوگرافی", "فونت", "font", "vazirmatn", "iransans", "نیم‌فاصله", "zwnj", "line-height"],
+  "persian-writing": ["نگارش", "ویرایش", "humanize", "غلط‌گیری", "docx", "pdf", "ali2000hos"],
   input: ["text field", "موبایل", "تلفن", "phone", "ایمیل", "فیلد"],
   textarea: ["توضیحات", "پیام"],
   select: ["dropdown", "شهر", "استان"],
@@ -103,6 +115,18 @@ export const EXTRA_ALIASES: Record<string, string[]> = {
   dither: ["bayer", "retro", "pixel", "دیتر"],
   halftone: ["dots", "print", "ترام", "هافتون"],
   waves: ["lines", "sine", "موج", "خط"],
+  plasma: ["پلاسما", "demoscene", "sine"],
+  truchet: ["تروشه", "tiles", "maze", "کاشی", "هزارتو"],
+  "hex-grid": ["hexagon", "honeycomb", "شش ضلعی", "شش‌ضلعی", "لانه زنبوری"],
+  marble: ["مرمر", "stone", "veins", "سنگ"],
+  metaballs: ["lava lamp", "goo", "blob", "گوی", "چسبناک"],
+  kaleidoscope: ["کلایدوسکوپ", "mirror", "mandala", "آینه"],
+  "cursor-trail": ["cursor", "comet", "trail", "رد ماوس", "دنباله", "ماوس"],
+  particles: ["dust", "floating", "ذرات", "غبار", "particle"],
+  moire: ["مواره", "interference", "rings", "تداخل"],
+  scanlines: ["crt", "retro", "tv", "اسکن لاین", "اسکن‌لاین", "تلویزیون"],
+  "iso-cubes": ["isometric", "cubes", "3d", "ایزومتریک", "مکعب"],
+  "liquid-gradient": ["chroma flow", "fluid", "gradient", "گرادیان", "سیال", "cursor"],
   paper: ["light", "روشن"],
   "national-id-input": ["national id", "کد ملی", "کدملی", "شماره ملی", "melli code"],
   "card-number-input": ["card number", "شماره کارت", "کارت بانکی", "bank card", "bin", "شماره‌ی کارت"],
@@ -112,6 +136,14 @@ export const EXTRA_ALIASES: Record<string, string[]> = {
   "amount-input": ["amount", "مبلغ", "money input", "تومان", "به حروف"],
   persian: ["validation", "اعتبارسنجی", "iranian", "کد ملی", "شبا", "پلاک"],
   "number-to-words": ["عدد به حروف", "به حروف", "words", "tomanToWords", "مبلغ به حروف"],
+  "search-input": ["search", "جست‌وجو", "جستجو", "سرچ", "search box", "searchbar"],
+  "tags-input": ["tags", "برچسب", "تگ", "chips input", "keywords", "کلیدواژه"],
+  "multi-select": ["multiselect", "چند انتخابی", "چندگزینه‌ای", "select multiple", "checkbox dropdown"],
+  toggle: ["toggle group", "pressed", "دکمه فشاری", "فیلتر", "segmented buttons"],
+  "segmented-control": ["segmented", "segment", "بخشی", "سوییچ چندحالته", "ios control"],
+  separator: ["divider", "hr", "جداکننده", "خط", "یا"],
+  spinner: ["loader", "loading", "بارگذاری", "لودینگ", "چرخنده"],
+  collapsible: ["collapse", "show more", "نمایش بیشتر", "بازشو", "expand"],
 };
 
 function collectionPath(type: RegistryType): string {
@@ -135,7 +167,7 @@ function aliasesFor(type: RegistryType, item: { slug: string; name: string; name
   return Array.from(new Set([item.slug, item.name, item.nameEn, item.slug.replace(/-/g, " "), ...extra].filter(Boolean) as string[]));
 }
 
-function fromDoc(type: Exclude<RegistryType, "theme">, item: DocBase, extra: Partial<CatalogItem> = {}): CatalogItem {
+function fromDoc(type: Exclude<RegistryType, "theme" | "skill">, item: DocBase, extra: Partial<CatalogItem> = {}): CatalogItem {
   return {
     type,
     slug: item.slug,
@@ -172,6 +204,23 @@ function fromTheme(item: ThemeDoc): CatalogItem {
   };
 }
 
+function fromSkill(item: SkillDoc & { file: string }): CatalogItem {
+  return {
+    type: "skill",
+    slug: item.slug,
+    name: item.name,
+    nameEn: item.nameEn,
+    desc: item.desc,
+    file: item.file,
+    target: skillTarget(item),
+    url: `/r/skills/${item.slug}.json`,
+    deps: [],
+    registryDeps: [],
+    tags: [item.format, ...item.tags],
+    aliases: aliasesFor("skill", item),
+  };
+}
+
 export function buildCatalog(homepage = "https://vibefarsi.ir"): Catalog {
   const items: CatalogItem[] = [
     ...libs.map((i) => fromDoc("lib", i)),
@@ -181,6 +230,7 @@ export function buildCatalog(homepage = "https://vibefarsi.ir"): Catalog {
     ...templates.map((i) => fromDoc("template", i, { tags: i.tags })),
     ...blocks.map((i) => fromDoc("block", i, { tags: i.tags })),
     ...themes.map(fromTheme),
+    ...hostedSkills.map(fromSkill),
   ];
   return {
     name: "vibefarsi",

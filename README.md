@@ -66,6 +66,7 @@ npx vibefarsi list
 | پس‌زمینه | `components/backgrounds` |
 | قالب | `components/templates` |
 | تم | `app/globals.css` |
+| مهارت | `.claude/skills/<slug>/SKILL.md` (راهنماها در `docs/`) |
 
 فلگ‌های پرکاربرد:
 
@@ -134,12 +135,13 @@ get_component(["input", "price", "button"])
 
 | بخش | تعداد | شامل |
 | --- | --- | --- |
-| [کامپوننت‌ها](https://vibefarsi.ir/components) | ۵۹ | دکمه، فرم، جدول داده، تقویم شمسی، شماره‌ی موبایل، کد تأیید، شماره‌ی شبا، قیمت به تومان |
+| [کامپوننت‌ها](https://vibefarsi.ir/components) | ۶۸ | دکمه، فرم، جدول داده، تقویم شمسی، شماره‌ی موبایل، کد تأیید، شماره‌ی شبا، قیمت به تومان |
 | [بلاک‌ها](https://vibefarsi.ir/blocks) | ۸ | هیرو، ویژگی‌ها، ردیف قیمت، پرسش‌های متداول، آمار، نظر مشتریان، کارت ورود، فراخوان پایانی |
 | [انیمیشن‌ها](https://vibefarsi.ir/animations) | ۳۹ | انیمیشن با CSS و React، بدون کتابخانه‌ی اضافه |
-| [پس‌زمینه‌ها](https://vibefarsi.ir/backgrounds) | ۳۲ | الگو و نور کم‌کنتراست که متن روشون خوانا می‌مونه |
+| [پس‌زمینه‌ها](https://vibefarsi.ir/backgrounds) | ۴۴ | الگو و نور کم‌کنتراست که متن روشون خوانا می‌مونه |
 | [قالب‌ها](https://vibefarsi.ir/templates) | ۲۴ | صفحه‌های کامل، از همین کامپوننت‌ها |
 | [سیستم‌های طراحی](https://vibefarsi.ir/themes) | ۶ | گرافیت (پیش‌فرض)، فیروزه، زعفران، انار، لاجورد، کاغذ (روشن) |
+| [مهارت‌ها](https://vibefarsi.ir/skills) | ۱۰ | فایل‌های SKILL.md برای Claude Code، Cursor و Codex: فارسی محاوره‌ای و رسمی، متن رابط کاربری، رابط راست‌چین، تقویم شمسی، اعتبارسنجی ایرانی، سئوی فارسی، و دو راهنما برای CLAUDE.md و تایپوگرافی |
 
 ## توسعه روی همین مخزن
 
@@ -148,7 +150,7 @@ get_component(["input", "price", "button"])
 </div>
 
 ```
-registry/         ui/  blocks/  animations/  backgrounds/  templates/  themes/
+registry/         ui/  blocks/  animations/  backgrounds/  templates/  themes/  skills/
 lib/registry/     names, descriptions, prompts, catalog builder
 app/r/            GET /r  (catalog)    GET /r/{type}/{slug}.json  (item)
 packages/cli/     npx vibefarsi

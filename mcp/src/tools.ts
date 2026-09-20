@@ -24,7 +24,7 @@ function itemCard(item: CatalogItem, score?: number): string {
 
 function renderItem(item: RegistryItem): string {
   const files = item.files
-    .map((f) => `#### ${f.path}\n\n\`\`\`tsx\n${f.content}\n\`\`\``)
+    .map((f) => `#### ${f.path}\n\n\`\`\`${f.path.endsWith(".md") ? "md" : f.path.endsWith(".css") ? "css" : "tsx"}\n${f.content}\n\`\`\``)
     .join("\n\n");
   const deps = item.dependencies.length ? item.dependencies.join(", ") : "none beyond react / tailwind";
   const rdeps = item.registryDependencies.length ? item.registryDependencies.join(", ") : "none";
@@ -173,7 +173,7 @@ export function registerTools(server: McpServer) {
     "search_registry",
     {
       description:
-        "Search the VibeFarsi registry (components, blocks, animations, backgrounds, templates, themes, lib helpers) with Persian or English. Use this instead of guessing shadcn names.",
+        "Search the VibeFarsi registry (components, blocks, animations, backgrounds, templates, themes, lib helpers, and agent skills such as persian-conversational or jalali-calendar) with Persian or English. Use this instead of guessing shadcn names.",
       inputSchema: z.object({
         query: z.string().describe("What you need, e.g. تقویم, otp, toman, dashboard, فیروزه"),
         type: z.enum(REGISTRY_TYPES).optional().describe("Limit to one registry kind."),

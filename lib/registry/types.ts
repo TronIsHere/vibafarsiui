@@ -41,3 +41,40 @@ export type ThemeDoc = {
   file: string;
   promptBullets: string[];
 };
+
+export type SkillFormat = "skill" | "guide" | "external";
+export type SkillIcon =
+  | "chat"
+  | "letter"
+  | "input"
+  | "rtl"
+  | "calendar"
+  | "shield"
+  | "search"
+  | "book"
+  | "type"
+  | "pen"
+  | "upload"
+  | "wallet"
+  | "sms";
+export type SkillDoc = {
+  slug: string;
+  name: string;
+  nameEn: string;
+  desc: string;
+  /** skill = SKILL.md folder agents auto-load; guide = plain .md you link from CLAUDE.md; external = lives in another repo. */
+  format: SkillFormat;
+  icon: SkillIcon;
+  /** Markdown source in this repo. Absent for external skills. */
+  file?: string;
+  tags: string[];
+  /** When the skill kicks in, in Persian, for the docs page. */
+  useWhen: string[];
+  /** Illustrative before/after for one prompt. */
+  example?: { prompt: string; without: string; with: string };
+  repo?: string;
+  author?: { name: string; url: string };
+  license?: string;
+  /** Install commands for external skills. */
+  install?: { label: string; cmd: string }[];
+};

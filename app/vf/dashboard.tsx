@@ -27,15 +27,22 @@ function Chart({ series }: { series: { key: string; label: string; views: number
   const max = Math.max(1, ...series.map((s) => s.views));
   const tickEvery = series.length > 12 ? 4 : series.length > 8 ? 2 : 1;
   return (
-    <div dir="ltr" className="flex h-40 items-end gap-1">
+    <div dir="ltr" className="flex h-40 gap-1" role="img" aria-label="نمودار روند بازدید">
       {series.map((s, i) => (
-        <div key={s.key} className="flex min-w-0 flex-1 flex-col items-center justify-end gap-1">
-          <div
-            className="w-full rounded-t-sm bg-brand/80"
-            style={{ height: `${Math.max(s.views ? 6 : 2, (s.views / max) * 100)}%` }}
-            title={`${s.label}: ${s.views}`}
-          />
-          <span className={cn("text-[9px] leading-none text-muted-foreground", i % tickEvery !== 0 && "invisible")}>
+        <div key={s.key} className="flex h-full min-w-0 flex-1 flex-col items-center gap-1">
+          <div className="flex min-h-0 w-full flex-1 items-end">
+            <div
+              className="w-full rounded-t-sm bg-brand/80"
+              style={{ height: `${s.views === 0 ? 2 : Math.max(8, (s.views / max) * 100)}%` }}
+              title={`${s.label}: ${faNumber(s.views)}`}
+            />
+          </div>
+          <span
+            className={cn(
+              "shrink-0 text-[9px] leading-none text-muted-foreground",
+              i % tickEvery !== 0 && "invisible",
+            )}
+          >
             {s.label}
           </span>
         </div>

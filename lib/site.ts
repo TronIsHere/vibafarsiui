@@ -17,6 +17,14 @@ export function absUrl(path = "/"): string {
 }
 
 export const OG_ALT = "وایب‌فارسی: کامپوننت‌های فارسی راست‌چین برای React";
+/** Bump when replacing the PNG so X/Telegram re-fetch (they cache by exact image URL). */
+export const OG_IMAGE_URL = "/opengraph-image.png?v=2";
+export const OG_IMAGE = {
+  url: OG_IMAGE_URL,
+  width: 1200,
+  height: 630,
+  alt: OG_ALT,
+} as const;
 
 export function pageMetadata({
   title,
@@ -29,12 +37,7 @@ export function pageMetadata({
   path: string;
   index?: boolean;
 }): Metadata {
-  const image = {
-    url: "/opengraph-image.png",
-    width: 1200,
-    height: 630,
-    alt: OG_ALT,
-  };
+  const image = { ...OG_IMAGE };
   return {
     title,
     ...(description ? { description } : {}),

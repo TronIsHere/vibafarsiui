@@ -95,6 +95,15 @@ import { NotificationInbox } from "@/registry/ui/notification-inbox";
 import { FormField, FormErrors, rules, useForm } from "@/registry/ui/form";
 import { Slider as SliderUi } from "@/registry/ui/slider";
 import { formatJalali } from "@/lib/jalali";
+import { SearchInput } from "@/registry/ui/search-input";
+import { TagsInput } from "@/registry/ui/tags-input";
+import { MultiSelect } from "@/registry/ui/multi-select";
+import { Toggle, ToggleGroup } from "@/registry/ui/toggle";
+import { SegmentedControl } from "@/registry/ui/segmented-control";
+import { Separator } from "@/registry/ui/separator";
+import { LoadingOverlay, Spinner } from "@/registry/ui/spinner";
+import { Collapsible } from "@/registry/ui/collapsible";
+import { AlignCenter, AlignLeft, AlignRight, Bold, Italic, LayoutGrid, List, Underline } from "lucide-react";
 
 type Order = {
   id: number;
@@ -595,6 +604,81 @@ function RangeDemo() {
         <DateRangePicker value={range} onChange={setRange} />
       </div>
       <RangeCalendar months={2} value={range} onChange={setRange} />
+    </div>
+  );
+}
+
+const SKILLS = [
+  { value: "react", label: "ری‌اکت" },
+  { value: "next", label: "نکست" },
+  { value: "ts", label: "تایپ‌اسکریپت" },
+  { value: "tailwind", label: "تیلویند" },
+  { value: "node", label: "نود" },
+  { value: "figma", label: "فیگما" },
+  { value: "flutter", label: "فلاتر", disabled: true },
+];
+
+function SearchDemo({ compact }: { compact?: boolean }) {
+  const [loading, setLoading] = React.useState(false);
+  const [hits, setHits] = React.useState<string | null>(null);
+  return (
+    <div className={compact ? "w-full space-y-2" : "w-full max-w-xs space-y-2"}>
+      <SearchInput
+        placeholder="نام محصول…"
+        loading={loading}
+        shortcut={compact ? undefined : "⌘K"}
+        onSearch={(q) => {
+          if (!q) return setHits(null);
+          setLoading(true);
+          setTimeout(() => {
+            setLoading(false);
+            setHits(`${faNumber(q.length * 7)} نتیجه برای «${q}»`);
+          }, 600);
+        }}
+      />
+      <p className="h-5 text-xs text-muted-foreground" aria-live="polite">{hits}</p>
+    </div>
+  );
+}
+
+function SegmentedDemo() {
+  const [range, setRange] = React.useState("week");
+  const totals: Record<string, number> = { day: 4_800_000, week: 31_200_000, month: 126_000_000 };
+  return (
+    <div className="w-full max-w-xs space-y-3">
+      <SegmentedControl
+        aria-label="بازه"
+        fullWidth
+        value={range}
+        onChange={setRange}
+        options={[{ value: "day", label: "روزانه" }, { value: "week", label: "هفتگی" }, { value: "month", label: "ماهانه" }]}
+      />
+      <div className="text-center">
+        <p className="text-xs text-muted-foreground">فروش</p>
+        <p className="text-lg font-semibold">{formatToman(totals[range])}</p>
+      </div>
+    </div>
+  );
+}
+
+function SpinnerDemo() {
+  const [loading, setLoading] = React.useState(true);
+  return (
+    <div className="w-full max-w-xs space-y-4">
+      <div className="flex items-center justify-around">
+        <Spinner size="xs" />
+        <Spinner size="sm" />
+        <Spinner size="md" />
+        <Spinner size="lg" className="text-brand" />
+      </div>
+      <div className="relative rounded-lg border border-border p-3 text-sm">
+        <LoadingOverlay loading={loading} label="در حال دریافت…" />
+        <p className="font-medium">سفارش ۱۴۰۵۲</p>
+        <p className="text-xs text-muted-foreground">۳ قلم، ارسال با پست پیشتاز</p>
+      </div>
+      <Button size="sm" variant="outline" className="w-full" onClick={() => setLoading((v) => !v)}>
+        {loading ? "توقف" : "بارگذاری دوباره"}
+      </Button>
     </div>
   );
 }
@@ -1131,6 +1215,74 @@ export const componentDemos: Record<string, React.ReactNode> = {
       </CardContent>
     </Card>
   ),
+  "search-input": <SearchDemo />,
+  "tags-input": (
+    <div className="w-full max-w-xs">
+      <TagsInput defaultValue={["ری‌اکت", "تیلویند"]} max={5} />
+    </div>
+  ),
+  "multi-select": (
+    <div className="w-full max-w-xs">
+      <MultiSelect options={SKILLS} defaultValue={["react", "ts"]} placeholder="مهارت‌ها…" max={4} aria-label="مهارت‌ها" />
+    </div>
+  ),
+  toggle: (
+    <div className="flex w-full max-w-xs flex-col items-center gap-4">
+      <ToggleGroup
+        type="multiple"
+        variant="outline"
+        defaultValue={["bold"]}
+        aria-label="قالب متن"
+        items={[
+          { value: "bold", label: <Bold />, "aria-label": "پررنگ" },
+          { value: "italic", label: <Italic />, "aria-label": "مورب" },
+          { value: "underline", label: <Underline />, "aria-label": "زیرخط" },
+        ]}
+      />
+      <ToggleGroup
+        type="single"
+        defaultValue="all"
+        aria-label="فیلتر"
+        items={[{ value: "all", label: "همه" }, { value: "instock", label: "موجود" }, { value: "sale", label: "تخفیف‌دار" }]}
+      />
+      <div className="flex items-center gap-2">
+        <Toggle size="sm" defaultPressed aria-label="نمای شبکه‌ای"><LayoutGrid /></Toggle>
+        <Toggle size="sm" aria-label="نمای فهرستی"><List /></Toggle>
+      </div>
+    </div>
+  ),
+  "segmented-control": <SegmentedDemo />,
+  separator: (
+    <div className="w-full max-w-xs space-y-4 text-sm">
+      <Button variant="outline" className="w-full">ورود با گوگل</Button>
+      <Separator label="یا" />
+      <Button className="w-full">ورود با شماره‌ی موبایل</Button>
+      <Separator />
+      <div className="flex h-5 items-center justify-center gap-3 text-muted-foreground">
+        <span>ویرایش</span>
+        <Separator orientation="vertical" />
+        <span>کپی</span>
+        <Separator orientation="vertical" />
+        <span className="text-destructive">حذف</span>
+      </div>
+    </div>
+  ),
+  spinner: <SpinnerDemo />,
+  collapsible: (
+    <div className="w-full max-w-xs rounded-lg border border-border p-4 text-sm">
+      <div className="flex items-center justify-between">
+        <span className="font-medium">هزینه‌ی ارسال</span>
+        <span>{formatToman(45_000)}</span>
+      </div>
+      <Collapsible trigger="نمایش جزئیات" openLabel="پنهان کردن" className="mt-2">
+        <ul className="space-y-1.5 text-xs text-muted-foreground">
+          <li>پست پیشتاز، تحویل ۲ تا ۳ روز کاری</li>
+          <li>بسته‌بندی استاندارد رایگان</li>
+          <li>برای خرید بالای {formatToman(2_000_000)} رایگان می‌شود</li>
+        </ul>
+      </Collapsible>
+    </div>
+  ),
 };
 
 /**
@@ -1139,6 +1291,47 @@ export const componentDemos: Record<string, React.ReactNode> = {
  */
 export const componentCardDemos: Record<string, React.ReactNode> = {
   ...componentDemos,
+  "search-input": <SearchDemo compact />,
+  toggle: (
+    <div className="flex w-full flex-col items-center gap-3">
+      <ToggleGroup
+        type="multiple"
+        variant="outline"
+        size="sm"
+        defaultValue={["right"]}
+        aria-label="چینش"
+        items={[
+          { value: "right", label: <AlignRight />, "aria-label": "راست‌چین" },
+          { value: "center", label: <AlignCenter />, "aria-label": "وسط‌چین" },
+          { value: "left", label: <AlignLeft />, "aria-label": "چپ‌چین" },
+        ]}
+      />
+      <ToggleGroup
+        type="single"
+        size="sm"
+        defaultValue="all"
+        aria-label="فیلتر"
+        items={[{ value: "all", label: "همه" }, { value: "instock", label: "موجود" }, { value: "sale", label: "تخفیف‌دار" }]}
+      />
+    </div>
+  ),
+  "segmented-control": (
+    <div className="w-full">
+      <SegmentedControl
+        aria-label="بازه"
+        fullWidth
+        defaultValue="week"
+        options={[{ value: "day", label: "روزانه" }, { value: "week", label: "هفتگی" }, { value: "month", label: "ماهانه" }]}
+      />
+    </div>
+  ),
+  spinner: (
+    <div className="flex w-full items-center justify-around">
+      <Spinner size="sm" />
+      <Spinner size="md" />
+      <Spinner size="lg" className="text-brand" />
+    </div>
+  ),
   button: (
     <div className="flex flex-col items-center gap-2">
       <div className="flex flex-wrap items-center justify-center gap-2">

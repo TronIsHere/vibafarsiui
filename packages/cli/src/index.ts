@@ -12,11 +12,11 @@ ${color.bold("vibefarsi")}  Persian RTL components for React + Tailwind
 Usage
   npx vibefarsi@latest init
   npx vibefarsi add button calendar price
-  npx vibefarsi list [components|animations|backgrounds|templates|themes|lib]
+  npx vibefarsi list [components|blocks|animations|backgrounds|templates|themes|skills|lib]
 
 Commands
   init     dir="rtl", Vazirmatn/IRANSans, Graphite tokens, lib/utils.ts, lib/jalali.ts
-  add      Pull items from the registry into your app
+  add      Pull items from the registry into your app (components, blocks, themes, skills…)
   list     Show registry slugs
 
 Flags

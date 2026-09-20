@@ -12,6 +12,7 @@ import {
   PanelsTopLeft,
   Search,
   Sparkles,
+  WandSparkles,
 } from "lucide-react";
 import { CommandDialog, type CommandItem } from "@/registry/ui/command";
 import {
@@ -21,6 +22,7 @@ import {
   blocks,
   components,
   sections,
+  skills,
   templates,
   themes,
 } from "@/lib/registry";
@@ -32,6 +34,7 @@ const TYPE_META = {
   background: { href: (slug: string) => `/backgrounds/${slug}`, group: "پس‌زمینه‌ها", icon: Image },
   template: { href: (slug: string) => `/templates/${slug}`, group: "قالب‌ها", icon: LayoutTemplate },
   theme: { href: (slug: string) => `/themes/${slug}`, group: "سیستم‌های طراحی", icon: Palette },
+  skill: { href: (slug: string) => `/skills/${slug}`, group: "مهارت‌ها", icon: WandSparkles },
 } as const;
 
 type SearchDoc = {
@@ -86,6 +89,7 @@ export function SiteSearch() {
       ["background", backgrounds],
       ["template", templates],
       ["theme", themes],
+      ["skill", skills],
     ];
 
     const catalog = collections.flatMap(([type, list]) => {

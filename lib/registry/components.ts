@@ -874,4 +874,151 @@ import { stringifyPlate } from "@/lib/persian"
     notes: ["تبدیل عدد به حروف در lib/number-to-words.ts هست و جدا هم میشه ازش استفاده کرد، با numberToWords، tomanToWords و rialToWords.", "«هزار» بدون «یک» می‌آد (هزار تومان، نه یک هزار تومان) ولی از میلیون به بالا «یک میلیون» نوشته میشه."],
     promptBullets: ["Numeric text field; strip non-digits (Persian digits accepted), keep a plain number in state, render with «٬» and Persian digits; unit at the end.", "Under the field spell the amount in Persian words with the unit; min/max errors replace it.", "Optional quick chips that set common amounts, labelled «۱۰۰ هزار» / «۱ میلیون»."],
   },
+  {
+    slug: "search-input", name: "جست‌وجو", cat: "form", file: ui("search-input"), deps: ["lucide-react"],
+    desc: "فیلد جست‌وجو با ذره‌بین، دکمه‌ی پاک کردن، حالت بارگذاری و تأخیر کوتاه قبل از جست‌وجو تا با هر حرف درخواست نفرستید.",
+    usage: `import { SearchInput } from "@/components/ui/search-input"
+
+<SearchInput placeholder="نام محصول…" loading={isPending} onSearch={(q) => search(q)} shortcut="⌘K" />`,
+    props: [
+      { name: "onSearch", type: "(value: string) => void", desc: "بعد از مکث تایپ، با Enter و وقتی فیلد پاک میشه صدا زده میشه." },
+      { name: "debounce", type: "number", default: "300", desc: "مکث تایپ به میلی‌ثانیه قبل از onSearch." },
+      { name: "loading", type: "boolean", desc: "به جای ذره‌بین یک چرخنده نشان میده." },
+      { name: "shortcut", type: "string", default: "—", desc: "راهنمای میانبر در انتهای فیلد، مثل «⌘K»، که با تایپ پنهان میشه." },
+      { name: "size", type: '"sm" | "md"', default: '"md"', desc: "ارتفاع ۳۲ یا ۴۰ پیکسل." },
+    ],
+    notes: ["Escape متن را پاک می‌کنه و Enter بدون منتظر ماندن جست‌وجو می‌کنه.", "type=\"search\" هست تا کیبورد موبایل دکمه‌ی جست‌وجو نشان بده، ولی ضربدر بومی مرورگر پنهان شده و دکمه‌ی خودمان جای آن نشسته."],
+    promptBullets: ["type=\"search\" with enterKeyHint=\"search\"; hide the WebKit cancel button and render an own clear (X) button at the inline-end once there is text.", "Magnifier at the inline-start (right in RTL); `loading` swaps it for a spinner.", "onSearch fires after a debounce (default 300ms), immediately on Enter, and with \"\" when cleared; Escape clears."],
+  },
+  {
+    slug: "tags-input", name: "برچسب‌ها", cat: "form", file: ui("tags-input"), deps: ["lucide-react"],
+    desc: "ورودی چندمقداری که با Enter یا ویرگول فارسی هر عبارت را چیپ می‌کنه، متن چسبانده‌شده را می‌شکنه و تکراری‌ها را نمی‌پذیره.",
+    usage: `import { TagsInput } from "@/components/ui/tags-input"
+
+<TagsInput defaultValue={["ری‌اکت", "تیلویند"]} max={5} onChange={setTags} />`,
+    props: [
+      { name: "value / onChange", type: "string[]", desc: "فهرست برچسب‌ها، کنترل‌شده یا آزاد." },
+      { name: "max", type: "number", desc: "سقف تعداد. شمارنده‌ی «۳ / ۵» زیر فیلد می‌آد و بعد از پر شدن، تایپ بسته میشه." },
+      { name: "separators", type: "string[]", default: '["،", ","]', desc: "کاراکترهایی که موقع تایپ برچسب را ثبت می‌کنن. Enter همیشه ثبت می‌کنه." },
+      { name: "validate", type: "(tag) => string | null", default: "trim", desc: "قبل از افزودن اصلاح یا رد می‌کنه، مثلاً حروف کوچک کردن یا محدودیت طول." },
+    ],
+    notes: ["Backspace روی فیلد خالی آخرین چیپ را برمی‌داره و با ترک فیلد، متن نیمه‌کاره هم ثبت میشه.", "هر چیپ dir=\"auto\" داره تا برچسب انگلیسی کنار فارسی درست نمایش داده بشه."],
+    promptBullets: ["Chips inside a bordered wrapper (focus-within ring) followed by a flex-1 text input; clicking the wrapper focuses the input.", "Enter, «،», «,» and newline commit a tag; paste splits on the same separators; duplicates are ignored; Backspace on empty input removes the last chip.", "Optional max with a Persian «۳ / ۵» counter; each chip has an X button labelled «حذف …»."],
+  },
+  {
+    slug: "multi-select", name: "چندانتخابی", cat: "form", file: ui("multi-select"), deps: ["lucide-react"],
+    desc: "فهرست انتخاب چندتایی با جست‌وجو، تیک کنار هر گزینه و چیپ‌هایی که داخل فیلد می‌نشینن و بعد از چند تا به «+۲ مورد دیگر» جمع میشن.",
+    usage: `import { MultiSelect } from "@/components/ui/multi-select"
+
+<MultiSelect
+  placeholder="مهارت‌ها…"
+  options={[{ value: "react", label: "ری‌اکت" }, { value: "next", label: "نکست" }, { value: "ts", label: "تایپ‌اسکریپت" }]}
+  max={3}
+  onChange={setSkills}
+/>`,
+    props: [
+      { name: "options", type: "{ value; label; disabled? }[]", desc: "گزینه‌ها. جست‌وجو روی label انجام میشه." },
+      { name: "value / onChange", type: "string[]", desc: "مقدارهای انتخاب‌شده، کنترل‌شده یا آزاد." },
+      { name: "searchable", type: "boolean", default: "true", desc: "فیلد فیلتر بالای فهرست." },
+      { name: "maxVisible", type: "number", default: "3", desc: "تعداد چیپ‌هایی که داخل فیلد نشان داده میشن و بقیه به «+n مورد دیگر» تبدیل میشن." },
+      { name: "max", type: "number", desc: "سقف انتخاب. بعد از رسیدن به آن، گزینه‌های دیگر غیرفعال میشن." },
+    ],
+    notes: ["پنل با lib/float.tsx داخل body رندر میشه تا overflow والد آن را نبره و هم‌عرض فیلد باز میشه.", "با کلید پایین فهرست باز میشه، Space یا Enter تیک می‌زنه، Backspace روی جست‌وجوی خالی آخرین چیپ را حذف می‌کنه و Escape می‌بنده."],
+    promptBullets: ["Trigger is a focusable div with role=combobox and aria-haspopup=listbox; selected items render as chips with X buttons, overflow collapses into «+۲ مورد دیگر».", "Panel in a fixed portal matching the field width: optional search box on top, ul role=listbox aria-multiselectable with checkbox-style options, footer with «n مورد انتخاب شده» and «پاک کردن».", "Keyboard: ArrowDown opens/moves, ArrowUp moves, Enter/Space toggles, Escape closes, Backspace with empty query removes the last chip; onMouseDown preventDefault on options keeps focus in the search box."],
+  },
+  {
+    slug: "toggle", name: "دکمه‌ی فشاری", cat: "form", file: ui("toggle"),
+    desc: "دکمه‌ی دووضعیتی مثل «پررنگ» یا «فقط موجود» و گروهش که یا مثل رادیو یکی را نگه می‌داره یا مثل چک‌باکس چند تا را.",
+    usage: `import { Toggle, ToggleGroup } from "@/components/ui/toggle"
+import { Bold, Italic, Underline } from "lucide-react"
+
+<Toggle aria-label="پررنگ"><Bold /></Toggle>
+
+<ToggleGroup
+  type="single"
+  defaultValue="all"
+  items={[{ value: "all", label: "همه" }, { value: "instock", label: "موجود" }, { value: "sale", label: "تخفیف‌دار" }]}
+/>`,
+    props: [
+      { name: "pressed / onPressedChange", type: "boolean", desc: "وضعیت دکمه‌ی تکی." },
+      { name: "type", type: '"single" | "multiple"', default: '"single"', desc: "در گروه: یکی یا چند تا. در single می‌تونید همان یکی را هم خاموش کنید." },
+      { name: "items", type: "{ value; label; aria-label?; disabled? }[]", desc: "گزینه‌های گروه. برای آیکون‌های تنها aria-label بدید." },
+      { name: "variant", type: '"default" | "outline"', default: '"default"', desc: "outline دور دکمه یا دور کل گروه خط می‌کشه." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', desc: "ارتفاع ۳۲، ۳۶ یا ۴۰ پیکسل." },
+    ],
+    notes: ["با Switch فرق داره. Switch یک تنظیم را روشن و خاموش می‌کنه و همان لحظه اعمال میشه، ولی Toggle یک حالت نمایش یا فیلتر را می‌گیره.", "کلیدهای چپ و راست بین اعضای گروه می‌گردن و در RTL چپ یعنی بعدی."],
+    promptBullets: ["Button with aria-pressed; pressed state uses bg-secondary text-foreground, unpressed is text-muted-foreground with a hover background.", "ToggleGroup: role=group, type single (one or none) or multiple; ArrowLeft moves to the next item in RTL, ArrowRight to the previous.", "Sizes sm/md/lg (h-8/h-9/h-10) and an outline variant that boxes the whole group."],
+  },
+  {
+    slug: "segmented-control", name: "کنترل بخشی", cat: "form", file: ui("segmented-control"),
+    desc: "چند گزینه‌ی کنار هم با یک قرص که زیر گزینه‌ی فعال سر می‌خوره، برای چیزهایی مثل «هفتگی و ماهانه» یا «فهرست و شبکه».",
+    usage: `import { SegmentedControl } from "@/components/ui/segmented-control"
+
+<SegmentedControl
+  aria-label="بازه"
+  defaultValue="week"
+  options={[{ value: "day", label: "روزانه" }, { value: "week", label: "هفتگی" }, { value: "month", label: "ماهانه" }]}
+  onChange={setRange}
+/>`,
+    props: [
+      { name: "options", type: "{ value; label; disabled?; aria-label? }[]", desc: "بخش‌ها. عرض همه برابر پهن‌ترین برچسبه." },
+      { name: "value / onChange", type: "string", desc: "کنترل‌شده یا آزاد. پیش‌فرض گزینه‌ی اوله." },
+      { name: "fullWidth", type: "boolean", default: "false", desc: "کل عرض والد را می‌گیره و بخش‌ها را مساوی تقسیم می‌کنه." },
+      { name: "size", type: '"sm" | "md"', default: '"md"', desc: "ارتفاع ۲۸ یا ۳۲ پیکسل." },
+    ],
+    notes: ["فرقش با Tabs اینه که محتوایی زیرش عوض نمیشه، فقط یک مقدار انتخاب میشه، مثل یک select کوچک با گزینه‌های کم.", "قرص از offsetLeft و offsetWidth خود دکمه اندازه گرفته میشه، پس در RTL هم درست زیر گزینه می‌نشینه و با تغییر اندازه دوباره اندازه‌گیری میشه."],
+    promptBullets: ["role=radiogroup with role=radio buttons on a bg-muted track; the active pill is one absolutely positioned span behind the buttons, moved with translateX and width measured from the selected button (offsetLeft/offsetWidth), re-measured by ResizeObserver.", "Equal-width segments via an inline grid with auto-cols-fr; fullWidth switches to a block grid.", "ArrowLeft = next in RTL, ArrowRight = previous; roving tabIndex so only the active segment is in the tab order."],
+  },
+  {
+    slug: "separator", name: "جداکننده", cat: "display", file: ui("separator"),
+    desc: "خط نازک افقی یا عمودی از توکن border، با متن وسطش برای جاهایی مثل «یا» بین دو روش ورود.",
+    usage: `import { Separator } from "@/components/ui/separator"
+
+<Separator />
+<Separator label="یا" />
+<div className="flex h-5 items-center gap-3">
+  <span>ویرایش</span><Separator orientation="vertical" /><span>حذف</span>
+</div>`,
+    props: [
+      { name: "orientation", type: '"horizontal" | "vertical"', default: '"horizontal"', desc: "عمودی داخل flex با self-stretch ارتفاع می‌گیره." },
+      { name: "label", type: "ReactNode", desc: "متن وسط خط افقی." },
+      { name: "decorative", type: "boolean", default: "true", desc: "true یعنی برای صفحه‌خوان معنایی نداره. برای جداکننده‌ی معنادار false بدید تا role=separator بگیره." },
+    ],
+    promptBullets: ["One-pixel line from the border token: h-px w-full for horizontal, w-px self-stretch for vertical.", "With a label: two flex-1 lines around a text-xs muted span.", "decorative → role=none; otherwise role=separator with aria-orientation."],
+  },
+  {
+    slug: "spinner", name: "بارگذاری", cat: "feedback", file: ui("spinner"),
+    desc: "حلقه‌ی در حال چرخش که رنگ متن اطرافش را می‌گیره، در چهار اندازه، با متن کنارش یا به شکل لایه‌ای روی کارت.",
+    usage: `import { Spinner, LoadingOverlay } from "@/components/ui/spinner"
+
+<Spinner label="در حال دریافت…" />
+<Button disabled><Spinner size="xs" className="text-current" /> ثبت</Button>
+
+<div className="relative">
+  <LoadingOverlay loading={isPending} />
+  …
+</div>`,
+    props: [
+      { name: "size", type: '"xs" | "sm" | "md" | "lg"', default: '"md"', desc: "۱۲ تا ۳۶ پیکسل. xs برای داخل دکمه." },
+      { name: "label", type: "ReactNode", desc: "متن کنار حلقه. بدون آن هم صفحه‌خوان «در حال بارگذاری» می‌شنوه." },
+      { name: "LoadingOverlay", type: "{ loading; label? }", desc: "لایه‌ی نیمه‌شفاف روی والدی که relative باشه." },
+    ],
+    promptBullets: ["role=status wrapper; the ring is a border-current circle with border-e-transparent and animate-spin, sized xs/sm/md/lg.", "Color comes from currentColor so text-muted-foreground or text-brand recolors it; sr-only «در حال بارگذاری» when there is no visible label.", "LoadingOverlay: absolute inset-0 bg-background/60 with a centered spinner, inherits the parent's radius."],
+  },
+  {
+    slug: "collapsible", name: "بازشو", cat: "display", file: ui("collapsible"), deps: ["lucide-react"],
+    desc: "دکمه‌ی «نمایش بیشتر» که یک بلوک را با انیمیشن ارتفاع باز و بسته می‌کنه و محتوا را از DOM حذف نمی‌کنه تا وضعیت فرم داخلش بمونه.",
+    usage: `import { Collapsible } from "@/components/ui/collapsible"
+
+<Collapsible trigger="نمایش جزئیات" openLabel="پنهان کردن">
+  <p>هزینه‌ی ارسال بر اساس وزن و شهر مقصد محاسبه می‌شود.</p>
+</Collapsible>`,
+    props: [
+      { name: "trigger", type: "ReactNode", desc: "برچسب دکمه. شورون کنارش خودش می‌چرخه." },
+      { name: "openLabel", type: "ReactNode", desc: "برچسب در حالت باز، مثل «پنهان کردن». اگر ندید همان trigger می‌مونه." },
+      { name: "open / defaultOpen / onOpenChange", type: "boolean", desc: "کنترل‌شده یا آزاد." },
+    ],
+    notes: ["انیمیشن با grid-template-rows از 0fr به 1fr انجام میشه، پس ارتفاعی اندازه‌گیری نمیشه و با هر محتوایی کار می‌کنه.", "در حالت بسته، بلوک inert میشه تا لینک و فیلدهای داخلش با Tab پیدا نشن. برای چند بخش پشت سر هم از Accordion استفاده کنید."],
+    promptBullets: ["Trigger button with aria-expanded and aria-controls; chevron rotates 180° when open.", "Height animation with a CSS grid wrapper: grid-rows-[0fr] ↔ grid-rows-[1fr], inner div min-h-0 overflow-hidden, ~200ms.", "Content stays mounted; the closed block gets inert and aria-hidden so it leaves the tab order."],
+  },
 ];

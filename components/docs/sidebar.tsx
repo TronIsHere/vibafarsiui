@@ -9,11 +9,12 @@ import {
   blocks,
   components,
   sections,
+  skills,
   templates,
   themes,
 } from "@/lib/registry";
 
-const lists = { components, blocks, animations, backgrounds, templates, themes } as const;
+const lists = { components, blocks, animations, backgrounds, templates, themes, skills } as const;
 
 export function DocsSidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();

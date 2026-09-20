@@ -33,11 +33,15 @@ export async function CodeBlock({
             <span className="select-none text-end opacity-35">{i + 1}</span>
             <span>
               {tokens.map((t, j) => {
-                // FontStyle.Italic — a const enum in vscode-textmate, so the bit is tested directly.
+                // FontStyle.Italic / Bold — const enums in vscode-textmate, so the bits are tested directly.
                 const italic = ((t.fontStyle ?? 0) & 1) !== 0;
-                if (!t.color && !italic) return t.content;
+                const bold = ((t.fontStyle ?? 0) & 2) !== 0;
+                if (!t.color && !italic && !bold) return t.content;
                 return (
-                  <span key={j} style={{ color: t.color, fontStyle: italic ? "italic" : undefined }}>
+                  <span
+                    key={j}
+                    style={{ color: t.color, fontStyle: italic ? "italic" : undefined, fontWeight: bold ? 600 : undefined }}
+                  >
                     {t.content}
                   </span>
                 );

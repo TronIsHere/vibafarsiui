@@ -7,7 +7,7 @@ import {
   type ThemedToken,
 } from "shiki";
 
-export type Lang = "tsx" | "css" | "json";
+export type Lang = "tsx" | "css" | "json" | "markdown" | "bash" | "text";
 
 /**
  * Graphite palette as hex — TextMate themes only accept hex. Values are the
@@ -53,6 +53,17 @@ const graphite: ThemeRegistrationRaw = {
     { scope: ["support.type.property-name.css", "support.type.vendored.property-name.css"], settings: { foreground: c.attr } },
     { scope: ["variable.css", "variable.argument.css", "support.type.custom-property"], settings: { foreground: c.type } },
     { scope: ["keyword.control.at-rule", "punctuation.definition.keyword.css"], settings: { foreground: c.keyword } },
+    // Markdown (SKILL.md and guides in registry/skills)
+    { scope: ["markup.heading", "entity.name.section.markdown", "punctuation.definition.heading.markdown"], settings: { foreground: c.brand, fontStyle: "bold" } },
+    { scope: ["markup.bold"], settings: { fontStyle: "bold" } },
+    { scope: ["markup.italic"], settings: { fontStyle: "italic" } },
+    { scope: ["markup.inline.raw", "markup.raw.block"], settings: { foreground: c.success } },
+    { scope: ["markup.underline.link", "string.other.link.title.markdown"], settings: { foreground: c.attr } },
+    { scope: ["markup.quote", "punctuation.definition.quote.begin.markdown"], settings: { foreground: c.muted, fontStyle: "italic" } },
+    { scope: ["punctuation.definition.list.begin.markdown", "meta.separator.markdown", "punctuation.definition.table.markdown"], settings: { foreground: c.brand } },
+    { scope: ["punctuation.definition.markdown", "fenced_code.block.language"], settings: { foreground: c.muted } },
+    // Shell
+    { scope: ["source.shell entity.name.command", "support.function.builtin.shell"], settings: { foreground: c.fn } },
   ],
 };
 
@@ -63,7 +74,7 @@ function getHighlighter() {
   // grammar we use is supported.
   return (highlighter ??= createHighlighter({
     themes: [graphite],
-    langs: ["tsx", "css", "json"],
+    langs: ["tsx", "css", "json", "markdown", "bash"],
     engine: createJavaScriptRegexEngine(),
   }));
 }

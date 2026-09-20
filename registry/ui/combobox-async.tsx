@@ -68,12 +68,12 @@ export function ComboboxAsync({ loadOptions, value = null, onChange, placeholder
             if (e.key === "Enter" && open && items[index]) { e.preventDefault(); pick(items[index]); }
             if (e.key === "Escape") setOpen(false);
           }}
-          className="h-full min-w-0 flex-1 bg-transparent pe-2 text-[14px]/8 outline-none placeholder:text-muted-foreground/70"
+          className="h-full min-w-0 flex-1 bg-transparent pe-2 text-sm/8 outline-none placeholder:text-muted-foreground/70"
         />
         {state === "loading" ? <Loader2 className="size-4 animate-spin text-muted-foreground" /> : <ChevronDown className={cn("size-4 text-muted-foreground transition-transform", open && "rotate-180")} />}
       </div>
       <FloatPortal open={listOpen} mounted={mounted} style={style} theme={theme} panelRef={panel} className="fixed z-50">
-        <ul id={listId} role="listbox" className="max-h-60 overflow-auto rounded-lg border border-border bg-popover p-1.5 text-[14px]/8 shadow-lg">
+        <ul id={listId} role="listbox" className="max-h-60 overflow-auto rounded-lg border border-border bg-popover p-1.5 text-sm/8 shadow-lg">
           {state === "error" && <li className="px-2.5 py-2 text-destructive">{errorText}</li>}
           {state === "loading" && items.length === 0 && <li className="px-2.5 py-2 text-muted-foreground">در حال جست‌وجو…</li>}
           {state === "idle" && items.length === 0 && <li className="px-2.5 py-2 text-muted-foreground">{emptyText}</li>}

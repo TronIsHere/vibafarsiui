@@ -8,6 +8,7 @@ import {
   Palette,
   PanelsTopLeft,
   Sparkles,
+  WandSparkles,
 } from "lucide-react";
 import { Frame, HatchBand, Section } from "@/components/landing/frame";
 import { TopBar } from "@/components/landing/top-bar";
@@ -22,6 +23,7 @@ const ICONS: Record<SectionKey, LucideIcon> = {
   backgrounds: Image,
   templates: LayoutTemplate,
   themes: Palette,
+  skills: WandSparkles,
 };
 
 const DIGITS = ["۴", "۰", "۴"] as const;

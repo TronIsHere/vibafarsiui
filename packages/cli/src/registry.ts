@@ -1,6 +1,6 @@
 export const DEFAULT_REGISTRY = "https://vibefarsi.ir/r";
 
-export type RegistryType = "component" | "animation" | "background" | "template" | "theme" | "lib";
+export type RegistryType = "component" | "animation" | "background" | "template" | "block" | "theme" | "lib" | "skill";
 
 export type CatalogItem = {
   type: RegistryType;
@@ -83,7 +83,7 @@ export async function fetchItem(client: RegistryClient, item: CatalogItem) {
   return getJson<RegistryItem>(client.itemUrl(item.url));
 }
 
-const TYPE_RANK: RegistryType[] = ["lib", "component", "animation", "background", "template", "theme"];
+const TYPE_RANK: RegistryType[] = ["lib", "component", "block", "animation", "background", "template", "theme", "skill"];
 
 export function resolveItems(catalog: Catalog, queries: string[]) {
   const found: CatalogItem[] = [];
@@ -99,7 +99,7 @@ export function resolveItems(catalog: Catalog, queries: string[]) {
 export function resolveOne(catalog: Catalog, query: string): CatalogItem | undefined {
   const q = query.trim().toLowerCase();
   if (!q) return undefined;
-  const typed = q.match(/^(components?|animations?|backgrounds?|templates?|themes?|lib)\/(.+)$/);
+  const typed = q.match(/^(components?|blocks?|animations?|backgrounds?|templates?|themes?|skills?|lib)\/(.+)$/);
   if (typed) {
     const rawType = typed[1].replace(/s$/, "") as RegistryType;
     const type = (rawType === "component" || TYPE_RANK.includes(rawType) ? rawType : "component") as RegistryType;

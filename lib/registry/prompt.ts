@@ -7,6 +7,7 @@ const SHARED_RULES = [
   "Colors only from theme tokens: bg-background, text-foreground, bg-primary, text-muted-foreground, border-border, and similar. Do not invent colors.",
   "Icons from lucide-react. Directional icons (arrows, chevrons) flip in RTL: \"next\" points left.",
   "Accessibility: correct ARIA roles, a visible focus ring, and full keyboard support.",
+  "Form controls (input, textarea, select) must compute to at least 16px on iOS, or Safari zooms the page on focus; keep text-sm on desktop and raise it under @supports (-webkit-touch-callout: none).",
   "Motion is short (150–300ms) and disabled under prefers-reduced-motion.",
   "All visible UI copy (labels, placeholders, empty states, errors) is Persian (Farsi). Code identifiers stay English.",
 ];

@@ -110,6 +110,19 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* iOS Safari zooms the page when a focused control is under 16px. Only iOS
+     understands -webkit-touch-callout, so desktop keeps its 14px fields. The
+     Tailwind size variables are raised on the control itself, which lifts
+     text-xs / text-sm to 1rem while text-base and larger stay as declared;
+     the max() covers controls that merely inherit a small size. */
+  @supports (-webkit-touch-callout: none) {
+    input, textarea, select {
+      --text-xs: 1rem;
+      --text-sm: 1rem;
+      font-size: max(1rem, 1em);
+    }
+  }
+
   h1, h2, h3, h4 {
     line-height: 1.35;
     text-wrap: balance;

@@ -1,7 +1,7 @@
-import { animations, backgrounds, blocks, buildPrompt, buildThemePrompt, components, libs, templates, themes } from "@/lib/registry";
+import { animations, backgrounds, blocks, buildPrompt, buildThemePrompt, components, hostedSkills, libs, skillTarget, templates, themes } from "@/lib/registry";
 import { readSource } from "@/lib/source";
 
-const lists = { components, animations, backgrounds, templates, blocks, themes, lib: libs } as const;
+const lists = { components, animations, backgrounds, templates, blocks, themes, lib: libs, skills: hostedSkills } as const;
 type Type = keyof typeof lists;
 
 export function generateStaticParams() {
@@ -19,6 +19,11 @@ function userPath(type: Type, file: string) {
   return `components/templates/${name}`;
 }
 
+function targetPath(type: Type, item: { file: string; slug: string; format?: "skill" | "guide" | "external" }) {
+  if (type === "skills" && item.format) return skillTarget({ slug: item.slug, format: item.format });
+  return userPath(type, item.file);
+}
+
 /**
  * Machine-readable registry, shadcn-style: GET /r/components/button.json
  * Consumed by the CLI and MCP server.
@@ -32,15 +37,16 @@ export async function GET(_req: Request, ctx: RouteContext<"/r/[type]/[slug]">) 
 
   const content = readSource(item.file);
   const isTheme = type === "themes";
-  const kind = (type === "lib" ? "lib" : type.replace(/s$/, "")) as "component" | "animation" | "background" | "template" | "block" | "lib";
+  const kind = (type === "lib" ? "lib" : type.replace(/s$/, "")) as "component" | "animation" | "background" | "template" | "block" | "lib" | "skill";
   const prompt = "swatches" in item
     ? buildThemePrompt(item)
-    : "promptBullets" in item
+    : "promptBullets" in item && kind !== "skill"
       ? buildPrompt(item, kind)
       : undefined;
 
   const isLib = type === "lib";
-  const fileKind = isTheme ? "registry:style" : isLib ? "registry:lib" : "registry:component";
+  const isSkill = type === "skills";
+  const fileKind = isTheme ? "registry:style" : isLib ? "registry:lib" : isSkill ? "registry:skill" : "registry:component";
   const body = {
     $schema: "https://vibefarsi.dev/schema/registry-item.json",
     name: item.slug,
@@ -49,7 +55,7 @@ export async function GET(_req: Request, ctx: RouteContext<"/r/[type]/[slug]">) 
     description: item.desc,
     dependencies: "deps" in item ? item.deps ?? [] : [],
     registryDependencies: "registryDeps" in item ? item.registryDeps ?? [] : [],
-    files: [{ path: userPath(type as Type, item.file), content, type: fileKind }],
+    files: [{ path: targetPath(type as Type, item), content, type: fileKind }],
     ...("css" in item && item.css ? { css: item.css } : {}),
     prompt,
   };

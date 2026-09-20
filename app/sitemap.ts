@@ -4,6 +4,7 @@ import {
   backgrounds,
   blocks,
   components,
+  skills,
   templates,
   themes,
 } from "@/lib/registry";
@@ -22,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absUrl("/backgrounds"), lastModified, changeFrequency: "weekly", priority: 0.8 },
     { url: absUrl("/templates"), lastModified, changeFrequency: "weekly", priority: 0.8 },
     { url: absUrl("/themes"), lastModified, changeFrequency: "weekly", priority: 0.8 },
+    { url: absUrl("/skills"), lastModified, changeFrequency: "weekly", priority: 0.8 },
     { url: absUrl("/icons"), lastModified, changeFrequency: "monthly", priority: 0.3 },
   ];
 
@@ -61,6 +63,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.5,
+    })),
+    ...skills.map((item) => ({
+      url: absUrl(`/skills/${item.slug}`),
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
     })),
   ];
 

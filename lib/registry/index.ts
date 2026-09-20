@@ -5,6 +5,7 @@ export * from "./backgrounds";
 export * from "./templates";
 export * from "./blocks";
 export * from "./themes";
+export * from "./skills";
 export * from "./prompt";
 export * from "./libs";
 export * from "./catalog";
@@ -15,8 +16,9 @@ import { backgrounds } from "./backgrounds";
 import { templates } from "./templates";
 import { blocks } from "./blocks";
 import { themes } from "./themes";
+import { skills } from "./skills";
 
-export type SectionKey = "components" | "blocks" | "templates" | "animations" | "backgrounds" | "themes";
+export type SectionKey = "components" | "blocks" | "templates" | "animations" | "backgrounds" | "themes" | "skills";
 
 export const sections: { key: SectionKey; label: string; desc: string; count: number }[] = [
   { key: "components", label: "کامپوننت‌ها", desc: "دکمه، فرم و جدول، همه از پایه راست‌چین", count: components.length },
@@ -25,4 +27,5 @@ export const sections: { key: SectionKey; label: string; desc: string; count: nu
   { key: "backgrounds", label: "پس‌زمینه‌ها", desc: "الگو و نور کم‌کنتراست که متن روشون خوانا می‌مونه", count: backgrounds.length },
   { key: "templates", label: "قالب‌ها", desc: "صفحه‌های کامل، از همین کامپوننت‌ها", count: templates.length },
   { key: "themes", label: "سیستم‌های طراحی", desc: "توکن‌های رنگ و شعاع که هر وقت بخواید عوض میشن", count: themes.length },
+  { key: "skills", label: "مهارت‌ها", desc: "فایل‌های SKILL.md که به Claude Code و Cursor فارسی یاد میدن", count: skills.length },
 ];

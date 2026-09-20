@@ -10,6 +10,7 @@ import { Templates } from "@/components/landing/templates";
 import { Blocks } from "@/components/landing/blocks";
 import { DesignSystems } from "@/components/landing/design-systems";
 import { McpSteps } from "@/components/landing/mcp-steps";
+import { Skills } from "@/components/landing/skills";
 import { Sponsors } from "@/components/landing/sponsors";
 import { CodeBlock } from "@/components/shared/code-block";
 import { JsonLd } from "@/components/shared/json-ld";
@@ -50,6 +51,8 @@ export default function Home() {
           <DesignSystems />
           <HatchBand />
           <McpSteps />
+          <HatchBand />
+          <Skills />
           <HatchBand />
           <Faq />
           <HatchBand />
