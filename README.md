@@ -148,6 +148,21 @@ get_component(["input", "price", "button"])
 
 سایت، رجیستری، CLI و سرور MCP همه در همین مخزن هستن. همه‌چیز از پوشه‌ی `registry` می‌آد. سایت همان فایل‌ها را نشون میده و مسیر <code dir="ltr">/r</code> هم همان‌ها را به CLI و MCP میده.
 
+برای PR، جزئیات استک، چیزهایی که عمداً نداریم، و چک‌لیست مشارکت در [`CONTRIBUTING.md`](CONTRIBUTING.md) هست.
+
+### استک (خلاصه)
+
+| بخش | ابزار |
+| --- | --- |
+| سایت / رجیستری | Next.js ۱۶ · React ۱۹ · TypeScript · Tailwind v۴ |
+| آیکون رجیستری | فقط `lucide-react` (تقریباً همیشه) |
+| سایت | `shiki` برای هایلایت کد · `zod` |
+| MCP | `@modelcontextprotocol/server` · پکیج `@vibefarsi/mcp` (Node ۲۰+) |
+| CLI | TypeScript خالص · پکیج `vibefarsi` روی npm |
+| استقرار | Liara · پورت ۳۰۰۰ |
+
+انیمیشن‌ها با CSS و React هستن؛ Framer Motion و GSAP داخل رجیستری نمی‌آد. تقویم و اعتبارسنجی ایرانی هم داخل `lib/` خود مخزنه، نه پکیج جدا.
+
 </div>
 
 ```
@@ -196,5 +211,7 @@ npm run mcp:smoke
 ## لایسنس
 
 MIT. پلن پولی نداریم و هیچ کامپوننتی قفل نیست. می‌خوایم ساختن یک رابط فارسی خوب، کار ساده‌ای باشه.
+
+برای مشارکت و جزئیات استک: [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 </div>

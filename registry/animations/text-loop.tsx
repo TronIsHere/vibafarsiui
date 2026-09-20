@@ -1,13 +1,15 @@
 "use client";
 
 import * as React from "react";
+import {
+  forSvgTextPath,
+  layoutGlyphsOnPath,
+  measureGlyphWidths,
+} from "@/lib/svg-text-path-rtl";
 import { cn } from "@/lib/utils";
 
 const VIEW_W = 1200;
-// RTL isolate: keeps the separator and any Latin tokens in Persian reading
-// order even though the SVG itself is LTR (see the component doc).
-const RLI = "\u2067";
-const PDI = "\u2069";
+const SVG_NS = "http://www.w3.org/2000/svg";
 
 export type TextLoopShape = "wave" | "line" | "arch" | "circle" | "infinity";
 
@@ -36,7 +38,6 @@ function viewHeightFor(shape: TextLoopShape, ribbonWidth: number) {
 
 function buildPath(shape: TextLoopShape, curviness: number, ribbonWidth: number, viewH: number) {
   const c = Math.max(0, curviness);
-  // Round caps extend half the ribbon past the path, so pad by that much.
   const pad = Math.max(24, ribbonWidth / 2 + 8);
   const cx = VIEW_W / 2;
   const cy = viewH / 2;
@@ -83,16 +84,46 @@ function buildPath(shape: TextLoopShape, curviness: number, ribbonWidth: number,
   }
 }
 
+function isClosedPath(d: string) {
+  return /\bz\s*$/i.test(d.trim());
+}
+
+function paintGlyphs(
+  layer: SVGGElement,
+  path: SVGPathElement,
+  chars: string[],
+  widths: number[],
+  offset: number,
+  closed: boolean,
+) {
+  const glyphs = layoutGlyphsOnPath(path, chars, widths, offset, closed);
+  while (layer.childNodes.length > glyphs.length) {
+    layer.removeChild(layer.lastChild!);
+  }
+  for (let i = 0; i < glyphs.length; i++) {
+    let el = layer.childNodes[i] as SVGTextElement | undefined;
+    if (!el) {
+      el = document.createElementNS(SVG_NS, "text");
+      el.setAttribute("dominant-baseline", "central");
+      el.setAttribute("text-anchor", "middle");
+      layer.appendChild(el);
+    }
+    const g = glyphs[i];
+    if (el.textContent !== g.ch) el.textContent = g.ch;
+    el.setAttribute("x", String(g.x));
+    el.setAttribute("y", String(g.y));
+    el.setAttribute("transform", `rotate(${g.rotate} ${g.x} ${g.y})`);
+  }
+  return glyphs.length;
+}
+
 /**
  * حلقه‌ی متن. Text rides an SVG path (wave, arch, circle, …) with a
- * seamless head/tail loop. No GSAP; requestAnimationFrame + startOffset.
+ * seamless loop. No GSAP; requestAnimationFrame shifts glyph distance.
  *
- * Persian-safe: no uppercase, no `textLength`/`lengthAdjust` (both insert
- * gaps between joined letters). Instead the font size is nudged so a whole
- * number of repeats tiles the path exactly, which is what makes the seam
- * invisible on closed shapes. The SVG is forced to `direction: ltr` because
- * inside an RTL document a `<textPath>` lays glyphs out backward from
- * `startOffset` and drops everything that falls off the path.
+ * Safari-safe Persian: WebKit does not shape/bidi Arabic on <textPath> and
+ * clamps negative startOffset to 0. We pre-shape to presentation forms,
+ * emit LTR visual order, and place each glyph with getPointAtLength.
  */
 export function TextLoop({
   text = "وایب‌فارسی",
@@ -111,25 +142,55 @@ export function TextLoop({
 }: TextLoopProps) {
   const pathRef = React.useRef<SVGPathElement>(null);
   const measureRef = React.useRef<SVGTextElement>(null);
-  const headRef = React.useRef<SVGTextPathElement>(null);
-  const tailRef = React.useRef<SVGTextPathElement>(null);
+  const layerRef = React.useRef<SVGGElement>(null);
   const paused = React.useRef(false);
+  const offsetRef = React.useRef(0);
+  const metricsRef = React.useRef({
+    length: 0,
+    reps: 1,
+    scale: 1,
+    unitWidth: 0,
+    widths: [] as number[],
+  });
 
-  const [metrics, setMetrics] = React.useState({ length: 0, reps: 1, scale: 1 });
-
-  const rawId = React.useId();
-  const pathId = `text-loop-${rawId.replace(/:/g, "")}`;
+  const [ready, setReady] = React.useState(false);
+  const [scale, setScale] = React.useState(1);
 
   const viewH = viewHeightFor(shape, ribbon ? ribbonWidth : 0);
   const d = React.useMemo(
     () => path || buildPath(shape, curviness, ribbon ? ribbonWidth : 0, viewH),
     [path, shape, curviness, ribbon, ribbonWidth, viewH],
   );
+  const closed = isClosedPath(d);
 
-  const unit = React.useMemo(() => {
+  const unitLogical = React.useMemo(() => {
     const gap = separator ? `\u00A0${separator}\u00A0` : "\u00A0\u00A0\u00A0";
     return `${text}${gap}`;
   }, [text, separator]);
+  const unitVisual = React.useMemo(() => forSvgTextPath(unitLogical), [unitLogical]);
+  const unitChars = React.useMemo(() => Array.from(unitVisual), [unitVisual]);
+
+  const paint = React.useCallback(
+    (offset: number) => {
+      const pathEl = pathRef.current;
+      const layer = layerRef.current;
+      const { reps, widths, unitWidth, length } = metricsRef.current;
+      if (!pathEl || !layer || !unitWidth || !length || widths.length === 0) return 0;
+
+      const tiles = closed ? reps : reps + 2;
+      const chars: string[] = [];
+      const glyphWidths: number[] = [];
+      for (let t = 0; t < tiles; t++) {
+        for (let i = 0; i < unitChars.length; i++) {
+          chars.push(unitChars[i]);
+          glyphWidths.push(widths[i] ?? 0);
+        }
+      }
+      const lead = closed ? 0 : unitWidth;
+      return paintGlyphs(layer, pathEl, chars, glyphWidths, offset + lead, closed);
+    },
+    [unitChars, closed],
+  );
 
   React.useLayoutEffect(() => {
     const pathEl = pathRef.current;
@@ -140,22 +201,33 @@ export function TextLoop({
     const measure = () => {
       if (cancelled) return;
       let length = 0;
-      let unitWidth = 0;
       try {
         length = pathEl.getTotalLength();
-        unitWidth = measureEl.getComputedTextLength();
       } catch {
         return;
       }
-      if (!length || !unitWidth) return;
-      // Whole repeats, then scale the font so they fill the path exactly.
+      if (!length) return;
+
+      measureEl.setAttribute("font-size", String(fontSize));
+      measureEl.setAttribute("font-weight", String(fontWeight));
+      const baseWidths = measureGlyphWidths(measureEl, unitVisual);
+      const unitWidth = baseWidths.reduce((s, w) => s + w, 0);
+      if (!unitWidth) return;
+
       const reps = Math.max(1, Math.round(length / unitWidth));
-      const scale = length / (reps * unitWidth);
-      setMetrics((prev) =>
-        prev.length === length && prev.reps === reps && Math.abs(prev.scale - scale) < 1e-3
-          ? prev
-          : { length, reps, scale },
-      );
+      const nextScale = length / (reps * unitWidth);
+      const widths = baseWidths.map((w) => w * nextScale);
+      metricsRef.current = {
+        length,
+        reps,
+        scale: nextScale,
+        unitWidth: unitWidth * nextScale,
+        widths,
+      };
+      setScale(nextScale);
+      offsetRef.current = 0;
+      const count = paint(0);
+      setReady(count > 0);
     };
 
     measure();
@@ -165,26 +237,14 @@ export function TextLoop({
       cancelled = true;
       cancelAnimationFrame(raf);
     };
-  }, [d, unit, fontSize, fontWeight]);
+  }, [d, unitVisual, fontSize, fontWeight, paint]);
 
   React.useEffect(() => {
-    const { length } = metrics;
-    const head = headRef.current;
-    const tail = tailRef.current;
-    if (!head || !tail || !length) return;
-
-    const apply = (offset: number) => {
-      const partner = offset >= 0 ? offset - length : offset + length;
-      head.setAttribute("startOffset", String(offset));
-      tail.setAttribute("startOffset", String(partner));
-    };
-
-    apply(0);
+    if (!ready) return;
 
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced || speed <= 0) return;
 
-    let offset = 0;
     let frame = 0;
     let last = performance.now();
     const sign = direction === "reverse" ? -1 : 1;
@@ -193,25 +253,19 @@ export function TextLoop({
       const dt = Math.min(64, now - last) / 1000;
       last = now;
       if (!paused.current) {
-        offset += sign * speed * dt;
-        if (offset >= length) offset -= length;
-        if (offset <= -length) offset += length;
-        apply(offset);
+        const wrap = metricsRef.current.unitWidth || 1;
+        let next = offsetRef.current + sign * speed * dt;
+        next %= wrap;
+        if (next < 0) next += wrap;
+        offsetRef.current = next;
+        paint(next);
       }
       frame = requestAnimationFrame(step);
     };
     frame = requestAnimationFrame(step);
-
     return () => cancelAnimationFrame(frame);
-  }, [metrics, speed, direction]);
+  }, [ready, speed, direction, paint]);
 
-  const loopText = `${RLI}${unit.repeat(metrics.reps)}${PDI}`;
-  const ready = metrics.length > 0;
-  const textStyle: React.CSSProperties = {
-    fontSize: fontSize * metrics.scale,
-    fontWeight,
-    letterSpacing: 0,
-  };
   const textClass = cn(
     ribbon ? "fill-brand-foreground" : "fill-foreground",
     "transition-opacity duration-300",
@@ -239,7 +293,6 @@ export function TextLoop({
       >
         <path
           ref={pathRef}
-          id={pathId}
           d={d}
           fill="none"
           className={ribbon ? "stroke-brand" : undefined}
@@ -254,23 +307,14 @@ export function TextLoop({
           aria-hidden
           className="pointer-events-none fill-transparent"
           style={{ fontSize, fontWeight, letterSpacing: 0 }}
-        >
-          {RLI}
-          {unit}
-          {PDI}
-        </text>
+        />
 
-        <text className={textClass} style={textStyle} dominantBaseline="central" aria-hidden>
-          <textPath ref={headRef} href={`#${pathId}`} startOffset={0}>
-            {loopText}
-          </textPath>
-        </text>
-
-        <text className={textClass} style={textStyle} dominantBaseline="central" aria-hidden>
-          <textPath ref={tailRef} href={`#${pathId}`} startOffset={0}>
-            {loopText}
-          </textPath>
-        </text>
+        <g
+          ref={layerRef}
+          className={textClass}
+          style={{ fontSize: fontSize * scale, fontWeight, letterSpacing: 0 }}
+          aria-hidden
+        />
       </svg>
     </div>
   );

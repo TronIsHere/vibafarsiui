@@ -64,6 +64,21 @@ numberToWords("۱۴۰۵")   // هزار و چهارصد و پنج`,
     ],
   },
   {
+    slug: "svg-text-path-rtl",
+    name: "متن روی مسیر SVG",
+    desc: "شکل‌دهی حروف عربی/فارسی به فرم‌های نمایشی و ترتیب بصری LTR برای <textPath>؛ لازم برای حلقه‌ی متن و متن خمیده در سافاری.",
+    file: "lib/svg-text-path-rtl.ts",
+    usage: `import { forSvgTextPath } from "@/lib/svg-text-path-rtl"
+
+// Paint under style={{ direction: "ltr", unicodeBidi: "bidi-override" }}
+forSvgTextPath("وایب‌فارسی · MCP")`,
+    promptBullets: [
+      "Safari/WebKit does not shape or bidi Arabic on SVG textPath; reshape to presentation forms then emit RTL-base visual order via forSvgTextPath.",
+      "Prefer laying glyphs with getPointAtLength instead of <textPath> (also avoids Safari's negative startOffset bug).",
+      "measureGlyphWidths uses getExtentOfChar on a hidden SVG text node so advances match the painted font.",
+    ],
+  },
+  {
     slug: "float",
     name: "لایه‌ی شناور",
     desc: "پورتال position:fixed برای پاپ‌آور، منو و کمبوباکس تا overflow:hidden آن‌ها را نبرد.",
