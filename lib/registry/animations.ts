@@ -357,6 +357,7 @@ export const animations: AnimationDoc[] = [
   },
   {
     slug: "text-loop", name: "حلقه‌ی متن", file: an("text-loop"), wide: true,
+    registryDeps: ["svg-text-path-rtl"],
     desc: "متن روی مسیر SVG (موج، قوس، دایره، …) می‌چرخه؛ نوار رنگی مسیر را نشان میده و با هاور متوقف میشه.",
     usage: `import { TextLoop } from "@/components/animations/text-loop"\n\n<TextLoop text="وایب‌فارسی" shape="wave" ribbon />`,
     props: [
@@ -367,10 +368,11 @@ export const animations: AnimationDoc[] = [
       { name: "fontSize", type: "number", default: "36", desc: "اندازه‌ی فونت در واحد viewBox؛ کمی تنظیم میشه تا تکرارها دقیقاً مسیر را پر کنن." },
       { name: "pauseOnHover", type: "boolean", default: "true", desc: "با هاور متوقف میشه." },
     ],
-    promptBullets: ["Two textPath nodes (head + tail) offset by path length so the loop is seamless; animate startOffset with requestAnimationFrame, not GSAP.", "Force direction: ltr on the <svg> (an RTL document makes textPath lay glyphs out backward and drop them) and wrap the text run in U+2067…U+2069 so Persian reading order survives.", "No textLength/lengthAdjust or letter-spacing (they break Persian joining); scale font-size so a whole number of repeats tiles the path length exactly.", "Text on the ribbon uses fill-brand-foreground over stroke-brand; respect prefers-reduced-motion by freezing at offset 0."],
+    promptBullets: ["Place pre-shaped glyphs with getPointAtLength (no <textPath>); animate a distance offset with requestAnimationFrame so Safari is not hit by textPath shaping bugs or negative startOffset.", "Run copy through forSvgTextPath (presentation forms + RTL visual order). Open paths keep an extra tile of lead-in; closed paths wrap along the path length.", "Scale glyph widths so a whole number of tiles matches the path length; paint into a <g> via DOM updates (not React state) at 60fps.", "Text on the ribbon uses fill-brand-foreground over stroke-brand; respect prefers-reduced-motion by freezing at offset 0."],
   },
   {
     slug: "curved-loop", name: "متن خمیده", file: an("curved-loop"), wide: true,
+    registryDeps: ["svg-text-path-rtl"],
     desc: "مارکی روی یک قوس که می‌تونید با کشیدن بکشیدش؛ جهت بعد از رها کردن از سرعت دست می‌آد.",
     usage: `import { CurvedLoop } from "@/components/animations/curved-loop"\n\n<CurvedLoop text="وایب‌فارسی · راست‌چین · فارسی" curveAmount={120} />`,
     props: [
@@ -381,6 +383,6 @@ export const animations: AnimationDoc[] = [
       { name: "direction", type: '"left" | "right"', default: '"left"', desc: "جهت پیش‌فرض حرکت." },
       { name: "interactive", type: "boolean", default: "true", desc: "اجازه‌ی کشیدن با اشاره‌گر." },
     ],
-    promptBullets: ["Quadratic path across a 1440-wide viewBox whose height grows with curveAmount; repeat the text to cover the box and wrap startOffset by the measured unit width.", "Force direction: ltr on the <svg> (an RTL document makes textPath lay glyphs out backward and drop them) and wrap the run in U+2067…U+2069 so Persian reading order survives.", "Pointer drag (scaled from screen px to viewBox units) updates startOffset and sets direction from release velocity; touch-pan-y so vertical scroll still works.", "No text-transform uppercase; fill from text-foreground token; freeze under prefers-reduced-motion."],
+    promptBullets: ["Quadratic path across a 1440-wide viewBox whose height grows with curveAmount; lay forSvgTextPath glyphs with getPointAtLength and wrap the distance offset in [0, spacing).", "No <textPath> (Safari breaks Arabic shaping/bidi and negative startOffset); paint glyphs into a <g> via DOM updates.", "Pointer drag (scaled from screen px to viewBox units) updates the offset and sets direction from release velocity; touch-pan-y so vertical scroll still works.", "No text-transform uppercase; fill from text-foreground token; freeze under prefers-reduced-motion."],
   },
 ];

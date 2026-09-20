@@ -1,6 +1,11 @@
 "use client";
 
 import * as React from "react";
+import {
+  forSvgTextPath,
+  layoutGlyphsOnPath,
+  measureGlyphWidths,
+} from "@/lib/svg-text-path-rtl";
 import { cn } from "@/lib/utils";
 
 export type CurvedLoopProps = {
@@ -17,19 +22,43 @@ export type CurvedLoopProps = {
 };
 
 const VIEW_W = 1440;
-// RTL isolate: keeps «·» and Latin tokens in Persian reading order even
-// though the SVG itself is LTR (see below).
-const RLI = "\u2067";
-const PDI = "\u2069";
+const SVG_NS = "http://www.w3.org/2000/svg";
+
+function paintGlyphs(
+  layer: SVGGElement,
+  path: SVGPathElement,
+  chars: string[],
+  widths: number[],
+  offset: number,
+) {
+  const glyphs = layoutGlyphsOnPath(path, chars, widths, offset, false);
+  while (layer.childNodes.length > glyphs.length) {
+    layer.removeChild(layer.lastChild!);
+  }
+  for (let i = 0; i < glyphs.length; i++) {
+    let el = layer.childNodes[i] as SVGTextElement | undefined;
+    if (!el) {
+      el = document.createElementNS(SVG_NS, "text");
+      el.setAttribute("dominant-baseline", "central");
+      el.setAttribute("text-anchor", "middle");
+      el.setAttribute("xml:space", "preserve");
+      layer.appendChild(el);
+    }
+    const g = glyphs[i];
+    if (el.textContent !== g.ch) el.textContent = g.ch;
+    el.setAttribute("x", String(g.x));
+    el.setAttribute("y", String(g.y));
+    el.setAttribute("transform", `rotate(${g.rotate} ${g.x} ${g.y})`);
+  }
+  return glyphs.length;
+}
 
 /**
- * متن خمیده. A single-curve SVG marquee you can drag. Loops with
- * startOffset wrapping; no uppercase so Persian joins stay intact.
+ * متن خمیده. A single-curve SVG marquee you can drag.
  *
- * The SVG is forced to `direction: ltr`: inside an RTL document a
- * `<textPath>` would lay glyphs out *backward* from `startOffset` and drop
- * everything that falls off the path. Bidi still orders the Persian run
- * right-to-left inside the LTR paragraph, so the words read correctly.
+ * Safari-safe: WebKit skips Arabic shaping/bidi on <textPath> and clamps
+ * negative startOffset to 0. Pre-shape to presentation forms, emit LTR
+ * visual order, and place each glyph with getPointAtLength.
  */
 export function CurvedLoop({
   text = "وایب‌فارسی · راست‌چین · فارسی",
@@ -40,17 +69,19 @@ export function CurvedLoop({
   fontSize = 72,
   className,
 }: CurvedLoopProps) {
-  const unit = React.useMemo(() => `${text.replace(/\s+$/, "")}\u00A0`, [text]);
+  const unitLogical = React.useMemo(() => `${text.replace(/\s+$/, "")}\u00A0`, [text]);
+  const unitVisual = React.useMemo(() => forSvgTextPath(unitLogical), [unitLogical]);
+  const unitChars = React.useMemo(() => Array.from(unitVisual), [unitVisual]);
 
+  const pathRef = React.useRef<SVGPathElement>(null);
   const measureRef = React.useRef<SVGTextElement>(null);
-  const textPathRef = React.useRef<SVGTextPathElement>(null);
-  const [spacing, setSpacing] = React.useState(0);
+  const layerRef = React.useRef<SVGGElement>(null);
+  const widthsRef = React.useRef<number[]>([]);
+  const spacingRef = React.useRef(0);
+
+  const [ready, setReady] = React.useState(false);
   const [dragging, setDragging] = React.useState(false);
 
-  const uid = React.useId();
-  const pathId = `curve-${uid.replace(/:/g, "")}`;
-
-  // Fit the quadratic curve inside the viewBox (was spilling past y=120).
   const viewH = Math.max(fontSize * 2, Math.abs(curveAmount) * 2 + fontSize * 1.5);
   const midY = viewH / 2;
   const pathD = `M-100,${midY} Q${VIEW_W / 2},${midY + curveAmount} ${VIEW_W + 100},${midY}`;
@@ -61,13 +92,44 @@ export function CurvedLoop({
   const velRef = React.useRef(0);
   const offsetRef = React.useRef(0);
 
-  const ready = spacing > 0;
-  const reps = ready ? Math.ceil((VIEW_W + 400) / spacing) + 2 : 1;
-  const totalText = `${RLI}${unit.repeat(reps)}${PDI}`;
-
   React.useEffect(() => {
     dirRef.current = direction;
   }, [direction]);
+
+  const paint = React.useCallback(
+    (offset: number) => {
+      const pathEl = pathRef.current;
+      const layer = layerRef.current;
+      const spacing = spacingRef.current;
+      const widths = widthsRef.current;
+      if (!pathEl || !layer || !spacing || widths.length === 0) return 0;
+
+      const pathLen = pathEl.getTotalLength();
+      const tiles = Math.ceil((pathLen + spacing * 2) / spacing) + 1;
+      const chars: string[] = [];
+      const glyphWidths: number[] = [];
+      for (let t = 0; t < tiles; t++) {
+        for (let i = 0; i < unitChars.length; i++) {
+          chars.push(unitChars[i]);
+          glyphWidths.push(widths[i] ?? 0);
+        }
+      }
+      return paintGlyphs(layer, pathEl, chars, glyphWidths, offset + spacing);
+    },
+    [unitChars],
+  );
+
+  const setOffset = React.useCallback(
+    (next: number) => {
+      const spacing = spacingRef.current;
+      if (!spacing) return;
+      let v = next % spacing;
+      if (v < 0) v += spacing;
+      offsetRef.current = v;
+      paint(v);
+    },
+    [paint],
+  );
 
   React.useLayoutEffect(() => {
     const el = measureRef.current;
@@ -76,35 +138,28 @@ export function CurvedLoop({
     let cancelled = false;
     const measure = () => {
       if (cancelled) return;
-      const w = el.getComputedTextLength();
-      if (w > 0) setSpacing((prev) => (Math.abs(prev - w) < 0.5 ? prev : w));
+      el.setAttribute("font-size", String(fontSize));
+      const nextWidths = measureGlyphWidths(el, unitVisual);
+      const w = nextWidths.reduce((s, n) => s + n, 0);
+      if (w <= 0) return;
+      widthsRef.current = nextWidths;
+      spacingRef.current = w;
+      offsetRef.current = 0;
+      const count = paint(0);
+      setReady(count > 0);
     };
 
     measure();
-    // Double-rAF so layout + font metrics settle before we trust the width.
     const raf = requestAnimationFrame(() => requestAnimationFrame(measure));
     document.fonts?.ready.then(measure).catch(() => {});
     return () => {
       cancelled = true;
       cancelAnimationFrame(raf);
     };
-  }, [unit, className, fontSize]);
-
-  const setOffset = React.useCallback(
-    (next: number) => {
-      if (!spacing) return;
-      // Keep the offset in (-spacing, 0] so the text always covers the path.
-      let v = next % spacing;
-      if (v > 0) v -= spacing;
-      offsetRef.current = v;
-      textPathRef.current?.setAttribute("startOffset", `${v}`);
-    },
-    [spacing],
-  );
+  }, [unitVisual, className, fontSize, paint]);
 
   React.useEffect(() => {
     if (!ready) return;
-    setOffset(-spacing);
 
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced || speed <= 0) return;
@@ -112,8 +167,6 @@ export function CurvedLoop({
     let frame = 0;
     let last = performance.now();
     const step = (now: number) => {
-      // `speed` is px per frame at 60fps; scale by elapsed time so 120Hz
-      // screens and throttled tabs move at the same rate.
       const dt = Math.min(64, now - last) / 1000;
       last = now;
       if (!dragRef.current) {
@@ -124,7 +177,7 @@ export function CurvedLoop({
     };
     frame = requestAnimationFrame(step);
     return () => cancelAnimationFrame(frame);
-  }, [ready, spacing, speed, setOffset]);
+  }, [ready, speed, setOffset]);
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!interactive) return;
@@ -140,7 +193,6 @@ export function CurvedLoop({
     const dx = e.clientX - lastXRef.current;
     lastXRef.current = e.clientX;
     velRef.current = dx;
-    // Scale screen pixels into viewBox units so the text tracks the pointer.
     const scale = VIEW_W / (e.currentTarget.clientWidth || VIEW_W);
     setOffset(offsetRef.current + dx * scale);
   };
@@ -176,30 +228,19 @@ export function CurvedLoop({
         role="img"
         aria-label={text}
       >
-        <defs>
-          <path id={pathId} d={pathD} fill="none" />
-        </defs>
+        <path ref={pathRef} d={pathD} fill="none" />
         <text
           ref={measureRef}
           xmlSpace="preserve"
           className="pointer-events-none fill-transparent"
           aria-hidden
-        >
-          {RLI}
-          {unit}
-          {PDI}
-        </text>
-        <text
+        />
+        <g
+          ref={layerRef}
           className="fill-current"
-          xmlSpace="preserve"
-          dominantBaseline="central"
-          style={{ opacity: ready ? 1 : 0 }}
+          style={{ opacity: ready ? 1 : 0, fontSize }}
           aria-hidden
-        >
-          <textPath ref={textPathRef} href={`#${pathId}`} startOffset="0" xmlSpace="preserve">
-            {totalText}
-          </textPath>
-        </text>
+        />
       </svg>
     </div>
   );
