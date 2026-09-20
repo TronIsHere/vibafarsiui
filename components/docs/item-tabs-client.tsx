@@ -1,7 +1,17 @@
 "use client";
 
 import * as React from "react";
-import { Bot, ChevronDown, Code2, Eye, Maximize2, RotateCcw } from "lucide-react";
+import {
+  Bot,
+  ChevronDown,
+  Code2,
+  Eye,
+  Maximize2,
+  Monitor,
+  RotateCcw,
+  Smartphone,
+  Tablet,
+} from "lucide-react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { themes } from "@/lib/registry/themes";
 import { cn } from "@/lib/utils";
@@ -18,8 +28,21 @@ export type DemoRef = {
   slug: string;
 };
 
-function previewHrefFor(slug: string, theme: string) {
-  return `/preview/${slug}?theme=${encodeURIComponent(theme)}`;
+type Viewport = "desktop" | "tablet" | "mobile";
+
+const VIEWPORTS: {
+  id: Viewport;
+  label: string;
+  width: number | "100%";
+  Icon: typeof Monitor;
+}[] = [
+  { id: "desktop", label: "دسکتاپ", width: "100%", Icon: Monitor },
+  { id: "tablet", label: "تبلت", width: 768, Icon: Tablet },
+  { id: "mobile", label: "موبایل", width: 375, Icon: Smartphone },
+];
+
+function previewSrc(path: string, theme: string) {
+  return `${path}?theme=${encodeURIComponent(theme)}`;
 }
 
 function applyThemeTo(root: HTMLElement | null | undefined, theme: string) {
@@ -28,10 +51,20 @@ function applyThemeTo(root: HTMLElement | null | undefined, theme: string) {
   else root.setAttribute("data-theme", theme);
 }
 
-/** Isolated full-page template. Theme lives on the iframe document, not the parent pane. */
-function TemplateFrame({ slug, theme }: { slug: string; theme: string }) {
+/** Isolated preview page. Theme lives on the iframe document so media queries match the frame width. */
+function PreviewFrame({
+  href,
+  theme,
+  width,
+  title,
+}: {
+  href: string;
+  theme: string;
+  width: number | "100%";
+  title: string;
+}) {
   const ref = React.useRef<HTMLIFrameElement>(null);
-  const src = React.useRef(previewHrefFor(slug, theme));
+  const src = React.useRef(previewSrc(href, theme));
 
   const apply = React.useCallback(() => {
     applyThemeTo(ref.current?.contentDocument?.documentElement, theme);
@@ -42,15 +75,33 @@ function TemplateFrame({ slug, theme }: { slug: string; theme: string }) {
   return (
     <iframe
       ref={ref}
-      title="پیش‌نمایش قالب"
+      title={title}
       src={src.current}
       onLoad={apply}
-      className="h-[640px] w-full rounded-lg border border-border bg-background"
+      style={{ width: width === "100%" ? "100%" : width }}
+      className={cn(
+        "h-[640px] shrink-0 rounded-lg border border-border bg-background transition-[width] duration-300",
+        width === "100%" && "w-full",
+      )}
     />
   );
 }
 
-function renderDemo(demo: DemoRef, k: number, theme: string): React.ReactNode {
+function frameHref(demo: DemoRef): string | null {
+  if (demo.kind === "template") return `/preview/${demo.slug}`;
+  if (demo.kind === "block") return `/preview/block/${demo.slug}`;
+  return null;
+}
+
+function renderDemo(
+  demo: DemoRef,
+  k: number,
+  theme: string,
+  viewport: Viewport,
+): React.ReactNode {
+  const width = VIEWPORTS.find((v) => v.id === viewport)!.width;
+  const href = frameHref(demo);
+
   switch (demo.kind) {
     case "component":
       return componentDemos[demo.slug];
@@ -59,9 +110,30 @@ function renderDemo(demo: DemoRef, k: number, theme: string): React.ReactNode {
     case "background":
       return backgroundDemos[demo.slug];
     case "block":
-      return <div className="w-full">{blockDemos[demo.slug]}</div>;
+      // Desktop stays inline so tall blocks aren't clipped; smaller sizes
+      // use an iframe so Tailwind breakpoints match the frame width.
+      if (viewport === "desktop") {
+        return <div className="w-full">{blockDemos[demo.slug]}</div>;
+      }
+      return (
+        <PreviewFrame
+          key={`${viewport}-${k}`}
+          href={href!}
+          theme={theme}
+          width={width}
+          title="پیش‌نمایش بلاک"
+        />
+      );
     case "template":
-      return <TemplateFrame key={k} slug={demo.slug} theme={theme} />;
+      return (
+        <PreviewFrame
+          key={k}
+          href={href!}
+          theme={theme}
+          width={width}
+          title="پیش‌نمایش قالب"
+        />
+      );
   }
 }
 
@@ -77,7 +149,7 @@ export interface ItemTabsClientProps {
   demo: DemoRef;
   files: CodeFileView[];
   prompt: string;
-  /** Full-page preview URL (templates). */
+  /** Full-page preview URL (templates / blocks). */
   previewHref?: string;
   /** Height class for the preview pane. */
   previewClass?: string;
@@ -93,6 +165,7 @@ export function ItemTabsClient({
   previewClass,
   layer,
 }: ItemTabsClientProps) {
+  const sized = demo.kind === "block" || demo.kind === "template";
   const replayable =
     demo.kind === "animation"
       ? replayableAnimations.has(demo.slug)
@@ -102,8 +175,10 @@ export function ItemTabsClient({
   );
   const [k, setK] = React.useState(0);
   const [scope, setScope] = React.useState("graphite");
+  const [viewport, setViewport] = React.useState<Viewport>("desktop");
   const [file, setFile] = React.useState(0);
-  const rendered = renderDemo(demo, k, scope);
+  const rendered = renderDemo(demo, k, scope, viewport);
+  const framed = sized && viewport !== "desktop";
 
   const tabs = [
     { id: "preview", label: "پیش‌نمایش", I: Eye },
@@ -140,6 +215,32 @@ export function ItemTabsClient({
 
         {tab === "preview" && (
           <div className="flex items-center gap-1.5">
+            {sized && (
+              <div
+                role="group"
+                aria-label="اندازه پیش‌نمایش"
+                className="inline-flex rounded-md border border-border p-0.5"
+              >
+                {VIEWPORTS.map(({ id, label, Icon }) => (
+                  <button
+                    key={id}
+                    type="button"
+                    aria-label={label}
+                    aria-pressed={viewport === id}
+                    title={label}
+                    onClick={() => setViewport(id)}
+                    className={cn(
+                      "flex size-7 cursor-pointer items-center justify-center rounded transition-colors",
+                      viewport === id
+                        ? "bg-secondary text-foreground"
+                        : "text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    <Icon className="size-3.5" />
+                  </button>
+                ))}
+              </div>
+            )}
             <label className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <span className="hidden sm:inline">سیستم طراحی</span>
               <span className="relative inline-flex">
@@ -222,9 +323,14 @@ export function ItemTabsClient({
         <div
           data-theme={scope}
           className={cn(
-            "relative flex items-center justify-center rounded-b-xl bg-background text-foreground",
-            demo.kind === "block" ? "p-0" : "p-6 sm:p-10",
-            previewClass ?? "min-h-[320px]",
+            "relative flex items-center justify-center rounded-b-xl text-foreground",
+            framed
+              ? "min-h-0 overflow-x-auto bg-secondary/40 p-4 sm:p-6"
+              : cn(
+                  "bg-background",
+                  demo.kind === "block" ? "p-0" : "p-6 sm:p-10",
+                  previewClass ?? "min-h-[320px]",
+                ),
           )}
         >
           {!layer && demo.kind !== "template" && demo.kind !== "block" && (
@@ -248,7 +354,12 @@ export function ItemTabsClient({
               </div>
             </div>
           ) : (
-            <div className="relative flex w-full items-center justify-center">
+            <div
+              className={cn(
+                "relative flex w-full items-center justify-center",
+                framed && "min-w-0",
+              )}
+            >
               {rendered}
             </div>
           )}

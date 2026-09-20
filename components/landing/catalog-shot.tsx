@@ -9,6 +9,7 @@ export const CENTERED_TEMPLATE_PEEKS = new Set([
   "receipt",
   "startup-landing",
   "pricing",
+  "ride",
 ]);
 
 export function CatalogShot({

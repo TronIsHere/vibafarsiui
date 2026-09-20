@@ -22,6 +22,12 @@ import { CoursePage } from "@/registry/templates/course";
 import { PaymentReceipt } from "@/registry/templates/receipt";
 import { TravelSearch } from "@/registry/templates/travel-search";
 import { ComingSoon } from "@/registry/templates/coming-soon";
+import { RealEstatePage } from "@/registry/templates/real-estate";
+import { SupportPage } from "@/registry/templates/support";
+import { RidePage } from "@/registry/templates/ride";
+import { JobsPage } from "@/registry/templates/jobs";
+import { PosPage } from "@/registry/templates/pos";
+import { CrmPage } from "@/registry/templates/crm";
 
 export const templateComponents: Record<string, React.ComponentType> = {
   "shop-dashboard": ShopDashboard,
@@ -48,4 +54,10 @@ export const templateComponents: Record<string, React.ComponentType> = {
   receipt: PaymentReceipt,
   "travel-search": TravelSearch,
   "coming-soon": ComingSoon,
+  "real-estate": RealEstatePage,
+  support: SupportPage,
+  ride: RidePage,
+  jobs: JobsPage,
+  pos: PosPage,
+  crm: CrmPage,
 };

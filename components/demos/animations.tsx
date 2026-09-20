@@ -11,6 +11,7 @@ import {
   Search,
   Settings,
   Sparkles,
+  Wallet,
 } from "lucide-react";
 import { TextShimmer } from "@/registry/animations/text-shimmer";
 import { Typewriter } from "@/registry/animations/typewriter";
@@ -54,6 +55,12 @@ import { ScratchCard } from "@/registry/animations/scratch-card";
 import { Sparkles as SparklesFx } from "@/registry/animations/sparkles";
 import { ScrollProgress } from "@/registry/animations/scroll-progress";
 import { PulseButton } from "@/registry/animations/pulse-button";
+import { CursorFollow } from "@/registry/animations/cursor-follow";
+import { NumberWheel } from "@/registry/animations/number-wheel";
+import { PinList } from "@/registry/animations/pin-list";
+import { RadialIntro } from "@/registry/animations/radial-intro";
+import { TextLoop } from "@/registry/animations/text-loop";
+import { CurvedLoop } from "@/registry/animations/curved-loop";
 import { Avatar } from "@/registry/ui/avatar";
 import { fa, faNumber } from "@/lib/utils";
 
@@ -348,6 +355,54 @@ export const animationDemos: Record<string, (k: number) => React.ReactNode> = {
   ),
   "scroll-progress": () => <ScrollProgressDemo />,
   "pulse-button": () => <PulseButton size="lg">شروع رایگان</PulseButton>,
+  "cursor-follow": () => (
+    <CursorFollow label="مشاهده جزئیات" className="flex h-40 w-full max-w-[280px] items-center justify-center">
+      <p className="text-sm text-muted-foreground">ماوس را روی این ناحیه بیاورید</p>
+    </CursorFollow>
+  ),
+  "number-wheel": (k) => <NumberWheel key={k} value={2400} step={100} className="mx-auto" />,
+  "pin-list": () => (
+    <PinList
+      className="w-full max-w-[280px]"
+      items={[
+        { id: "1", name: "خانه", info: "داشبورد اصلی", icon: Home, pinned: true },
+        { id: "2", name: "کیف پول", info: "موجودی و تراکنش‌ها", icon: Wallet, pinned: false },
+        { id: "3", name: "پیام‌ها", info: "۳ خوانده‌نشده", icon: MessageSquare, pinned: false },
+        { id: "4", name: "تنظیمات", info: "حساب و اعلان‌ها", icon: Settings, pinned: false },
+      ]}
+    />
+  ),
+  "radial-intro": (k) => (
+    <RadialIntro
+      key={k}
+      stageSize={200}
+      imageSize={44}
+      items={[
+        { id: "1", name: "سارا", src: "/avatars/sara.jpg" },
+        { id: "2", name: "علی", src: "/avatars/ali.jpg" },
+        { id: "3", name: "مینا", src: "/avatars/mina.jpg" },
+        { id: "4", name: "رضا", src: "/avatars/reza.jpg" },
+        { id: "5", name: "نگار", src: "/avatars/negar.jpg" },
+      ]}
+    />
+  ),
+  "text-loop": () => (
+    <TextLoop
+      text="وایب‌فارسی"
+      shape="wave"
+      fontSize={34}
+      ribbonWidth={60}
+      curviness={60}
+      className="max-w-full"
+    />
+  ),
+  "curved-loop": () => (
+    <CurvedLoop
+      text="وایب‌فارسی · راست‌چین · فارسی · MCP"
+      curveAmount={120}
+      className="max-w-full"
+    />
+  ),
 };
 
 export const replayable = new Set([
@@ -361,4 +416,6 @@ export const replayable = new Set([
   "swipe-to-confirm",
   "terminal",
   "scratch-card",
+  "number-wheel",
+  "radial-intro",
 ]);

@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "بلاک‌های آماده‌ی صفحه راست‌چین · وایب‌فارسی",
-  description: "هیرو، قیمت تومانی، پرسش‌های متداول، آمار و کارت ورود. بخش‌های کامل صفحه برای لندینگ فارسی React و Next.js.",
+  description: "نوار بالا، هیرو، قیمت تومانی، شبکه‌ی محصول، مقالات، تماس با ما و پابرگ. بخش‌های کامل صفحه برای لندینگ، فروشگاه و داشبورد فارسی با React و Next.js.",
   path: "/blocks",
 });
 

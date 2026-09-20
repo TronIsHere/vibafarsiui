@@ -23,6 +23,8 @@ const KF = {
   confetti: `@keyframes confetti {\n  0% { transform: translate(-50%, 0) rotate(0deg); opacity: 1; }\n  60% { transform: translate(calc(-50% + var(--cx)), var(--cy)) rotate(calc(var(--cr) * 0.6)); opacity: 1; }\n  100% { transform: translate(calc(-50% + var(--cx) * 1.3), 40px) rotate(var(--cr)); opacity: 0; }\n}`,
   sparkle: `@keyframes sparkle {\n  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }\n  50% { opacity: 1; transform: scale(1) rotate(90deg); }\n}`,
   pulseRing: `@keyframes pulse-ring {\n  0% { transform: scale(1); opacity: 0.6; }\n  100% { transform: scale(1.4); opacity: 0; }\n}`,
+  particleBurst: `@keyframes particle-burst {\n  from { opacity: 1; transform: translate(0, 0) scale(1); }\n  to { opacity: 0; transform: translate(var(--burst-x), var(--burst-y)) scale(0.35); }\n}`,
+  radialOrbit: `@keyframes radial-orbit {\n  from { transform: rotate(var(--start-angle, 0deg)); }\n  to { transform: rotate(calc(var(--start-angle, 0deg) + 360deg)); }\n}\n@keyframes radial-counter {\n  from { transform: translate(-50%, calc(-50% - var(--orbit-r, 80px))) rotate(calc(var(--start-angle, 0deg) * -1)); }\n  to { transform: translate(-50%, calc(-50% - var(--orbit-r, 80px))) rotate(calc(var(--start-angle, 0deg) * -1 - 360deg)); }\n}`,
 };
 
 export const animations: AnimationDoc[] = [
@@ -306,5 +308,79 @@ export const animations: AnimationDoc[] = [
     desc: "دو حلقه‌ای که پشت دکمه باز میشن تا عمل اصلی صفحه به چشم بیاید.",
     usage: `import { PulseButton } from "@/components/animations/pulse-button"\n\n<PulseButton size="lg">شروع رایگان</PulseButton>`,
     promptBullets: ["Wrap the Button in a relative span with two absolute inset-0 layers in primary/40 that animate scale 1 → 1.4 and opacity 0.6 → 0, offset by half the period.", "Layers copy the button's radius by size; one instance per page."],
+  },
+  {
+    slug: "cursor-follow", name: "نشانگر سفارشی", file: an("cursor-follow"),
+    desc: "نشانگر و برچسبی که داخل یک ناحیه جای نشانگر سیستم را می‌گیرن، مناسب پیش‌نمایش محصول.",
+    usage: `import { CursorFollow } from "@/components/animations/cursor-follow"\n\n<CursorFollow label="مشاهده" className="h-48">\n  <div className="flex h-full items-center justify-center">ماوس را اینجا بیاورید</div>\n</CursorFollow>`,
+    props: [
+      { name: "label", type: "ReactNode", desc: "متن یا عنصر کنار نشانگر." },
+      { name: "labelOffset", type: "{ x; y }", default: "{ x: 18, y: 14 }", desc: "جابه‌جایی برچسب از نوک نشانگر." },
+    ],
+    notes: ["روی لمس و اشاره‌گر درشت خاموش می‌مونه؛ فقط با ماوس ظاهر میشه."],
+    promptBullets: ["Track pointer relative to the container; render an absolute SVG cursor and optional label at those coords; set cursor-none only when (pointer: fine).", "Hide on mouseleave; no-op on touch / coarse pointers."],
+  },
+  {
+    slug: "number-wheel", name: "چرخ عدد", file: an("number-wheel"), css: KF.particleBurst, wide: true,
+    desc: "حلقه‌ی عمودی اعداد فارسی که تا مقدار هدف می‌چرخه و ستاره‌اش پر میشه.",
+    usage: `import { NumberWheel } from "@/components/animations/number-wheel"\n\n<NumberWheel value={2400} step={100} />`,
+    props: [
+      { name: "value", type: "number", desc: "مقدار نهایی." },
+      { name: "step", type: "number", default: "100", desc: "گام بین ردیف‌ها." },
+      { name: "sideItemsCount", type: "number", default: "2", desc: "ردیف‌های بالا و پایین هایلایت." },
+      { name: "duration / delay", type: "number", default: "1800 / 200", desc: "میلی‌ثانیه." },
+      { name: "withStar", type: "boolean", default: "true", desc: "ستاره‌ی پرشونده و جرقه در پایان." },
+    ],
+    promptBullets: ["Build a stepped list around the rounded target; rAF ease-out scrolls translateY so the target lands in the centre highlight.", "Persian digits via faNumber; star fill uses clip-path inset from the top; on complete, burst particles with the particle-burst keyframe and --burst-x/y."],
+  },
+  {
+    slug: "pin-list", name: "فهرست سنجاق", file: an("pin-list"), wide: true,
+    desc: "آیتم‌هایی که با کلیک بین بخش سنجاق‌شده و همه جابه‌جا میشن و با FLIP نرم حرکت می‌کنن.",
+    usage: `import { PinList } from "@/components/animations/pin-list"\n\n<PinList items={[{ id: "1", name: "خانه", info: "داشبورد", icon: Home, pinned: true }, …]} />`,
+    props: [
+      { name: "items", type: "PinListItem[]", desc: "id، name، info، icon، pinned." },
+      { name: "labels", type: "{ pinned?; unpinned? }", default: '"سنجاق‌شده" / "همه"', desc: "عنوان دو بخش." },
+      { name: "onChange", type: "(items) => void", desc: "بعد از هر سنجاق یا برداشتن سنجاق." },
+    ],
+    promptBullets: ["Measure each [data-pin-id] rect before the state change; after layout, invert with translate(dx,dy) then transition transform to none (FLIP).", "Pinned items show a filled pin; unpinned reveal the pin on hover/focus; click toggles and reorders (pinned to end, unpinned to start)."],
+  },
+  {
+    slug: "radial-intro", name: "معرفی شعاعی", file: an("radial-intro"), css: KF.radialOrbit,
+    desc: "آواتارهایی که از مرکز باز میشن، روی مدار می‌نشینن و بعد با حفظ راست‌ایستایی می‌چرخن.",
+    usage: `import { RadialIntro } from "@/components/animations/radial-intro"\n\n<RadialIntro items={[{ id: "1", name: "سارا", src: "/avatars/sara.jpg" }, { id: "2", name: "علی", src: "/avatars/ali.jpg" }, { id: "3", name: "مینا", src: "/avatars/mina.jpg" }, { id: "4", name: "رضا", src: "/avatars/reza.jpg" }, { id: "5", name: "نگار", src: "/avatars/negar.jpg" }]} />`,
+    props: [
+      { name: "items", type: "{ id; name; src }[]", desc: "آواتارها به ترتیب مدار." },
+      { name: "stageSize / imageSize", type: "number", default: "280 / 52", desc: "قطر صحنه و آواتار." },
+      { name: "duration", type: "number", default: "28", desc: "ثانیه برای یک دور کامل." },
+    ],
+    promptBullets: ["Phased: idle (stacked centre) → lift (fade in) → place (rotate arms to equal angles) → spin (radial-orbit + radial-counter so faces stay upright).", "Set --start-angle per arm and --orbit-r on the stage; dashed ring marks the orbit."],
+  },
+  {
+    slug: "text-loop", name: "حلقه‌ی متن", file: an("text-loop"), wide: true,
+    desc: "متن روی مسیر SVG (موج، قوس، دایره، …) می‌چرخه؛ نوار رنگی مسیر را نشان میده و با هاور متوقف میشه.",
+    usage: `import { TextLoop } from "@/components/animations/text-loop"\n\n<TextLoop text="وایب‌فارسی" shape="wave" ribbon />`,
+    props: [
+      { name: "text / separator", type: "string", default: '"وایب‌فارسی" / "·"', desc: "متن و جداکننده‌ی تکرار." },
+      { name: "shape", type: '"wave" | "line" | "arch" | "circle" | "infinity"', default: '"wave"', desc: "شکل مسیر. یا path سفارشی." },
+      { name: "speed", type: "number", default: "90", desc: "پیکسل بر ثانیه روی مسیر." },
+      { name: "ribbon / ribbonWidth", type: "boolean / number", default: "true / 64", desc: "نوار stroke-brand پشت متن." },
+      { name: "fontSize", type: "number", default: "36", desc: "اندازه‌ی فونت در واحد viewBox؛ کمی تنظیم میشه تا تکرارها دقیقاً مسیر را پر کنن." },
+      { name: "pauseOnHover", type: "boolean", default: "true", desc: "با هاور متوقف میشه." },
+    ],
+    promptBullets: ["Two textPath nodes (head + tail) offset by path length so the loop is seamless; animate startOffset with requestAnimationFrame, not GSAP.", "Force direction: ltr on the <svg> (an RTL document makes textPath lay glyphs out backward and drop them) and wrap the text run in U+2067…U+2069 so Persian reading order survives.", "No textLength/lengthAdjust or letter-spacing (they break Persian joining); scale font-size so a whole number of repeats tiles the path length exactly.", "Text on the ribbon uses fill-brand-foreground over stroke-brand; respect prefers-reduced-motion by freezing at offset 0."],
+  },
+  {
+    slug: "curved-loop", name: "متن خمیده", file: an("curved-loop"), wide: true,
+    desc: "مارکی روی یک قوس که می‌تونید با کشیدن بکشیدش؛ جهت بعد از رها کردن از سرعت دست می‌آد.",
+    usage: `import { CurvedLoop } from "@/components/animations/curved-loop"\n\n<CurvedLoop text="وایب‌فارسی · راست‌چین · فارسی" curveAmount={120} />`,
+    props: [
+      { name: "text", type: "string", desc: "متن مارکی. فاصله‌ی انتهایی خودکار اضافه میشه." },
+      { name: "speed", type: "number", default: "1.2", desc: "پیکسل در هر فریم (روی ۶۰ فریم؛ با زمان مقیاس میشه تا روی هر نمایشگری یکسان باشه)." },
+      { name: "curveAmount", type: "number", default: "80", desc: "عمق قوس درجه دو؛ منفی یعنی قوس رو به بالا." },
+      { name: "fontSize", type: "number", default: "72", desc: "اندازه‌ی فونت در واحد viewBox (عرض ۱۴۴۰)." },
+      { name: "direction", type: '"left" | "right"', default: '"left"', desc: "جهت پیش‌فرض حرکت." },
+      { name: "interactive", type: "boolean", default: "true", desc: "اجازه‌ی کشیدن با اشاره‌گر." },
+    ],
+    promptBullets: ["Quadratic path across a 1440-wide viewBox whose height grows with curveAmount; repeat the text to cover the box and wrap startOffset by the measured unit width.", "Force direction: ltr on the <svg> (an RTL document makes textPath lay glyphs out backward and drop them) and wrap the run in U+2067…U+2069 so Persian reading order survives.", "Pointer drag (scaled from screen px to viewBox units) updates startOffset and sets direction from release velocity; touch-pan-y so vertical scroll still works.", "No text-transform uppercase; fill from text-foreground token; freeze under prefers-reduced-motion."],
   },
 ];
