@@ -10,6 +10,7 @@ import {
   MessageCircle,
   MessageSquareText,
   PenLine,
+  Ruler,
   ScrollText,
   Search,
   ShieldCheck,
@@ -38,6 +39,7 @@ export const SKILL_ICONS: Record<SkillIcon, LucideIcon> = {
   upload: CloudUpload,
   wallet: Wallet,
   sms: MessageSquareText,
+  ruler: Ruler,
 };
 
 export function SkillFormatPill({ format, className }: { format: SkillDoc["format"]; className?: string }) {

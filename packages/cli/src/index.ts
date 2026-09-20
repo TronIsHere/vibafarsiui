@@ -15,7 +15,8 @@ Usage
   npx vibefarsi list [components|blocks|animations|backgrounds|templates|themes|skills|lib]
 
 Commands
-  init     dir="rtl", Vazirmatn/IRANSans, Graphite tokens, lib/utils.ts, lib/jalali.ts
+  init     dir="rtl", Vazirmatn/IRANSans, Graphite tokens, lib/utils.ts, lib/jalali.ts,
+           agent rules in AGENTS.md + docs/ (Persian RTL and UI craft)
   add      Pull items from the registry into your app (components, blocks, themes, skills…)
   list     Show registry slugs
 

@@ -56,7 +56,8 @@ export type SkillIcon =
   | "pen"
   | "upload"
   | "wallet"
-  | "sms";
+  | "sms"
+  | "ruler";
 export type SkillDoc = {
   slug: string;
   name: string;

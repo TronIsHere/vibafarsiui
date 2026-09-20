@@ -47,6 +47,7 @@ export const EXTRA_ALIASES: Record<string, string[]> = {
   "iran-validation": ["validation", "اعتبارسنجی", "کد ملی", "شبا", "iban", "شماره کارت", "luhn", "موبایل", "کد پستی", "پلاک"],
   "persian-seo": ["seo", "سئو", "متادیتا", "metadata", "hreflang", "اسلاگ", "slug", "json-ld", "گوگل"],
   "agents-md-persian": ["claude.md", "agents.md", "cursor rules", "قوانین", "rules", "system prompt", "راهنما"],
+  "ui-craft-rules": ["craft", "slop", "vibe coding", "وایب کدینگ", "وایب‌کدینگ", "design system", "دیزاین سیستم", "skeleton", "layout shift", "touch target", "stagger"],
   "persian-typography": ["typography", "تایپوگرافی", "فونت", "font", "vazirmatn", "iransans", "نیم‌فاصله", "zwnj", "line-height"],
   "persian-writing": ["نگارش", "ویرایش", "humanize", "غلط‌گیری", "docx", "pdf", "ali2000hos"],
   input: ["text field", "موبایل", "تلفن", "phone", "ایمیل", "فیلد"],

@@ -126,6 +126,11 @@ const INIT_WRITES: React.ReactNode[] = [
     <Inline>lib/utils.ts</Inline> و <Inline>lib/jalali.ts</Inline> از رجیستری
   </>,
   <>
+    قوانین مدل: یک بلوک فشرده‌ی فارسی و کرافت داخل <Inline>AGENTS.md</Inline>، خط <Inline>@AGENTS.md</Inline> در{" "}
+    <Inline>CLAUDE.md</Inline>، دو راهنمای کامل در <Inline>docs/</Inline> و اگر پوشه‌ی <Inline>.cursor</Inline> باشه یک rule
+    برای Cursor. دوباره که init بزنید همان بلوک جایگزین میشه و بقیه‌ی فایل دست نمی‌خوره
+  </>,
+  <>
     <Inline>vibefarsi.json</Inline> و مسیر <Inline>@/*</Inline> در tsconfig
   </>,
 ];

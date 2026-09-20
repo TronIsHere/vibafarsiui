@@ -90,4 +90,7 @@ every file you touch, without being reminded.
 The full skills cover each topic in depth and trigger on their own when the
 task matches: `persian-rtl-ui`, `persian-ui-copy`, `persian-conversational`,
 `persian-formal`, `jalali-calendar`, `iran-validation`, `persian-seo`.
-Install any of them with `npx vibefarsi add <slug>`.
+Install any of them with `npx vibefarsi add <slug>`. For the craft side
+(design system discipline, layout shift, type scale, touch targets, motion
+by name) pair this with the `ui-craft-rules` guide; `vibefarsi init` writes
+both into `docs/` and a compact block into `AGENTS.md`.

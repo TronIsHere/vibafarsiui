@@ -43,6 +43,7 @@ npx vibefarsi@latest init
 - فونت Vazirmatn، در Next.js با `next/font/google` و `app/fonts.ts`، و در بقیه‌ی پروژه‌ها با import از Google Fonts داخل CSS
 - توکن‌های تم گرافیت و نگاشت Tailwind در `globals.css`
 - `lib/utils.ts` (اعداد فارسی، `formatToman`، `cn`) و `lib/jalali.ts` (تبدیل شمسی) از رجیستری
+- قوانین مدل: یک بلوک فشرده از قوانین فارسی و کرافت رابط داخل `AGENTS.md`، خط `@AGENTS.md` در `CLAUDE.md`، و دو راهنمای کامل [`agents-md-persian`](https://vibefarsi.ir/skills/agents-md-persian) و [`ui-craft-rules`](https://vibefarsi.ir/skills/ui-craft-rules) در `docs/` تا Claude Code، Codex و Cursor از همان اول با راست‌چین، اعداد فارسی، توکن‌ها و اندازه‌های درست شروع کنن
 - `vibefarsi.json` و مسیر <code dir="ltr">@/*</code> در tsconfig
 
 بعد کامپوننت‌ها را اضافه کنید:

@@ -1,5 +1,6 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { writeAgentGuides } from "./agents.js";
 import type { Flags } from "./args.js";
 import { applyThemeTokens } from "./css.js";
 import { fail, hint, info, skip, title, warn } from "./log.js";
@@ -20,6 +21,7 @@ import {
   makeClient,
   resolveOne,
   rewriteUserSource,
+  type Catalog,
 } from "./registry.js";
 
 const VAZIR_VAR = "--font-vazirmatn";
@@ -219,11 +221,12 @@ export async function runInit(flags: Flags) {
     warn("IRANSans files were not in /fonts; using Vazirmatn. Drop IRANSans-Reg.woff there and re-run with --font iransans.");
   }
 
+  const client = makeClient(project.config.registry);
+  let catalog: Catalog;
   try {
     await writeLibFromRegistry(project, flags, "utils");
     await writeLibFromRegistry(project, flags, "jalali");
-    const client = makeClient(project.config.registry);
-    const catalog = await fetchCatalog(client);
+    catalog = await fetchCatalog(client);
     const theme = resolveOne(catalog, flags.theme) ?? resolveOne(catalog, "graphite");
     if (!theme || theme.type !== "theme") throw new Error(`Theme "${flags.theme}" not in registry`);
     const themeItem = await fetchItem(client, theme);
@@ -257,11 +260,13 @@ export async function runInit(flags: Flags) {
     info(`font  Vazirmatn via Google Fonts in ${path.relative(project.cwd, project.paths.css)}`);
   }
 
+  await writeAgentGuides(project, flags, client, catalog, font.id);
+
   if (ensureTsPathAlias(project, flags.dryRun)) info("tsconfig paths  @/*");
   writeConfig(project, flags.dryRun);
   info("vibefarsi.json");
 
   console.log("");
-  info(`RTL + ${font.id === "iransans" ? "IRANSans" : "Vazirmatn"} + ${flags.theme} tokens + lib/utils.ts + lib/jalali.ts`);
+  info(`RTL + ${font.id === "iransans" ? "IRANSans" : "Vazirmatn"} + ${flags.theme} tokens + lib/utils.ts + lib/jalali.ts + agent rules`);
   hint("npx vibefarsi add button calendar price");
 }

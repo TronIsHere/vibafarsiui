@@ -258,7 +258,11 @@ export default async function SkillPage({ params }: PageProps<"/skills/[slug]">)
           <Link href="/skills/agents-md-persian" className="underline underline-offset-4 hover:text-foreground">
             قوانین فارسی برای CLAUDE.md
           </Link>{" "}
-          خلاصه‌ی همه‌ی مهارت‌ها در یک صفحه‌ست.
+          خلاصه‌ی همه‌ی مهارت‌ها در یک صفحه‌ست و{" "}
+          <Link href="/skills/ui-craft-rules" className="underline underline-offset-4 hover:text-foreground">
+            قوانین کرافت رابط
+          </Link>{" "}
+          طرف طراحی را پوشش میده. <Path>npx vibefarsi init</Path> هر دو را داخل پروژه می‌نویسه.
         </p>
       )}
 

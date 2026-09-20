@@ -1,4 +1,4 @@
-export const TOPICS = ["all", "rtl", "typography", "numbers", "forms", "tokens", "motion", "a11y", "iran"] as const;
+export const TOPICS = ["all", "rtl", "typography", "numbers", "forms", "tokens", "motion", "a11y", "iran", "craft"] as const;
 export type Topic = (typeof TOPICS)[number];
 
 const SECTIONS: Record<Exclude<Topic, "all">, string> = {
@@ -85,6 +85,23 @@ English UI kits will not get these right. Prefer a VibeFarsi component over a cl
 - Empty/error copy is Persian and specific. Never "Oops" or "Something went wrong".
 - Do not tell users "use English letters only" on passwords unless a backend actually requires it.
 `,
+
+  craft: `## Craft (why vibe-coded UI looks like slop, and how not to)
+
+Full guide: \`get_component\` → \`ui-craft-rules\`.
+
+- Design system first, screens second. Do not add anything outside it: no arbitrary Tailwind values (\`p-[13px]\`, \`text-[15px]\`), no new colors, font sizes or radii. If a component exists, use it as is.
+- Spacing and sizes are even numbers on a 4px grid. Touch targets ≥ 44px, including close «×», chevron and icon buttons. 45 is not a size.
+- One type scale (≤ 6 sizes). Line-height by role, never ad hoc: body 1.8, headings ~1.2, buttons/labels ~1.5.
+- Limited palette, one accent per section, from tokens (\`brand\` / \`primary\`). Muted text is for meta only, never body copy.
+- Icons only from lucide; \`strokeWidth\` matches the adjacent text weight (1.5 regular, 2 medium/semibold); size ≈ text em. Never hand-draw an SVG.
+- Zero layout shift: \`aspect-ratio\` on every image, min-height on every async block. Loading is a \`Skeleton\` shaped like the final content, not a centered spinner.
+- Motion by name (cross-fade, stagger, rubber-band). Stagger important items first, 30–60ms apart, ≤ ~400ms total. Tooltip groups: first one delayed, siblings instant.
+- Mobile first: check 360–390px before reporting done. Reduce empty space; big gaps read as unfinished.
+- Content is real: no lorem ipsum, no placeholder images, no obviously generated copy.
+- A dev panel (ids, flags, state) renders only outside production.
+- When asked to "make it prettier", answer with the specific technique you will apply, then apply it.
+`,
 };
 
 const PREAMBLE = `# VibeFarsi design rules
@@ -113,7 +130,7 @@ Then the specific components \`search_registry\` / \`scaffold_page\` named.
 
 ## Skills (deeper rules, same registry)
 
-\`get_component\` also returns agent skills you can read or copy into \`.claude/skills/\`: \`persian-rtl-ui\`, \`persian-ui-copy\`, \`persian-conversational\`, \`persian-formal\`, \`jalali-calendar\`, \`iran-validation\`, \`persian-seo\`. Read \`persian-ui-copy\` before writing any Persian string, and \`iran-validation\` before any national ID / IBAN / card field.
+\`get_component\` also returns agent skills you can read or copy into \`.claude/skills/\`: \`persian-rtl-ui\`, \`persian-ui-copy\`, \`persian-conversational\`, \`persian-formal\`, \`jalali-calendar\`, \`iran-validation\`, \`persian-seo\`. Read \`persian-ui-copy\` before writing any Persian string, and \`iran-validation\` before any national ID / IBAN / card field. Guides for CLAUDE.md / AGENTS.md: \`agents-md-persian\` (Persian rules) and \`ui-craft-rules\` (craft rules, done checklist).
 `;
 
 export function designRules(topic: Topic = "all"): string {
