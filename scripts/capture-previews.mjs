@@ -62,6 +62,7 @@ const PEEK_MODE = {
   onboarding: "center",
   "error-pages": "center",
   receipt: "center",
+  ride: "center",
   "startup-landing": "top",
   pricing: "top",
 };
