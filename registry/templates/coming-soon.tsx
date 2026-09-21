@@ -34,7 +34,7 @@ export function ComingSoon() {
   const [ok, setOk] = React.useState(false);
   const cells: [number | null, string][] = [[t?.d ?? null, "روز"], [t?.h ?? null, "ساعت"], [t?.m ?? null, "دقیقه"], [t?.s ?? null, "ثانیه"]];
   return (
-    <div className="relative flex min-h-dvh flex-col overflow-hidden bg-background text-foreground">
+    <div className="relative flex min-h-dvh flex-col overflow-x-hidden bg-background text-foreground">
       <StarsBackground count={70} />
       <AuroraBackground className="opacity-70" />
       <header className="relative mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4">
@@ -47,7 +47,7 @@ export function ComingSoon() {
         <h1 className="mt-6 text-4xl font-bold leading-[1.2] sm:text-6xl"><GradientText>داشبورد فروش‌تان</GradientText><br />به‌زودی راه می‌افتد</h1>
         <p className="mt-5 max-w-lg text-lg text-muted-foreground">همه‌ی فروشگاه‌ها و درگاه‌ها در یک صفحه، با اعداد فارسی و تاریخ شمسی. شماره‌تان را بگذارید؛ روز انتشار یک پیامک می‌فرستیم، نه بیشتر.</p>
 
-        <div className="mt-10 grid w-full max-w-md grid-cols-4 gap-2 sm:gap-3" dir="rtl" aria-live="off">
+        <div className="mt-10 grid w-full max-w-md grid-cols-4 gap-2 sm:gap-3" dir="ltr" aria-live="off">
           {cells.map(([n, l]) => (
             <div key={l} className="rounded-2xl border border-border bg-card/70 py-4 backdrop-blur">
               <p className="text-3xl font-bold tabular-nums sm:text-4xl">{n === null ? "--" : fa(String(n).padStart(2, "0"))}</p>
@@ -63,7 +63,15 @@ export function ComingSoon() {
           </MorphButton>
         </form>
         <div className="mt-6 flex items-center gap-3 text-sm text-muted-foreground">
-          <AvatarGroup people={[{ name: "مریم" }, { name: "علی" }, { name: "نگار" }, { name: "رضا" }]} size="sm" />
+          <AvatarGroup
+            people={[
+              { name: "مریم", src: "https://i.pravatar.cc/64?u=maryam" },
+              { name: "علی", src: "https://i.pravatar.cc/64?u=ali" },
+              { name: "نگار", src: "https://i.pravatar.cc/64?u=negar" },
+              { name: "رضا", src: "https://i.pravatar.cc/64?u=reza" },
+            ]}
+            size="sm"
+          />
           <span>{faNumber(1_240)} نفر زودتر از شما در صف‌اند</span>
         </div>
       </main>

@@ -16,12 +16,12 @@ export interface StatProps {
 export function Stat({ label, value, unit, delta, deltaLabel = "نسبت به دوره‌ی قبل", size = "md", className }: StatProps) {
   const up = (delta ?? 0) >= 0;
   return (
-    <div className={cn("rounded-xl border border-border bg-card", size === "sm" ? "p-3" : "p-4", className)}>
+    <div className={cn("min-w-0 overflow-hidden rounded-xl border border-border bg-card", size === "sm" ? "p-3" : "p-4", className)}>
       <p className="text-xs text-muted-foreground">{label}</p>
       <div className="mt-1 flex items-end justify-between gap-2">
-        <p className={cn("min-w-0 font-bold leading-none", size === "sm" ? "text-lg" : "text-2xl")}>
+        <p className={cn("min-w-0 font-bold leading-tight wrap-break-word", size === "sm" ? "text-lg" : "text-xl sm:text-2xl")}>
           <span className="tabular-nums">{value}</span>
-          {unit && <span className="ms-1 text-xs font-normal text-muted-foreground">{unit}</span>}
+          {unit && <span className="ms-1 inline-block text-xs font-normal text-muted-foreground">{unit}</span>}
         </p>
         {delta !== undefined && (
           <span className={cn("inline-flex shrink-0 items-center gap-0.5 text-xs font-semibold", up ? "text-success" : "text-destructive")} title={String(deltaLabel)}>

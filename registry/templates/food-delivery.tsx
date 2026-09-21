@@ -71,29 +71,29 @@ export function FoodDelivery() {
   );
 
   return (
-    <div className="min-h-dvh bg-background pb-24 text-foreground lg:pb-0">
+    <div className="min-h-dvh overflow-x-hidden bg-background pb-24 text-foreground lg:pb-0">
       <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur">
         <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4">
-          <button type="button" className="flex min-w-0 cursor-pointer items-center gap-1.5 text-sm"><MapPin className="size-4 shrink-0 text-brand" /><span className="truncate">تهران، سعادت‌آباد، بلوار دریا</span><ChevronDown className="size-3.5 text-muted-foreground" /></button>
+          <button type="button" className="flex min-w-0 cursor-pointer items-center gap-1.5 text-sm"><MapPin className="size-4 shrink-0 text-brand" /><span className="truncate">تهران، سعادت‌آباد، بلوار دریا</span><ChevronDown className="size-3.5 shrink-0 text-muted-foreground" /></button>
           <div className="ms-auto hidden w-64 sm:block"><Input placeholder="جست‌وجو در منو…" startAddon={<Search className="size-4" />} className="h-9" /></div>
         </div>
       </header>
 
       <div className="mx-auto max-w-6xl px-4">
         <section className="mt-4 overflow-hidden rounded-2xl border border-border bg-card">
-          <div className="h-32 bg-gradient-to-l from-orange-950/50 via-card to-card" />
-          <div className="-mt-8 flex flex-wrap items-end gap-4 px-5 pb-5">
+          <div className="h-28 bg-gradient-to-l from-orange-950/50 via-card to-card sm:h-32" />
+          <div className="-mt-8 flex flex-col gap-4 px-4 pb-5 sm:flex-row sm:flex-wrap sm:items-end sm:gap-4 sm:px-5">
             <span className="flex size-16 items-center justify-center rounded-2xl border border-border bg-background text-2xl font-black shadow-md">ح</span>
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2"><h1 className="text-xl font-bold">کبابی حاج‌محمود</h1><Badge variant="success" className="rounded-full border border-success/30 px-2 text-[11px]">باز است</Badge></div>
-              <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+              <div className="mt-2 flex flex-col gap-1.5 text-xs text-muted-foreground sm:mt-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-1">
                 <span className="flex items-center gap-1"><Star className="size-3.5 fill-warning text-warning" />{fa(4.7).replace(".", "٫")} ({faNumber(1_240)} نظر)</span>
                 <span className="flex items-center gap-1"><Clock className="size-3.5" />۳۵ تا ۴۵ دقیقه</span>
                 <span className="flex items-center gap-1"><Bike className="size-3.5" />ارسال {formatToman(DELIVERY)}</span>
                 <span>حداقل سفارش {formatToman(100_000)}</span>
               </div>
             </div>
-            <Rating value={5} readOnly size="sm" className="hidden sm:inline-flex" />
+            <Rating value={5} readOnly size="sm" className="hidden lg:inline-flex" />
           </div>
         </section>
 
@@ -103,14 +103,20 @@ export function FoodDelivery() {
               {cats.map((c) => <button key={c} type="button" onClick={() => setCat(c)} className={cn("shrink-0 cursor-pointer rounded-full border px-3.5 py-1.5 text-sm transition-colors", c === cat ? "border-foreground bg-foreground text-background" : "border-border hover:bg-accent")}>{c}</button>)}
             </div>
             <h2 className="mb-3 mt-2 text-lg font-bold">{cat}</h2>
-            <ul className="grid gap-3 sm:grid-cols-2">
+            <ul className="grid gap-3 lg:grid-cols-2">
               {shown.map((m) => (
                 <li key={m.id} className="flex gap-3 rounded-2xl border border-border bg-card p-3">
-                  <div className={cn("size-24 shrink-0 rounded-xl bg-gradient-to-br to-secondary", m.tone)} aria-hidden />
+                  <div className={cn("size-20 shrink-0 rounded-xl bg-gradient-to-br to-secondary sm:size-24", m.tone)} aria-hidden />
                   <div className="flex min-w-0 flex-1 flex-col">
-                    <div className="flex items-start justify-between gap-2"><h3 className="text-sm font-semibold">{m.name}</h3>{m.hot && <Badge variant="brand" className="text-[11px]">پرفروش</Badge>}</div>
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="text-sm font-semibold leading-6">{m.name}</h3>
+                      {m.hot && <Badge variant="brand" className="shrink-0 text-[11px]">پرفروش</Badge>}
+                    </div>
                     <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground">{m.desc}</p>
-                    <div className="mt-auto flex items-end justify-between pt-2"><Price amount={m.price} original={m.original} size="sm" /><Qty n={cart[m.id] ?? 0} onChange={(v) => set(m.id, v)} /></div>
+                    <div className="mt-auto flex flex-wrap items-end justify-between gap-2 pt-2">
+                      <Price amount={m.price} original={m.original} size="sm" className="min-w-0" />
+                      <Qty n={cart[m.id] ?? 0} onChange={(v) => set(m.id, v)} />
+                    </div>
                   </div>
                 </li>
               ))}

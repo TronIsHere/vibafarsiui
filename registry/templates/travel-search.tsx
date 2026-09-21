@@ -46,8 +46,12 @@ export function TravelSearch() {
     <div className="min-h-dvh bg-background text-foreground">
       <section className="border-b border-border bg-card/40">
         <div className="mx-auto max-w-6xl px-4 py-8">
-          <Tabs defaultValue="flight">
-            <TabsList aria-label="نوع سفر"><TabsTrigger value="flight"><Plane className="size-4" />پرواز</TabsTrigger><TabsTrigger value="train"><TrainFront className="size-4" />قطار</TabsTrigger><TabsTrigger value="bus"><Bus className="size-4" />اتوبوس</TabsTrigger></TabsList>
+          <Tabs defaultValue="flight" className="w-full">
+            <TabsList aria-label="نوع سفر" className="grid w-full grid-cols-3 sm:inline-flex sm:w-auto">
+              <TabsTrigger value="flight" className="inline-flex w-full items-center justify-center gap-1.5"><Plane className="size-4 shrink-0" />پرواز</TabsTrigger>
+              <TabsTrigger value="train" className="inline-flex w-full items-center justify-center gap-1.5"><TrainFront className="size-4 shrink-0" />قطار</TabsTrigger>
+              <TabsTrigger value="bus" className="inline-flex w-full items-center justify-center gap-1.5"><Bus className="size-4 shrink-0" />اتوبوس</TabsTrigger>
+            </TabsList>
           </Tabs>
           <div className="mt-4 flex flex-wrap items-end gap-3 rounded-2xl border border-border bg-card p-4">
             <Field label="مبدأ" htmlFor="from" className="min-w-0 flex-1 basis-36">
