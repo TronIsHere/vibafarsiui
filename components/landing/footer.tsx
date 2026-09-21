@@ -2,7 +2,9 @@ import Link from "next/link";
 import { Logo } from "@/components/shared/logo";
 import { GithubIcon } from "@/components/shared/icons";
 import { GITHUB_URL } from "@/lib/site";
+import { hostingSponsor } from "@/lib/sponsors";
 import { Section } from "./frame";
+import { SponsorMark } from "./sponsor-card";
 
 export function MonoFooter() {
   return (
@@ -41,7 +43,20 @@ export function MonoFooter() {
               </Link>
             ))}
           </nav>
-          <span>© ۱۴۰۵ وایب‌فارسی</span>
+          <div className="flex flex-col items-start gap-3 sm:items-end">
+            <span>© ۱۴۰۵ وایب‌فارسی</span>
+            {hostingSponsor ? (
+              <a
+                href={hostingSponsor.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex cursor-pointer items-center gap-2 transition-opacity hover:opacity-90"
+              >
+                <span>میزبانی</span>
+                <SponsorMark sponsor={hostingSponsor} />
+              </a>
+            ) : null}
+          </div>
         </div>
       </footer>
     </>

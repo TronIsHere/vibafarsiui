@@ -48,7 +48,7 @@ function GoldSeat({ sponsor, index }: { sponsor: Sponsor | null; index: number }
         <div className="flex items-center justify-between gap-3">
           <span className="font-mono text-[11px] text-muted-foreground">{seatNo(index + 1)}</span>
           <span className="rounded-full border border-brand/30 bg-brand/10 px-2.5 py-0.5 text-[11px] font-medium text-brand">
-            حامی اصلی
+            {sponsor.role === "hosting" ? "میزبانی" : "حامی اصلی"}
           </span>
         </div>
         <div>
