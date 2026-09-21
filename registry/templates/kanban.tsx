@@ -14,6 +14,13 @@ type Card = { id: string; title: string; tag: string; tone: "brand" | "success" 
 type Col = { id: string; title: string; cards: Card[] };
 const day = (n: number) => new Date(Date.now() + n * 864e5);
 const TODAY = new Date(); TODAY.setHours(0, 0, 0, 0); // a card due today is not overdue yet
+const avatars: Record<string, string> = {
+  "مریم احمدی": "https://i.pravatar.cc/64?u=maryam-ahmadi",
+  "علی رضایی": "https://i.pravatar.cc/64?u=ali-rezaei",
+  "نگار کریمی": "https://i.pravatar.cc/64?u=negar-karimi",
+  "رضا موسوی": "https://i.pravatar.cc/64?u=reza-mousavi",
+  "سارا محمدی": "https://i.pravatar.cc/64?u=sara-mohammadi",
+};
 const initial: Col[] = [
   { id: "backlog", title: "بک‌لاگ", cards: [
     { id: "c1", title: "بازطراحی صفحه‌ی پرداخت", tag: "طراحی", tone: "brand", who: "مریم احمدی", due: day(6), done: 0, total: 4 },
@@ -60,7 +67,17 @@ export function KanbanBoard() {
       <header className="flex flex-wrap items-center gap-3 border-b border-border px-4 py-3 sm:px-6">
         <div><h1 className="text-lg font-bold">بازطراحی اپ فروشگاه</h1><p className="text-xs text-muted-foreground">اسپرینت ۱۴ · {formatJalali(new Date(), { weekday: true })}</p></div>
         <div className="ms-auto flex items-center gap-2">
-          <AvatarGroup people={[{ name: "مریم احمدی" }, { name: "علی رضایی" }, { name: "نگار کریمی" }, { name: "رضا موسوی" }, { name: "سارا محمدی" }]} max={4} size="sm" />
+          <AvatarGroup
+            people={[
+              { name: "مریم احمدی", src: "https://i.pravatar.cc/64?u=maryam-ahmadi" },
+              { name: "علی رضایی", src: "https://i.pravatar.cc/64?u=ali-rezaei" },
+              { name: "نگار کریمی", src: "https://i.pravatar.cc/64?u=negar-karimi" },
+              { name: "رضا موسوی", src: "https://i.pravatar.cc/64?u=reza-mousavi" },
+              { name: "سارا محمدی", src: "https://i.pravatar.cc/64?u=sara-mohammadi" },
+            ]}
+            max={4}
+            size="sm"
+          />
           <div className="hidden w-56 md:block"><Input placeholder="جست‌وجوی کار…" startAddon={<Search className="size-4" />} className="h-9" /></div>
           <Button variant="outline" size="sm"><Filter />فیلتر</Button>
           <Button size="sm" onClick={() => setAdding("backlog")}><Plus />کار جدید</Button>
@@ -99,7 +116,7 @@ export function KanbanBoard() {
                       />
                     </div>
                     <div className="mt-3 flex items-center gap-2"><Badge variant={card.tone} className="rounded-md bg-secondary px-1.5 text-[11px] leading-5">{card.tag}</Badge><span className="text-[11px] text-muted-foreground">{fa(card.done)}/{fa(card.total)}</span><div className="h-1 flex-1 overflow-hidden rounded-full bg-input"><div className="h-full rounded-full bg-primary" style={{ width: `${(card.done / card.total) * 100}%` }} /></div></div>
-                    <div className="mt-3 flex items-center justify-between"><span className={cn("flex items-center gap-1 text-[11px]", overdue ? "text-destructive" : "text-muted-foreground")}><CalendarDays className="size-3.5" />{formatJalali(card.due)}</span><Avatar name={card.who} size="sm" /></div>
+                    <div className="mt-3 flex items-center justify-between"><span className={cn("flex items-center gap-1 text-[11px]", overdue ? "text-destructive" : "text-muted-foreground")}><CalendarDays className="size-3.5" />{formatJalali(card.due)}</span><Avatar name={card.who} src={avatars[card.who]} size="sm" /></div>
                   </li>
                 );
               })}

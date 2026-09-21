@@ -48,11 +48,18 @@ export function CheckoutPage() {
             {step === 0 && (
               <ul className="divide-y divide-border">
                 {items.map((it) => (
-                  <li key={it.id} className="flex items-center gap-4 py-4 first:pt-0 last:pb-0">
-                    <span className="flex size-16 shrink-0 items-center justify-center rounded-lg bg-secondary"><Package className="size-6 text-muted-foreground" /></span>
-                    <div className="min-w-0 flex-1"><p className="text-sm font-medium">{it.name}</p><p className="text-xs text-muted-foreground">گارانتی ۱۸ ماهه</p></div>
-                    <NumberField value={qty[it.id]} min={1} max={9} onChange={(n) => setQty((q) => ({ ...q, [it.id]: n }))} aria-label="تعداد" />
-                    <span className="w-32 text-end text-sm font-semibold tabular-nums">{formatToman(it.price * (qty[it.id] ?? 1))}</span>
+                  <li key={it.id} className="flex flex-col gap-3 py-4 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:gap-4">
+                    <div className="flex min-w-0 flex-1 items-center gap-3">
+                      <span className="flex size-16 shrink-0 items-center justify-center rounded-lg bg-secondary"><Package className="size-6 text-muted-foreground" /></span>
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium leading-6">{it.name}</p>
+                        <p className="text-xs text-muted-foreground">گارانتی ۱۸ ماهه</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between gap-3 sm:justify-end sm:gap-4">
+                      <NumberField value={qty[it.id]} min={1} max={9} onChange={(n) => setQty((q) => ({ ...q, [it.id]: n }))} aria-label="تعداد" />
+                      <span className="shrink-0 text-end text-sm font-semibold tabular-nums sm:w-32">{formatToman(it.price * (qty[it.id] ?? 1))}</span>
+                    </div>
                   </li>
                 ))}
               </ul>

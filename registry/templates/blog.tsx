@@ -10,12 +10,12 @@ export function BlogPost() {
   return (
     <div className="min-h-dvh bg-background text-foreground">
       <header className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4"><span className="font-bold">وبلاگ وایب‌فارسی</span><span className="text-sm text-muted-foreground">مقاله‌ها</span></header>
-      <main className="mx-auto grid max-w-5xl grid-cols-1 gap-10 px-4 py-10 lg:grid-cols-[1fr_220px]">
-        <article>
+      <main className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-10 px-4 py-10 lg:grid-cols-[minmax(0,1fr)_220px]">
+        <article className="min-w-0">
           <Breadcrumb items={[{ label: "خانه", href: "#" }, { label: "تایپوگرافی", href: "#" }, { label: "فونت فارسی در وب" }]} />
           <div className="mt-5 flex items-center gap-2"><Badge variant="outline">تایپوگرافی</Badge><Badge variant="outline">راست‌چین</Badge></div>
           <h1 className="mt-3 text-3xl font-bold leading-[1.3] sm:text-4xl">فونت فارسی در وب: چه چیزی خوانایی را می‌سازد و چه چیزی خرابش می‌کند</h1>
-          <div className="mt-5 flex items-center gap-3 text-sm text-muted-foreground">
+          <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
             <Avatar name="نگار کریمی" size="sm" />
             <span>نگار کریمی</span>
             <span>·</span>
@@ -24,7 +24,7 @@ export function BlogPost() {
             <span>۶ دقیقه مطالعه</span>
           </div>
 
-          <div className="mt-8 max-w-[65ch] space-y-6 text-[17px] leading-[1.9] text-foreground/90">
+          <div className="mt-8 w-full space-y-6 text-[17px] leading-[1.9] text-foreground/90">
             <p>بیشتر سایت‌های فارسی با یک فونت خوب شروع می‌کنند و با چند تصمیم کوچک خرابش می‌کنند: فاصله‌ی حروف، ارتفاع خط کم، و اعدادی که وسط جمله لاتین می‌شوند. این مطلب همان تصمیم‌ها را یکی‌یکی مرور می‌کند.</p>
             <h2 id="s1" className="text-xl font-bold text-foreground">چرا فونت مهم است</h2>
             <p>خط فارسی پیوسته است. حروف به هم می‌چسبند و شکل‌شان بسته به جای‌شان در کلمه عوض می‌شود. هر چیزی که این پیوستگی را به هم بزند، از letter-spacing گرفته تا فونت جایگزین سیستم، خواندن را کند می‌کند.</p>

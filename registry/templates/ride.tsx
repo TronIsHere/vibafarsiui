@@ -43,19 +43,46 @@ export function RidePage() {
 
   return (
     <div className="min-h-dvh bg-background text-foreground">
-      <div className="relative min-h-[42vh] border-b border-border bg-secondary/40" style={{ backgroundImage: "linear-gradient(to bottom, oklch(from var(--brand) l c h / 12%), transparent), radial-gradient(circle at 30% 40%, oklch(from var(--foreground) l c h / 8%) 1px, transparent 1px)", backgroundSize: "auto, 24px 24px" }}>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative h-48 w-[min(100%,20rem)]">
-            <span className="absolute inset-e-6 top-4 flex size-10 items-center justify-center rounded-full bg-brand text-brand-foreground shadow-lg"><MapPin className="size-5" /></span>
-            <span className="absolute inset-s-4 bottom-8 flex size-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg"><Navigation className="size-5" /></span>
-            <svg className="absolute inset-0 size-full text-brand" viewBox="0 0 200 180" fill="none" aria-hidden>
-              <path d="M150 30 C 120 60, 90 70, 50 140" stroke="currentColor" strokeWidth="3" strokeDasharray="6 6" opacity="0.7" />
-            </svg>
-          </div>
+      <div className="relative isolate min-h-[44vh] overflow-hidden border-b border-border bg-[oklch(0.18_0.02_60)]">
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1px 1px, oklch(1 0 0 / 14%) 1px, transparent 0)",
+            backgroundSize: "22px 22px",
+          }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,oklch(from_var(--brand)_l_c_h/28%),transparent_55%),linear-gradient(to_bottom,oklch(0_0_0/10%),oklch(0_0_0/55%))]"
+        />
+        <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between gap-3 p-4 sm:p-5">
+          <p className="rounded-full bg-background/90 px-3.5 py-1.5 text-sm font-bold shadow-sm backdrop-blur">راهی</p>
+          <Badge variant="success" className="shadow-sm">آنلاین</Badge>
         </div>
-        <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
-          <p className="rounded-full bg-background/90 px-3 py-1.5 text-sm font-bold backdrop-blur">راهی</p>
-          <Badge variant="success">آنلاین</Badge>
+        <div className="absolute inset-0 flex items-center justify-center px-6 pb-8 pt-16">
+          <div className="relative aspect-320/200 w-full max-w-sm">
+            <svg className="absolute inset-0 size-full text-brand" viewBox="0 0 320 200" fill="none" aria-hidden>
+              <path
+                d="M64 44 C 118 44, 148 88, 176 114 S 248 156, 256 140"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeDasharray="6 7"
+                opacity="0.9"
+                vectorEffect="non-scaling-stroke"
+              />
+              <circle cx="64" cy="44" r="20" className="fill-brand" />
+              <circle cx="256" cy="140" r="20" className="fill-primary" />
+            </svg>
+            <span className="pointer-events-none absolute left-[20%] top-[22%] flex size-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center text-brand-foreground">
+              <MapPin className="size-4" strokeWidth={2.25} />
+            </span>
+            <span className="pointer-events-none absolute left-[80%] top-[70%] flex size-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center text-primary-foreground">
+              <Navigation className="size-4" strokeWidth={2.25} />
+            </span>
+          </div>
         </div>
       </div>
 

@@ -93,7 +93,7 @@ export function SaasLanding() {
             <p className="mt-5 max-w-lg text-lg text-muted-foreground" style={{ animation: "fade-up 0.8s cubic-bezier(0.16,1,0.3,1) 0.4s both" }}>
               درگاه، فاکتور شمسی، اشتراک ماهانه و تسویه‌ی روزانه؛ همه با <GradientText className="font-semibold">یک API فارسی</GradientText> که در یک بعدازظهر وصل می‌شود.
             </p>
-            <div className="mt-8 flex flex-col gap-2 sm:flex-row" style={{ animation: "fade-up 0.8s cubic-bezier(0.16,1,0.3,1) 0.55s both" }}>
+            <div className="mt-8 flex flex-col items-start gap-2 sm:flex-row sm:items-center" style={{ animation: "fade-up 0.8s cubic-bezier(0.16,1,0.3,1) 0.55s both" }}>
               <PulseButton size="lg">ساخت حساب رایگان</PulseButton>
               <Button size="lg" variant="ghost">خواندن مستندات<ArrowLeft /></Button>
             </div>
@@ -206,7 +206,7 @@ export function SaasLanding() {
           <div className="relative">
             <h2 className="text-3xl font-bold">اولین پرداخت را امروز بگیرید</h2>
             <p className="mx-auto mt-3 max-w-md text-muted-foreground">ثبت‌نام، اتصال درگاه و اولین فاکتور، همه در کمتر از یک ساعت.</p>
-            <div className="mt-6 flex justify-center gap-2"><PulseButton size="lg">شروع رایگان</PulseButton><Button size="lg" variant="ghost">گفت‌وگو با فروش</Button></div>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2"><PulseButton size="lg">شروع رایگان</PulseButton><Button size="lg" variant="ghost">گفت‌وگو با فروش</Button></div>
           </div>
         </div>
       </section>

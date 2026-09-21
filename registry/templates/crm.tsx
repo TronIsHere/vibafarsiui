@@ -90,6 +90,7 @@ export function CrmPage() {
       header: "خرید تجمعی",
       sortable: true,
       numeric: true,
+      className: "whitespace-nowrap",
       cell: (c) => formatToman(c.spend),
     },
     {
@@ -140,8 +141,8 @@ export function CrmPage() {
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <Stat label="کل مشتریان" value={fa(customers.length)} />
           <Stat label="فعال این ماه" value={fa(customers.filter((c) => c.stage === "active" || c.stage === "vip").length)} delta={8} />
-          <Stat label="خرید تجمعی" value={faNumber(customers.reduce((s, c) => s + c.spend, 0))} unit="تومان" />
-          <Stat label="سرنخ باز" value={fa(customers.filter((c) => c.stage === "lead").length)} />
+          <Stat label="خرید تجمعی" value={faNumber(customers.reduce((s, c) => s + c.spend, 0))} unit="تومان" className="col-span-2 sm:col-span-1" />
+          <Stat label="سرنخ باز" value={fa(customers.filter((c) => c.stage === "lead").length)} className="col-span-2 sm:col-span-1" />
         </div>
 
         <DataTable
