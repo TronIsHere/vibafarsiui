@@ -1,4 +1,4 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowUpLeft, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Sponsor } from "@/lib/sponsors";
 
@@ -82,20 +82,26 @@ export function SponsorMark({
   );
 }
 
-/** Same shell as ItemCard, so a gold seat sits in the component grid. */
+/**
+ * Same footprint as ItemCard so a gold seat sits in the component grid, but
+ * styled as a sponsor seat (brand ring, badge, hatched stage, external link)
+ * so it never reads as one more component.
+ */
 export function SponsorCatalogCard({ sponsor }: { sponsor: Sponsor }) {
+  const tierLabel = sponsor.role === "hosting" ? "میزبانی" : "حامی اصلی";
   return (
-    <div className="group relative flex h-full flex-col rounded-xl border border-border bg-card transition-colors duration-200 hover:border-foreground/25">
+    <div className="group relative flex h-full flex-col rounded-xl border border-brand/40 bg-card ring-1 ring-brand/10 transition-colors duration-200 hover:border-brand/70 hover:ring-brand/20">
       <a
         href={sponsor.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="block cursor-pointer rounded-t-xl border-b border-border bg-muted/50 px-4 py-3 outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+        className="block cursor-pointer rounded-t-xl border-b border-brand/25 bg-brand/10 px-4 py-3 outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
       >
         <div className="flex items-center justify-between gap-2">
           <h3 className="text-sm font-semibold">{sponsor.name}</h3>
-          <span className="text-[11px] text-muted-foreground" dir="ltr">
-            {sponsor.nameEn ?? "sponsor"}
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-brand/30 bg-brand/15 px-2 py-0.5 text-[11px] font-medium text-brand">
+            <Heart className="size-3 fill-current" />
+            {tierLabel}
           </span>
         </div>
         <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground">
@@ -107,18 +113,23 @@ export function SponsorCatalogCard({ sponsor }: { sponsor: Sponsor }) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={sponsor.name}
-        className="relative flex min-h-[176px] min-w-0 flex-1 cursor-pointer items-center justify-center p-4 outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+        className="relative flex min-h-[176px] min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-3 rounded-b-xl bg-hatch p-4 outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
       >
         <SponsorMark sponsor={sponsor} large />
+        {sponsor.nameEn ? (
+          <span className="text-[11px] text-muted-foreground" dir="ltr">
+            {sponsor.nameEn}
+          </span>
+        ) : null}
       </a>
       <a
         href={sponsor.href}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`باز کردن ${sponsor.name}`}
-        className="absolute end-3 top-3 hidden size-7 cursor-pointer items-center justify-center rounded-md border border-border bg-card text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 sm:flex"
+        className="absolute end-3 top-3 hidden size-7 cursor-pointer items-center justify-center rounded-md border border-brand/30 bg-card text-brand opacity-0 transition-opacity group-hover:opacity-100 sm:flex"
       >
-        <ArrowLeft className="size-3.5" />
+        <ArrowUpLeft className="size-3.5" />
       </a>
     </div>
   );
