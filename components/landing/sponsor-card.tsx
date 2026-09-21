@@ -1,5 +1,54 @@
 import { ArrowLeft } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { Sponsor } from "@/lib/sponsors";
+
+function SponsorLockup({
+  sponsor,
+  large,
+}: {
+  sponsor: Sponsor;
+  large?: boolean;
+}) {
+  const alt = sponsor.nameEn ? `${sponsor.name} (${sponsor.nameEn})` : sponsor.name;
+  return (
+    <span
+      dir="ltr"
+      role="img"
+      aria-label={alt}
+      className={cn(
+        "inline-flex items-center justify-center gap-2.5 rounded-xl bg-neutral-950 ring-1 ring-white/10",
+        large ? "h-16 gap-3 px-4 sm:h-20 sm:px-5" : "h-10 px-3",
+      )}
+    >
+      {/* Wordmark is authored black; invert to white on the dark chip. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={sponsor.type}
+        alt=""
+        aria-hidden
+        className={cn(
+          "w-auto brightness-0 invert",
+          large ? "h-5 sm:h-6" : "h-3.5",
+        )}
+      />
+      <span
+        aria-hidden
+        className={cn("shrink-0", large ? "size-7 sm:size-8" : "size-5")}
+        style={{
+          backgroundColor: sponsor.markColor ?? "var(--brand-primary, #1769ff)",
+          WebkitMaskImage: `url(${sponsor.logo})`,
+          WebkitMaskSize: "contain",
+          WebkitMaskRepeat: "no-repeat",
+          WebkitMaskPosition: "center",
+          maskImage: `url(${sponsor.logo})`,
+          maskSize: "contain",
+          maskRepeat: "no-repeat",
+          maskPosition: "center",
+        }}
+      />
+    </span>
+  );
+}
 
 export function SponsorMark({
   sponsor,
@@ -8,6 +57,9 @@ export function SponsorMark({
   sponsor: Sponsor;
   large?: boolean;
 }) {
+  if (sponsor.type && sponsor.logo) {
+    return <SponsorLockup sponsor={sponsor} large={large} />;
+  }
   if (sponsor.logo) {
     return (
       // Logos are brand assets with unknown intrinsic size; keep them fluid.
