@@ -147,6 +147,8 @@ export const EXTRA_ALIASES: Record<string, string[]> = {
   separator: ["divider", "hr", "جداکننده", "خط", "یا"],
   spinner: ["loader", "loading", "بارگذاری", "لودینگ", "چرخنده"],
   collapsible: ["collapse", "show more", "نمایش بیشتر", "بازشو", "expand"],
+  "scroll-area": ["scrollarea", "scrollbar", "اسکرول", "اسکرول‌بار", "ناحیه اسکرول", "باکس اسکرول", "overflow"],
+  countdown: ["timer", "شمارش معکوس", "تایمر", "فلش فروش", "لانچ", "launch", "flash sale"],
 };
 
 function collectionPath(type: RegistryType): string {

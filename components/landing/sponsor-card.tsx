@@ -1,6 +1,6 @@
 import { ArrowUpLeft, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { Sponsor } from "@/lib/sponsors";
+import { sponsorBadge, type Sponsor } from "@/lib/sponsors";
 
 function SponsorLockup({
   sponsor,
@@ -88,7 +88,7 @@ export function SponsorMark({
  * so it never reads as one more component.
  */
 export function SponsorCatalogCard({ sponsor }: { sponsor: Sponsor }) {
-  const tierLabel = sponsor.role === "hosting" ? "میزبانی" : "حامی اصلی";
+  const tierLabel = sponsorBadge(sponsor);
   return (
     <div className="group relative flex h-full flex-col rounded-xl border border-brand/40 bg-card ring-1 ring-brand/10 transition-colors duration-200 hover:border-brand/70 hover:ring-brand/20">
       <a

@@ -103,6 +103,8 @@ import { SegmentedControl } from "@/registry/ui/segmented-control";
 import { Separator } from "@/registry/ui/separator";
 import { LoadingOverlay, Spinner } from "@/registry/ui/spinner";
 import { Collapsible } from "@/registry/ui/collapsible";
+import { ScrollArea } from "@/registry/ui/scroll-area";
+import { Countdown } from "@/registry/ui/countdown";
 import { AlignCenter, AlignLeft, AlignRight, Bold, Italic, LayoutGrid, List, Underline } from "lucide-react";
 
 type Order = {
@@ -1283,6 +1285,33 @@ export const componentDemos: Record<string, React.ReactNode> = {
       </Collapsible>
     </div>
   ),
+  "scroll-area": (
+    <ScrollArea className="h-48 w-full max-w-xs rounded-lg border border-border px-3">
+      {[
+        "هدفون بی‌سیم پرو",
+        "کیبورد مکانیکی",
+        "ماوس ارگونومیک",
+        "مانیتور ۲۷ اینچ",
+        "پایه‌ی لپ‌تاپ",
+        "هاب USB-C",
+        "وب‌کم Full HD",
+        "اسپیکر رومیزی",
+        "کابل HDMI",
+        "شارژر ۶۵ وات",
+      ].map((item) => (
+        <p key={item} className="border-b border-border py-2.5 text-sm last:border-0">
+          {item}
+        </p>
+      ))}
+    </ScrollArea>
+  ),
+  countdown: (
+    <Countdown
+      target={new Date(Date.now() + 2 * 864e5 + 5 * 36e5 + 23 * 60e3)}
+      className="w-full max-w-sm"
+      size="sm"
+    />
+  ),
 };
 
 /**
@@ -1646,5 +1675,20 @@ export const componentCardDemos: Record<string, React.ReactNode> = {
         <Progress value={72} />
       </CardContent>
     </Card>
+  ),
+  "scroll-area": (
+    <ScrollArea className="h-36 w-full rounded-lg border border-border px-3">
+      {["هدفون بی‌سیم پرو", "کیبورد مکانیکی", "ماوس ارگونومیک", "مانیتور ۲۷ اینچ", "پایه‌ی لپ‌تاپ", "هاب USB-C"].map((item) => (
+        <p key={item} className="border-b border-border py-2 text-sm last:border-0">{item}</p>
+      ))}
+    </ScrollArea>
+  ),
+  countdown: (
+    <Countdown
+      target={new Date(Date.now() + 2 * 864e5 + 5 * 36e5)}
+      units={["hours", "minutes", "seconds"]}
+      size="sm"
+      className="w-full"
+    />
   ),
 };

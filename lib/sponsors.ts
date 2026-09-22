@@ -16,6 +16,8 @@ export type Sponsor = {
   markColor?: string;
   /** Hosting partner gets a footer credit and a seat badge. */
   role?: "hosting";
+  /** Seat badge override. Defaults to میزبانی / حامی اصلی. */
+  badge?: string;
   tier: SponsorTier;
 };
 
@@ -33,14 +35,6 @@ export const sponsors: Sponsor[] = [
     tier: "gold",
   },
   {
-    name: "پیکسول",
-    nameEn: "Pixevel",
-    href: "https://pixevel.com/",
-    logo: "/sponsors/pixevel.png",
-    blurb: "ارائه‌دهنده خدمات و محصولات دیجیتال؛ اشتراک، گیفت‌کارت و بازی.",
-    tier: "gold",
-  },
-  {
     name: "پاستاکلود",
     nameEn: "Paasta",
     href: "https://paasta.cloud",
@@ -51,6 +45,15 @@ export const sponsors: Sponsor[] = [
     role: "hosting",
     tier: "gold",
   },
+  {
+    name: "پیکسول",
+    nameEn: "Pixevel",
+    href: "https://pixevel.com/",
+    logo: "/sponsors/pixevel.png",
+    blurb: "خدمات و محصولات دیجیتال؛ اشتراک، گیفت‌کارت و بازی.",
+    badge: "حامی",
+    tier: "gold",
+  },
 ];
 
 export const goldSponsors = sponsors.filter((s) => s.tier === "gold");
@@ -59,3 +62,8 @@ export const silverSponsors = sponsors.filter((s) => s.tier !== "gold");
 /** Hosting partner shown in the site footer. */
 export const hostingSponsor =
   sponsors.find((s) => s.role === "hosting") ?? null;
+
+export function sponsorBadge(sponsor: Sponsor): string {
+  if (sponsor.badge) return sponsor.badge;
+  return sponsor.role === "hosting" ? "میزبانی" : "حامی اصلی";
+}

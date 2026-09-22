@@ -1,7 +1,7 @@
 import { AppWindow, ArrowLeft, FileText, Pin, Plus } from "lucide-react";
 import { fa } from "@/lib/utils";
 import { SPONSOR_URL } from "@/lib/site";
-import { goldSponsors, silverSponsors, sponsors, type Sponsor } from "@/lib/sponsors";
+import { goldSponsors, silverSponsors, sponsors, sponsorBadge, type Sponsor } from "@/lib/sponsors";
 import { Section } from "./frame";
 import { SponsorMark } from "./sponsor-card";
 
@@ -43,12 +43,12 @@ function GoldSeat({ sponsor, index }: { sponsor: Sponsor | null; index: number }
         target="_blank"
         rel="noopener noreferrer"
         aria-label={sponsor.name}
-        className="group flex min-h-[220px] cursor-pointer flex-col justify-between bg-background p-6 transition-colors duration-200 hover:bg-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 sm:p-8"
+        className="group flex h-full min-h-[220px] cursor-pointer flex-col justify-between bg-background p-6 transition-colors duration-200 hover:bg-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 sm:p-8"
       >
         <div className="flex items-center justify-between gap-3">
           <span className="font-mono text-[11px] text-muted-foreground">{seatNo(index + 1)}</span>
           <span className="rounded-full border border-brand/30 bg-brand/10 px-2.5 py-0.5 text-[11px] font-medium text-brand">
-            {sponsor.role === "hosting" ? "میزبانی" : "حامی اصلی"}
+            {sponsorBadge(sponsor)}
           </span>
         </div>
         <div>
@@ -63,9 +63,9 @@ function GoldSeat({ sponsor, index }: { sponsor: Sponsor | null; index: number }
               ) : null}
             </div>
           </div>
-          {sponsor.blurb ? (
-            <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">{sponsor.blurb}</p>
-          ) : null}
+          <p className="mt-4 line-clamp-2 min-h-[3rem] max-w-sm text-sm leading-6 text-muted-foreground">
+            {sponsor.blurb ?? "\u00a0"}
+          </p>
         </div>
       </a>
     );
@@ -77,7 +77,7 @@ function GoldSeat({ sponsor, index }: { sponsor: Sponsor | null; index: number }
       target="_blank"
       rel="noopener noreferrer"
       aria-label="حامی شوید"
-      className="group flex min-h-[220px] cursor-pointer flex-col bg-hatch p-6 transition-colors duration-200 hover:bg-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 sm:p-8"
+      className="group flex h-full min-h-[220px] cursor-pointer flex-col bg-hatch p-6 transition-colors duration-200 hover:bg-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 sm:p-8"
     >
       <div className="flex items-center justify-between">
         <span className="font-mono text-[11px] text-muted-foreground">{seatNo(index + 1)}</span>
@@ -159,9 +159,9 @@ export function Sponsors() {
         </a>
       </div>
 
-      <ul className="grid grid-cols-1 gap-px bg-border sm:grid-cols-2">
+      <ul className="grid grid-cols-1 gap-px bg-border sm:grid-cols-3 sm:items-stretch">
         {gold.map((sponsor, i) => (
-          <li key={sponsor ? sponsor.name : `gold-open-${i}`}>
+          <li key={sponsor ? sponsor.name : `gold-open-${i}`} className="min-h-0">
             <GoldSeat sponsor={sponsor} index={i} />
           </li>
         ))}
