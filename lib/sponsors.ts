@@ -33,6 +33,14 @@ export const sponsors: Sponsor[] = [
     tier: "gold",
   },
   {
+    name: "پیکسول",
+    nameEn: "Pixevel",
+    href: "https://pixevel.com/",
+    logo: "/sponsors/pixevel.png",
+    blurb: "ارائه‌دهنده خدمات و محصولات دیجیتال؛ اشتراک، گیفت‌کارت و بازی.",
+    tier: "gold",
+  },
+  {
     name: "پاستاکلود",
     nameEn: "Paasta",
     href: "https://paasta.cloud",

@@ -5,7 +5,7 @@ import { goldSponsors, silverSponsors, sponsors, type Sponsor } from "@/lib/spon
 import { Section } from "./frame";
 import { SponsorMark } from "./sponsor-card";
 
-const GOLD_SEATS = 2;
+const GOLD_SEATS = 3;
 const WALL_SEATS = 4;
 
 const perks = [
