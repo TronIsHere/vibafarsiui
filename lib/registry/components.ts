@@ -1008,4 +1008,42 @@ import { Bold, Italic, Underline } from "lucide-react"
     notes: ["انیمیشن با grid-template-rows از 0fr به 1fr انجام میشه، پس ارتفاعی اندازه‌گیری نمیشه و با هر محتوایی کار می‌کنه.", "در حالت بسته، بلوک inert میشه تا لینک و فیلدهای داخلش با Tab پیدا نشن. برای چند بخش پشت سر هم از Accordion استفاده کنید."],
     promptBullets: ["Trigger button with aria-expanded and aria-controls; chevron rotates 180° when open.", "Height animation with a CSS grid wrapper: grid-rows-[0fr] ↔ grid-rows-[1fr], inner div min-h-0 overflow-hidden, ~200ms.", "Content stays mounted; the closed block gets inert and aria-hidden so it leaves the tab order."],
   },
+  {
+    slug: "scroll-area", name: "ناحیه اسکرول", cat: "display", file: ui("scroll-area"),
+    desc: "باکس اسکرول با اسکرول‌بار نازک و هم‌رنگ تم؛ برای لیست‌های بلند و متن‌های اسکرول‌شونده، تا اسکرول‌بار پیش‌فرض ویندوز تم دارک را خراب نکنه.",
+    usage: `import { ScrollArea } from "@/components/ui/scroll-area"
+
+<ScrollArea className="h-64 rounded-lg border border-border p-3">
+  {items.map((item) => (
+    <p key={item} className="border-b border-border py-2 last:border-0">{item}</p>
+  ))}
+</ScrollArea>`,
+    props: [
+      { name: "orientation", type: '"vertical" | "horizontal" | "both"', default: '"vertical"', desc: "محور اسکرول. افقی برای گالری و عمودی برای لیست." },
+      { name: "size", type: '"thin" | "md"', default: '"thin"', desc: "ضخامت اسکرول‌بار." },
+    ],
+    notes: ["با scroll-progress فرق داره؛ آن فقط نوار پیشرفت بالای صفحه است، این خود ظرف اسکرول با اسکرول‌بار قابل استایل است.", "ارتفاع یا عرض ثابت (مثل h-64) بدهید وگرنه محتوا کش می‌آید و اسکرولی دیده نمی‌شود."],
+    promptBullets: ["Overflow box with theme scrollbar: scrollbar-width thin, scrollbar-color from --border, webkit thumb rounded-full bg-border, track transparent.", "orientation vertical | horizontal | both; size thin | md for scrollbar thickness.", "min-h-0 min-w-0 so it shrinks inside flex/grid parents; not the page-level scroll-progress bar."],
+  },
+  {
+    slug: "countdown", name: "شمارش معکوس", cat: "display", file: ui("countdown"),
+    desc: "تایمر شمارش معکوس با اعداد فارسی؛ برای فلش‌سیلز فروشگاه یا لانچ محصول در لندینگ.",
+    usage: `import { Countdown } from "@/components/ui/countdown"
+
+const launch = new Date("2026-10-01T12:00:00+03:30")
+
+<Countdown target={launch} className="max-w-md" />
+<Countdown target={launch} units={["hours", "minutes", "seconds"]} variant="inline" size="sm" />`,
+    props: [
+      { name: "target", type: "Date | string | number", desc: "زمان پایان؛ Date، رشته‌ی ISO یا timestamp." },
+      { name: "units", type: '("days" | "hours" | "minutes" | "seconds")[]', default: "هر چهار واحد", desc: "کدام خانه‌ها نشان داده شوند، به ترتیب چپ‌به‌راست." },
+      { name: "variant", type: '"cards" | "inline"', default: '"cards"', desc: "کارت‌های جدا یا ۱۲:۳۴:۵۶ با دونقطه." },
+      { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', desc: "اندازه‌ی رقم و پدینگ." },
+      { name: "pad", type: "boolean", default: "true", desc: "رقم‌ها دوخانه‌ای با صفر (۰۰)." },
+      { name: "labels", type: "Partial<Record<unit, string>>", desc: "برچسب فارسی هر واحد؛ پیش‌فرض روز/ساعت/دقیقه/ثانیه." },
+      { name: "onComplete", type: "() => void", desc: "یک‌بار وقتی به صفر رسید." },
+    ],
+    notes: ["تا قبل از mount خانه‌ها «--» هستند تا HTML سرور و کلاینت یکی بماند.", "useCountdown را هم می‌توان جدا برای منطق سفارشی import کرد.", "dir=ltr روی رقم‌هاست تا ترتیب روز←ثانیه درست خوانده شود؛ برچسب‌ها فارسی می‌مانند."],
+    promptBullets: ["Client timer to a target Date; Persian digits via fa(); labels روز/ساعت/دقیقه/ثانیه; pad to two digits.", "SSR-safe: null until mounted so first paint shows -- placeholders; onComplete fires once at zero.", "variant cards (bordered grid, dir=ltr) or inline colon-separated; units array picks which cells to show."],
+  },
 ];

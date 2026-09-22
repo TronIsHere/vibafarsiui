@@ -5,13 +5,20 @@ import {
   Bell,
   Calendar,
   Check,
+  ChevronRight,
   Folder,
   Home,
+  ImageIcon,
+  Menu,
   MessageSquare,
+  Package,
+  PenLine,
   Search,
   Settings,
   Sparkles,
+  Upload,
   Wallet,
+  X,
 } from "lucide-react";
 import { TextShimmer } from "@/registry/animations/text-shimmer";
 import { Typewriter } from "@/registry/animations/typewriter";
@@ -61,8 +68,28 @@ import { PinList } from "@/registry/animations/pin-list";
 import { RadialIntro } from "@/registry/animations/radial-intro";
 import { TextLoop } from "@/registry/animations/text-loop";
 import { CurvedLoop } from "@/registry/animations/curved-loop";
+import { NumberPop } from "@/registry/animations/number-pop";
+import { NotificationBadge } from "@/registry/animations/notification-badge";
+import { TextSwap } from "@/registry/animations/text-swap";
+import { PanelReveal } from "@/registry/animations/panel-reveal";
+import { PageSlide } from "@/registry/animations/page-slide";
+import { IconSwap } from "@/registry/animations/icon-swap";
+import { AvatarHover } from "@/registry/animations/avatar-hover";
+import { ErrorShake } from "@/registry/animations/error-shake";
+import { ClearInput } from "@/registry/animations/clear-input";
+import { SkeletonReveal } from "@/registry/animations/skeleton-reveal";
+import { FabMorph } from "@/registry/animations/fab-morph";
+import { LikeButton } from "@/registry/animations/like-button";
+import { ArrowLink } from "@/registry/animations/arrow-link";
+import { ThinkingStates } from "@/registry/animations/thinking-states";
+import { ReasoningStream } from "@/registry/animations/reasoning-stream";
+import { StreamingText } from "@/registry/animations/streaming-text";
+import { MatrixLoader } from "@/registry/animations/matrix-loader";
+import { BannerStack, type StackBanner } from "@/registry/animations/banner-stack";
+import { Input } from "@/registry/ui/input";
+import { SkeletonRow } from "@/registry/ui/skeleton";
 import { Avatar } from "@/registry/ui/avatar";
-import { fa, faNumber } from "@/lib/utils";
+import { cn, fa, faNumber } from "@/lib/utils";
 
 function OdometerDemo() {
   const prices = [12_450_000, 12_980_000, 9_870_000, 13_120_000];
@@ -131,6 +158,171 @@ const mockCard = (filled: boolean) => (
     <div className="mt-4 flex gap-2">{filled ? <><Button size="sm">مشاهده</Button><Button size="sm" variant="outline">رسید</Button></> : <><Skeleton className="h-8 w-16" /><Skeleton className="h-8 w-16" /></>}</div>
   </div>
 );
+
+function NumberPopDemo() {
+  const prices = [12_450_000, 12_980_000, 9_870_000, 13_120_000];
+  const [i, setI] = React.useState(0);
+  React.useEffect(() => {
+    const id = window.setInterval(() => setI((x) => (x + 1) % prices.length), 2200);
+    return () => window.clearInterval(id);
+  }, [prices.length]);
+  return <NumberPop value={prices[i]} unit="تومان" className="text-3xl font-bold" />;
+}
+
+function BadgeDemo() {
+  const [n, setN] = React.useState(3);
+  return (
+    <div className="flex items-center gap-6">
+      <NotificationBadge show={n > 0} count={n}>
+        <span className="flex size-10 items-center justify-center rounded-xl border border-border bg-card"><Bell className="size-5" /></span>
+      </NotificationBadge>
+      <div className="flex gap-2">
+        <Button size="sm" variant="outline" onClick={() => setN((x) => x + 1)}>اعلان جدید</Button>
+        <Button size="sm" variant="ghost" onClick={() => setN(0)}>خواندم</Button>
+      </div>
+    </div>
+  );
+}
+
+const SAVE_LABELS = ["ذخیره", "در حال ذخیره…", "ذخیره شد"];
+function TextSwapDemo() {
+  const [step, setStep] = React.useState(0);
+  const timer = React.useRef<number | undefined>(undefined);
+  React.useEffect(() => () => window.clearTimeout(timer.current), []);
+  const run = () => {
+    if (step !== 0) return;
+    setStep(1);
+    timer.current = window.setTimeout(() => {
+      setStep(2);
+      timer.current = window.setTimeout(() => setStep(0), 1600);
+    }, 1200);
+  };
+  return (
+    <Button onClick={run} className={step === 2 ? "bg-success hover:bg-success" : undefined}>
+      <TextSwap value={SAVE_LABELS[step]} options={SAVE_LABELS} />
+    </Button>
+  );
+}
+
+function PanelDemo() {
+  const [open, setOpen] = React.useState(true);
+  return (
+    <div className="flex w-full max-w-xs flex-col items-start gap-3">
+      <Button size="sm" variant="outline" onClick={() => setOpen((o) => !o)}>{open ? "بستن فیلترها" : "نمایش فیلترها"}</Button>
+      <PanelReveal open={open} from="start" className="w-full rounded-xl border border-border bg-card p-3 text-sm">
+        <p className="font-medium">فیلترها</p>
+        <div className="mt-2 flex flex-wrap gap-1.5">{["ارزان‌ترین", "پرفروش", "موجود", "تخفیف‌دار"].map((t) => <Badge key={t} variant="outline">{t}</Badge>)}</div>
+      </PanelReveal>
+    </div>
+  );
+}
+
+function PageSlideDemo() {
+  const [i, setI] = React.useState(0);
+  const orders = [["سفارش #۱۴۰۵۲", "۲٬۴۸۰٬۰۰۰ تومان"], ["سفارش #۱۴۰۵۳", "۹۸۰٬۰۰۰ تومان"], ["سفارش #۱۴۰۵۴", "۱۲٬۴۵۰٬۰۰۰ تومان"]];
+  const card = "w-full rounded-xl border border-border bg-card p-4 text-sm";
+  return (
+    <div className="w-full max-w-sm">
+      <PageSlide
+        index={i}
+        pages={[
+          <ul key="list" className={cn(card, "divide-y divide-border p-0")}>
+            {orders.map(([t, p]) => (
+              <li key={t}>
+                <button type="button" onClick={() => setI(1)} className="flex w-full cursor-pointer items-center justify-between px-4 py-2.5 text-start hover:bg-accent/60">
+                  <span>{t}</span><span className="flex items-center gap-1 text-xs text-muted-foreground">{p}<ChevronRight className="size-3.5 rtl:-scale-x-100" /></span>
+                </button>
+              </li>
+            ))}
+          </ul>,
+          <div key="detail" className={card}>
+            <div className="flex items-center justify-between"><p className="font-semibold">سفارش #۱۴۰۵۲</p><Badge>پرداخت شد</Badge></div>
+            <p className="mt-2 text-muted-foreground">۳ قلم · ارسال با پست پیشتاز · تحویل تا سه‌شنبه</p>
+            <Button size="sm" variant="outline" className="mt-3" onClick={() => setI(0)}>بازگشت به فهرست</Button>
+          </div>,
+        ]}
+      />
+    </div>
+  );
+}
+
+function IconSwapDemo() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <Button variant="outline" size="icon" aria-label={open ? "بستن" : "منو"} onClick={() => setOpen((o) => !o)}>
+      <IconSwap state={open ? "b" : "a"} a={<Menu className="size-5" />} b={<X className="size-5" />} rotate />
+    </Button>
+  );
+}
+
+function ErrorShakeDemo() {
+  const [code, setCode] = React.useState("");
+  const [error, setError] = React.useState<string | null>(null);
+  return (
+    <form
+      className="flex w-full max-w-xs items-start gap-2"
+      onSubmit={(e) => { e.preventDefault(); setError(code === "1234" ? null : "کد تخفیف معتبر نیست."); }}
+    >
+      <ErrorShake error={error} onRevert={() => setError(null)} className="flex-1">
+        <Input value={code} onChange={(e) => { setCode(e.target.value); setError(null); }} placeholder="کد تخفیف (۱۲۳۴ درسته)" dir="ltr" className="text-center" />
+      </ErrorShake>
+      <Button type="submit" variant="outline">اعمال</Button>
+    </form>
+  );
+}
+
+function ClearInputDemo() {
+  const [q, setQ] = React.useState("کفش ورزشی مردانه سایز ۴۲");
+  return <ClearInput value={q} onChange={setQ} placeholder="جستجوی محصول…" />;
+}
+
+function SkeletonRevealDemo() {
+  const [loading, setLoading] = React.useState(true);
+  React.useEffect(() => {
+    const id = window.setTimeout(() => setLoading(false), 1400);
+    return () => window.clearTimeout(id);
+  }, []);
+  return (
+    <div className="w-full max-w-xs rounded-xl border border-border bg-card p-4">
+      <SkeletonReveal loading={loading} skeleton={<SkeletonRow />}>
+        <div className="flex items-center gap-3">
+          <Avatar name="سارا محمدی" src="/avatars/sara.jpg" size="lg" />
+          <div><p className="text-sm font-semibold">سارا محمدی</p><p className="text-xs text-muted-foreground">طراح محصول · تهران</p></div>
+        </div>
+      </SkeletonReveal>
+    </div>
+  );
+}
+
+function LikeDemo() {
+  return (
+    <div className="flex items-center gap-3">
+      <LikeButton count={127} />
+      <LikeButton defaultLiked count={8} />
+    </div>
+  );
+}
+
+function BannerStackDemo() {
+  const seed = React.useRef(0);
+  const samples: Omit<StackBanner, "id">[] = [
+    { title: "پرداخت انجام شد", description: "۲٬۴۸۰٬۰۰۰ تومان از کارت شما کم شد.", icon: <Check /> },
+    { title: "سفارش ارسال شد", description: "کد رهگیری به شماره‌تون پیامک شد.", icon: <Package /> },
+    { title: "پیام جدید", description: "سارا: فاکتور را دیدم، ممنون.", icon: <MessageSquare /> },
+    { title: "آپلود کامل شد", description: "۴ عکس به گالری اضافه شد.", icon: <Upload /> },
+  ];
+  const [items, setItems] = React.useState<StackBanner[]>(() => [{ id: 0, ...samples[0] }]);
+  const push = () => {
+    seed.current += 1;
+    setItems((s) => [{ id: seed.current, ...samples[seed.current % samples.length] }, ...s].slice(0, 5));
+  };
+  return (
+    <div className="flex w-full max-w-sm flex-col items-center gap-4">
+      <Button size="sm" variant="outline" onClick={push}>اعلان جدید</Button>
+      <BannerStack items={items} />
+    </div>
+  );
+}
 
 /** Demos that restart when `k` changes (the docs page passes a replay counter). */
 export const animationDemos: Record<string, (k: number) => React.ReactNode> = {
@@ -403,6 +595,66 @@ export const animationDemos: Record<string, (k: number) => React.ReactNode> = {
       className="max-w-full"
     />
   ),
+  "number-pop": () => <NumberPopDemo />,
+  "notification-badge": () => <BadgeDemo />,
+  "text-swap": () => <TextSwapDemo />,
+  "panel-reveal": () => <PanelDemo />,
+  "page-slide": () => <PageSlideDemo />,
+  "icon-swap": () => <IconSwapDemo />,
+  "avatar-hover": () => (
+    <AvatarHover
+      size="lg"
+      people={[
+        { name: "سارا", src: "/avatars/sara.jpg" },
+        { name: "علی", src: "/avatars/ali.jpg" },
+        { name: "مینا", src: "/avatars/mina.jpg" },
+        { name: "رضا", src: "/avatars/reza.jpg" },
+        { name: "نگار", src: "/avatars/negar.jpg" },
+      ]}
+    />
+  ),
+  "error-shake": () => <ErrorShakeDemo />,
+  "clear-input": () => <ClearInputDemo />,
+  "skeleton-reveal": (k) => <SkeletonRevealDemo key={k} />,
+  "fab-morph": () => (
+    <FabMorph
+      items={[
+        { label: "پست جدید", icon: <PenLine /> },
+        { label: "آپلود عکس", icon: <ImageIcon /> },
+        { label: "پوشه‌ی جدید", icon: <Folder /> },
+      ]}
+    />
+  ),
+  "like-button": () => <LikeDemo />,
+  "arrow-link": () => (
+    <div className="flex flex-col items-start gap-3">
+      <ArrowLink href="#">بیشتر بخوانید</ArrowLink>
+      <ArrowLink href="#" className="text-muted-foreground hover:text-foreground">همه‌ی سفارش‌ها</ArrowLink>
+    </div>
+  ),
+  "thinking-states": () => <ThinkingStates states={["در حال خواندن فایل‌ها", "در حال اجرای دستور", "در حال نوشتن پاسخ"]} />,
+  "reasoning-stream": () => (
+    <ReasoningStream
+      text={[
+        "اول فایل تنظیمات را می‌خوانم تا ببینم مسیر خروجی کجاست.",
+        "به نظر می‌رسد مسیر نسبی است و از ریشه‌ی پروژه حساب نمی‌شود.",
+        "پس باید قبل از ساخت، مسیر را با ریشه ترکیب کنم.",
+        "تست‌ها را اجرا می‌کنم تا مطمئن شوم چیزی نشکسته.",
+        "همه‌ی تست‌ها سبز شدند؛ تغییر را خلاصه می‌کنم.",
+      ]}
+    />
+  ),
+  "streaming-text": (k) => <StreamingText key={k} text="این متن مثل پاسخ یک مدل زبانی، کلمه‌به‌کلمه از دل تاری بیرون می‌آید و در جای خودش می‌نشیند؛ نه مثل تایپ کردن، بیشتر مثل شکل گرفتن." className="max-w-sm text-sm" />,
+  "matrix-loader": () => (
+    <div className="flex items-center gap-6">
+      <MatrixLoader variant="scan" />
+      <MatrixLoader variant="twinkle" />
+      <MatrixLoader variant="orbit" rounded />
+      <MatrixLoader variant="pulse" rounded />
+      <MatrixLoader variant="wave" />
+    </div>
+  ),
+  "banner-stack": () => <BannerStackDemo />,
 };
 
 export const replayable = new Set([
@@ -418,4 +670,6 @@ export const replayable = new Set([
   "scratch-card",
   "number-wheel",
   "radial-intro",
+  "skeleton-reveal",
+  "streaming-text",
 ]);
