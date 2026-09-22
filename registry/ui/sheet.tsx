@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -38,8 +39,13 @@ export function Sheet({
   className,
 }: SheetProps) {
   const titleId = React.useId();
+  const [mounted, setMounted] = React.useState(false);
   const [present, setPresent] = React.useState(open);
   const [shown, setShown] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   React.useEffect(() => {
     if (open) {
@@ -66,9 +72,9 @@ export function Sheet({
     };
   }, [present, onOpenChange]);
 
-  if (!present) return null;
+  if (!mounted || !present) return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50" role="presentation">
       <div
         aria-hidden
@@ -114,6 +120,7 @@ export function Sheet({
         </div>
         <div className="flex flex-1 flex-col overflow-auto p-4">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

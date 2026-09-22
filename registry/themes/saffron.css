@@ -1,24 +1,52 @@
-/* زعفران. روی <html data-theme="saffron"> یا هر عنصر دیگری اعمال کنید. */
+/* زعفران، نئوبروتالیسم. تیترها با Lalezar هستن. */
 [data-theme="saffron"] {
-  color-scheme: dark;
-  --background: oklch(0.14 0.015 60);
-  --foreground: oklch(0.97 0.01 80);
-  --card: oklch(0.17 0.02 60);
-  --card-foreground: oklch(0.97 0.01 80);
-  --popover: oklch(0.19 0.02 60);
-  --popover-foreground: oklch(0.97 0.01 80);
-  --primary: oklch(0.8 0.15 75);
-  --primary-foreground: oklch(0.2 0.05 70);
-  --secondary: oklch(0.24 0.03 60);
-  --secondary-foreground: oklch(0.97 0.01 80);
-  --muted: oklch(0.21 0.025 60);
-  --muted-foreground: oklch(0.72 0.04 70);
-  --accent: oklch(0.24 0.03 60);
-  --accent-foreground: oklch(0.97 0.01 80);
-  --border: oklch(0.85 0.1 75 / 14%);
-  --input: oklch(0.85 0.1 75 / 18%);
-  --ring: oklch(0.8 0.15 75);
-  --brand: oklch(0.86 0.14 85);
-  --brand-foreground: oklch(0.2 0.05 70);
-  --radius: 0.5rem;
+  color-scheme: light;
+
+  /* رنگ */
+  --background: oklch(0.95 0.05 92);
+  --foreground: oklch(0.17 0.01 60);
+  --card: oklch(0.995 0.01 95);
+  --card-foreground: oklch(0.17 0.01 60);
+  --popover: oklch(0.995 0.01 95);
+  --popover-foreground: oklch(0.17 0.01 60);
+  --primary: oklch(0.82 0.17 78);
+  --primary-foreground: oklch(0.17 0.01 60);
+  --secondary: oklch(0.995 0.01 95);
+  --secondary-foreground: oklch(0.17 0.01 60);
+  --muted: oklch(0.91 0.05 90);
+  --muted-foreground: oklch(0.4 0.03 70);
+  --accent: oklch(0.88 0.12 85);
+  --accent-foreground: oklch(0.17 0.01 60);
+  --destructive: oklch(0.58 0.22 28);
+  --success: oklch(0.55 0.15 150);
+  --warning: oklch(0.62 0.16 55);
+  --border: oklch(0.17 0.01 60);
+  --input: oklch(0.17 0.01 60);
+  --ring: oklch(0.17 0.01 60);
+  --brand: oklch(0.63 0.21 25);
+  --brand-foreground: oklch(0.99 0 0);
+
+  /* زبان طراحی: فونت، فرم، خط، عمق، حرکت و تراکم */
+  --radius: 0rem;
+  --type-display: "Lalezar", "IRANSans", "Vazirmatn", system-ui, sans-serif;
+  --type-display-weight: 400;
+  --shape-control: 0rem;
+  --shape-field: 0rem;
+  --shape-surface: 0rem;
+  --shape-overlay: 0rem;
+  --line: 2px;
+  --line-field: 2px;
+  --line-style: solid;
+  --field: var(--card);
+  --depth-control: -3px 3px 0 0 var(--foreground);
+  --depth-press: 0 0 0 0 var(--foreground);
+  --depth-field: 0 0 #0000;
+  --depth-surface: -6px 6px 0 0 var(--foreground);
+  --depth-overlay: -8px 8px 0 0 var(--foreground);
+  --surface-filter: none;
+  --press: translate(-3px, 3px);
+  --motion: 90ms;
+  --motion-ease: linear;
+  --backdrop: none;
+  --spacing: 0.25rem;
 }

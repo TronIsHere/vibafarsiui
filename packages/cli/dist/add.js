@@ -3,8 +3,8 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { applyItemCss, applyThemeTokens } from "./css.js";
 import { fail, hint, info, skip, title, warn } from "./log.js";
-import { loadProject, resolveTarget, writeFile } from "./project.js";
-import { fetchCatalog, fetchItem, implicitLibSlugs, lucideNeeded, makeClient, resolveItems, resolveOne, rewriteUserSource, } from "./registry.js";
+import { loadProject, resolveTarget, writeBytes, writeFile } from "./project.js";
+import { fetchBytes, fetchCatalog, fetchItem, implicitLibSlugs, lucideNeeded, makeClient, resolveItems, resolveOne, rewriteUserSource, textOf, } from "./registry.js";
 function installArgs(pm, pkgs) {
     if (pm === "yarn")
         return ["add", ...pkgs];
@@ -74,7 +74,7 @@ async function materialize(project, client, catalog, item, flags, written) {
         return undefined;
     written.add(key);
     const payload = await fetchItem(client, item);
-    const extra = implicitLibSlugs(payload.files.map((f) => f.content).join("\n"));
+    const extra = implicitLibSlugs(textOf(payload.files));
     for (const slug of extra) {
         if (slug === item.slug)
             continue;
@@ -83,7 +83,7 @@ async function materialize(project, client, catalog, item, flags, written) {
             await materialize(project, client, catalog, lib, flags, written);
     }
     if (isCssItem(item, payload)) {
-        const css = payload.files.map((f) => f.content).join("\n");
+        const css = textOf(payload.files);
         applyThemeTokens(project, item.slug, css, "--font-vazirmatn", flags.dryRun, {
             googleCss: project.framework !== "next",
         });
@@ -97,7 +97,13 @@ async function materialize(project, client, catalog, item, flags, written) {
             skip(`${rel} (exists)`);
             continue;
         }
-        writeFile(dest, rewriteUserSource(file.content), flags.dryRun);
+        if (file.url && file.content === undefined) {
+            // Binary asset such as a photo: public/sites/<slug>/hero.webp
+            writeBytes(dest, await fetchBytes(client, file.url), flags.dryRun);
+        }
+        else {
+            writeFile(dest, rewriteUserSource(file.content ?? ""), flags.dryRun);
+        }
         info(rel);
     }
     if (applyItemCss(project, payload, flags.dryRun)) {
@@ -141,7 +147,7 @@ export async function runAdd(flags) {
                 continue;
             for (const d of payload.dependencies ?? [])
                 deps.add(d);
-            if (payload.files.some((f) => lucideNeeded(f.content)))
+            if (lucideNeeded(textOf(payload.files)))
                 deps.add("lucide-react");
         }
         catch (err) {

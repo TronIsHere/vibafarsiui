@@ -1,9 +1,11 @@
-/* کاغذ. روی <html data-theme="paper"> یا هر عنصر دیگری اعمال کنید. */
+/* کاغذ، مجله‌ای. تیترها با Noto Naskh Arabic هستن. */
 [data-theme="paper"] {
   color-scheme: light;
+
+  /* رنگ */
   --background: oklch(0.985 0.004 85);
   --foreground: oklch(0.2 0.01 60);
-  --card: oklch(1 0 0);
+  --card: oklch(0.985 0.004 85);
   --card-foreground: oklch(0.2 0.01 60);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0.01 60);
@@ -15,13 +17,36 @@
   --muted-foreground: oklch(0.47 0.015 60);
   --accent: oklch(0.94 0.008 85);
   --accent-foreground: oklch(0.2 0.01 60);
-  --destructive: oklch(0.58 0.2 25);
-  --success: oklch(0.55 0.15 160);
-  --warning: oklch(0.7 0.15 75);
-  --border: oklch(0.2 0.01 60 / 12%);
-  --input: oklch(0.2 0.01 60 / 16%);
+  --destructive: oklch(0.55 0.2 25);
+  --success: oklch(0.52 0.13 160);
+  --warning: oklch(0.62 0.14 70);
+  --border: oklch(0.2 0.01 60 / 14%);
+  --input: oklch(0.2 0.01 60 / 30%);
   --ring: oklch(0.5 0.02 60);
-  --brand: oklch(0.68 0.17 55);
+  --brand: oklch(0.55 0.19 30);
   --brand-foreground: oklch(0.985 0 0);
-  --radius: 0.75rem;
+
+  /* زبان طراحی: فونت، فرم، خط، عمق، حرکت و تراکم */
+  --radius: 0.25rem;
+  --type-display: "Noto Naskh Arabic", "IRANSans", "Vazirmatn", serif;
+  --type-display-weight: 700;
+  --shape-control: 0.125rem;
+  --shape-field: 0rem;
+  --shape-surface: 0.125rem;
+  --shape-overlay: 0.25rem;
+  --line: 1px;
+  --line-field: 0 0 1px 0;
+  --line-style: solid;
+  --field: transparent;
+  --depth-control: 0 0 #0000;
+  --depth-press: 0 0 #0000;
+  --depth-field: 0 0 #0000;
+  --depth-surface: 0 0 #0000;
+  --depth-overlay: 0 12px 32px -16px oklch(0.2 0.01 60 / 25%);
+  --surface-filter: none;
+  --press: translateY(1px);
+  --motion: 160ms;
+  --motion-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --backdrop: none;
+  --spacing: 0.26rem;
 }

@@ -55,7 +55,7 @@ export function AmountInput({ value, defaultValue = null, onChange, unit = "تو
     <div className={cn("space-y-1.5", className)}>
       <div
         className={cn(
-          "flex h-10 items-center gap-2 rounded-lg border bg-background/60 px-3 transition-colors focus-within:ring-2 focus-within:ring-ring/60",
+          "flex h-10 items-center gap-2 rounded-field border-line-field bg-field shadow-field px-3 transition-colors focus-within:ring-2 focus-within:ring-ring/60",
           invalid ? "border-destructive/60" : "border-input",
           disabled && "opacity-50",
         )}

@@ -47,7 +47,7 @@ export function DatePicker({ value, onChange, placeholder = "انتخاب تار
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          "flex h-10 w-full min-w-0 cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-lg border border-input bg-background/60 px-3 text-sm transition-colors",
+          "flex h-10 w-full min-w-0 cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-field border-line-field border-input bg-field shadow-field px-3 text-sm transition-colors",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60",
         )}
       >

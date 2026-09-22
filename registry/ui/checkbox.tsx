@@ -37,10 +37,10 @@ export function Checkbox({ checked, defaultChecked = false, onCheckedChange, dis
       disabled={disabled}
       onClick={toggle}
       className={cn(
-        "mt-0.5 flex size-4 shrink-0 cursor-pointer items-center justify-center rounded border transition-colors",
+        "mt-0.5 flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-[min(var(--shape-control),0.25rem)] border-line transition-colors",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         "disabled:cursor-not-allowed disabled:opacity-50",
-        state ? "border-primary bg-primary text-primary-foreground" : "border-input bg-background/60",
+        state ? "border-primary bg-primary text-primary-foreground" : "border-input bg-field",
       )}
     >
       {state === "indeterminate" ? <Minus className="size-3" /> : state ? <Check className="size-3" /> : null}

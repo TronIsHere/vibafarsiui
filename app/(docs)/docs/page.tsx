@@ -71,6 +71,22 @@ const TAILWIND_MAP = `/* app/globals.css */
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Design language: type, shape, line, depth and motion of the active system. */
+  --radius-control: var(--shape-control);
+  --radius-field: var(--shape-field);
+  --radius-surface: var(--shape-surface);
+  --radius-overlay: var(--shape-overlay);
+  --border-width-line: var(--line);
+  --border-width-line-field: var(--line-field);
+  --color-field: var(--field);
+  --shadow-control: var(--depth-control);
+  --shadow-press: var(--depth-press);
+  --shadow-field: var(--depth-field);
+  --shadow-surface: var(--depth-surface);
+  --shadow-overlay: var(--depth-overlay);
+  --ease-motion: var(--motion-ease);
+  --font-display: var(--type-display);
   --font-sans: var(--font-vazirmatn), "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -81,6 +97,15 @@ const TAILWIND_MAP = `/* app/globals.css */
     letter-spacing: 0;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    font-family: var(--type-body, inherit);
+    background-image: var(--backdrop, none);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--type-display, inherit);
+    font-weight: var(--type-display-weight, 700);
+    /* Single-weight display faces (Lalezar) must not be faux-bolded. */
+    font-synthesis-weight: none;
   }
 
   /* iOS Safari zooms into any focused field smaller than 16px; only iOS matches this query. */

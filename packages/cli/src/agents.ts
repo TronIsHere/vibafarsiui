@@ -127,7 +127,7 @@ async function copyGuide(project: Project, flags: Flags, client: RegistryClient,
     skip(`${rel} (exists)`);
     return rel;
   }
-  writeFile(dest, file.content, flags.dryRun);
+  writeFile(dest, file.content ?? "", flags.dryRun);
   info(rel);
   return rel;
 }

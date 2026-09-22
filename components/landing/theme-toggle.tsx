@@ -1,11 +1,12 @@
 "use client";
 
 import { Moon, Sun } from "lucide-react";
+import { themes } from "@/lib/registry";
 import { useTheme } from "@/lib/theme-store";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const light = theme === "paper";
+  const light = themes.some((t) => t.slug === theme && t.light);
   return (
     <button
       type="button"

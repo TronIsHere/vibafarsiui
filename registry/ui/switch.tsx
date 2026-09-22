@@ -30,7 +30,7 @@ export function Switch({
         onCheckedChange?.(!on);
       }}
       className={cn(
-        "relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border border-transparent transition-colors",
+        "relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-[calc(var(--shape-control)*999)] border border-transparent transition-colors duration-(--motion) ease-motion",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         on ? "bg-primary" : "bg-input",
         className,
@@ -39,7 +39,7 @@ export function Switch({
     >
       <span
         className={cn(
-          "pointer-events-none block size-5 rounded-full shadow transition-[transform,background-color]",
+          "pointer-events-none block size-5 rounded-[calc(var(--shape-control)*999)] shadow transition-[transform,background-color] duration-(--motion) ease-motion",
           on ? "bg-primary-foreground" : "bg-foreground",
           // RTL: the "on" position is the inline-start side; translate toward -x.
           on ? "-translate-x-5" : "-translate-x-0.5",

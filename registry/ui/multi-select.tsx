@@ -108,7 +108,7 @@ export function MultiSelect({
         onClick={() => show(!open)}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(true); } else onKeyDown(e); }}
         className={cn(
-          "flex min-h-10 w-full cursor-pointer flex-wrap items-center gap-1.5 rounded-lg border border-input bg-background/60 py-1.5 pe-2 ps-2 text-sm transition-colors",
+          "flex min-h-10 w-full cursor-pointer flex-wrap items-center gap-1.5 rounded-field border-line-field border-input bg-field shadow-field py-1.5 pe-2 ps-2 text-sm transition-colors",
           "focus-visible:border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60",
           open && "border-transparent ring-2 ring-ring/60",
           disabled && "cursor-not-allowed opacity-50",

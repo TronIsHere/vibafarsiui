@@ -44,6 +44,44 @@
   --radius: 0.625rem;
 }
 
+
+/* ------------------------------------------------------------------
+   Design language. A design system is more than a palette: these tokens
+   carry its type, shape, line, depth, press, motion and density, and the
+   registry components read them. This is graphite's language. The site
+   chrome keeps it under every theme; only [data-ds] scopes (previews,
+   iframes, theme cards) take the active system's language below.
+   Restated on every [data-theme] so color-derived tokens (--field,
+   colored shadows) resolve against that element's own palette.
+------------------------------------------------------------------- */
+:root,
+[data-theme],
+[data-theme="graphite"][data-ds] {
+  --radius: 0.625rem;
+  --type-body: var(--font-iransans), system-ui, sans-serif;
+  --type-display: var(--font-iransans), system-ui, sans-serif;
+  --type-display-weight: 700;
+  --shape-control: calc(var(--radius) - 2px);
+  --shape-field: calc(var(--radius) - 2px);
+  --shape-surface: calc(var(--radius) + 12px);
+  --shape-overlay: calc(var(--radius) + 4px);
+  --line: 1px;
+  --line-field: 1px;
+  --line-style: solid;
+  --field: color-mix(in oklch, var(--background) 60%, transparent);
+  --depth-control: 0 0 #0000;
+  --depth-press: 0 0 #0000;
+  --depth-field: 0 0 #0000;
+  --depth-surface: 0 1px 0 0 oklch(1 0 0 / 6%) inset;
+  --depth-overlay: 0 20px 50px -20px oklch(0 0 0 / 80%);
+  --surface-filter: none;
+  --press: scale(0.98);
+  --motion: 200ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+  --backdrop: none;
+  --density: 0.25rem;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -73,6 +111,22 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 12px);
+
+  /* Design-language utilities: rounded-control, border-line, shadow-surface, ease-motion… */
+  --radius-control: var(--shape-control);
+  --radius-field: var(--shape-field);
+  --radius-surface: var(--shape-surface);
+  --radius-overlay: var(--shape-overlay);
+  --border-width-line: var(--line);
+  --border-width-line-field: var(--line-field);
+  --color-field: var(--field);
+  --shadow-control: var(--depth-control);
+  --shadow-press: var(--depth-press);
+  --shadow-field: var(--depth-field);
+  --shadow-surface: var(--depth-surface);
+  --shadow-overlay: var(--depth-overlay);
+  --ease-motion: var(--motion-ease);
+  --font-display: var(--type-display);
 
   --font-sans: var(--font-iransans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
@@ -144,6 +198,23 @@
 
   ::selection {
     background: color-mix(in oklch, var(--color-brand) 30%, transparent);
+  }
+
+  /* A design-language scope: previews, iframes and theme cards. Type,
+     density and the backdrop come from the active system here. */
+  [data-ds] {
+    --spacing: var(--density);
+    font-family: var(--type-body);
+  }
+  [data-ds]:not(html),
+  [data-ds] > body {
+    background-image: var(--backdrop);
+  }
+  [data-ds] :is(h1, h2, h3, h4) {
+    font-family: var(--type-display);
+    font-weight: var(--type-display-weight);
+    /* Single-weight display faces (Lalezar) must not be faux-bolded. */
+    font-synthesis-weight: none;
   }
 }
 
@@ -280,116 +351,218 @@
 
   --brand: oklch(0.8 0.165 65);
   --brand-foreground: oklch(0.22 0.06 60);
-
-  --radius: 0.625rem;
 }
 
 /* ------------------------------------------------------------------
-   Design systems. Same semantic tokens, different values.
-   Applied on <html data-theme="..."> for the whole page, or on any
-   element to scope a preview.
+   Design systems. Each has two blocks:
+   1. [data-theme="…"]           the palette; applies to the whole page.
+   2. […][data-ds], :where(…) [data-ds]   the language (type, shape,
+      line, depth, press, motion, density); applies inside previews.
+   The copyable files in registry/themes/*.css hold both in one :root.
 ------------------------------------------------------------------- */
+
+/* فیروزه — glass. Translucent, blurred surfaces over a lit backdrop. */
 [data-theme="turquoise"] {
   color-scheme: dark;
-  --background: oklch(0.15 0.03 215);
+  --background: oklch(0.2 0.045 225);
   --foreground: oklch(0.97 0.01 200);
-  --card: oklch(0.18 0.03 215);
+  --card: oklch(0.97 0.02 200 / 7%);
   --card-foreground: oklch(0.97 0.01 200);
-  --popover: oklch(0.2 0.03 215);
+  --popover: oklch(0.25 0.045 225 / 88%);
   --popover-foreground: oklch(0.97 0.01 200);
-  --primary: oklch(0.83 0.13 190);
-  --primary-foreground: oklch(0.16 0.04 200);
-  --secondary: oklch(0.25 0.04 215);
+  --primary: oklch(0.86 0.12 190);
+  --primary-foreground: oklch(0.2 0.05 210);
+  --secondary: oklch(0.97 0.02 200 / 11%);
   --secondary-foreground: oklch(0.97 0.01 200);
-  --muted: oklch(0.22 0.035 215);
-  --muted-foreground: oklch(0.72 0.04 205);
-  --accent: oklch(0.25 0.04 215);
+  --muted: oklch(0.97 0.02 200 / 6%);
+  --muted-foreground: oklch(0.8 0.04 205);
+  --accent: oklch(0.97 0.02 200 / 12%);
   --accent-foreground: oklch(0.97 0.01 200);
-  --border: oklch(0.85 0.08 200 / 14%);
-  --input: oklch(0.85 0.08 200 / 18%);
-  --ring: oklch(0.83 0.13 190);
-  --brand: oklch(0.88 0.1 185);
-  --brand-foreground: oklch(0.16 0.04 200);
-  --radius: 0.75rem;
+  --destructive: oklch(0.7 0.18 22);
+  --success: oklch(0.8 0.15 165);
+  --warning: oklch(0.85 0.14 85);
+  --border: oklch(0.97 0.03 200 / 16%);
+  --input: oklch(0.97 0.03 200 / 22%);
+  --ring: oklch(0.86 0.12 190);
+  --brand: oklch(0.87 0.12 165);
+  --brand-foreground: oklch(0.2 0.05 180);
+}
+[data-theme="turquoise"][data-ds],
+:where([data-theme="turquoise"]) [data-ds] {
+  --radius: 0.875rem;
+  --type-display: var(--font-kufi), var(--font-iransans), system-ui, sans-serif;
+  --type-display-weight: 600;
+  --shape-control: 0.75rem;
+  --shape-field: 0.75rem;
+  --shape-surface: 1.375rem;
+  --shape-overlay: 1rem;
+  --field: oklch(0.97 0.02 200 / 6%);
+  --depth-control: 0 1px 0 0 oklch(1 0 0 / 22%) inset, 0 10px 24px -14px oklch(0.8 0.14 190 / 60%);
+  --depth-press: 0 1px 0 0 oklch(1 0 0 / 12%) inset;
+  --depth-surface: 0 1px 0 0 oklch(1 0 0 / 18%) inset, 0 30px 60px -30px oklch(0.08 0.03 230 / 70%);
+  --depth-overlay: 0 1px 0 0 oklch(1 0 0 / 20%) inset, 0 30px 70px -24px oklch(0.08 0.03 230 / 80%);
+  --surface-filter: blur(20px) saturate(1.6);
+  --press: scale(0.97);
+  --motion: 280ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --backdrop:
+    radial-gradient(55% 45% at 90% 0%, oklch(0.72 0.14 195 / 50%), transparent 70%),
+    radial-gradient(45% 50% at 5% 100%, oklch(0.55 0.17 265 / 45%), transparent 70%),
+    radial-gradient(35% 35% at 45% 55%, oklch(0.75 0.13 160 / 18%), transparent 70%);
 }
 
+/* زعفران — neo-brutalist. Ink outlines, hard offset shadows, square corners. */
 [data-theme="saffron"] {
-  color-scheme: dark;
-  --background: oklch(0.14 0.015 60);
-  --foreground: oklch(0.97 0.01 80);
-  --card: oklch(0.17 0.02 60);
-  --card-foreground: oklch(0.97 0.01 80);
-  --popover: oklch(0.19 0.02 60);
-  --popover-foreground: oklch(0.97 0.01 80);
-  --primary: oklch(0.8 0.15 75);
-  --primary-foreground: oklch(0.2 0.05 70);
-  --secondary: oklch(0.24 0.03 60);
-  --secondary-foreground: oklch(0.97 0.01 80);
-  --muted: oklch(0.21 0.025 60);
-  --muted-foreground: oklch(0.72 0.04 70);
-  --accent: oklch(0.24 0.03 60);
-  --accent-foreground: oklch(0.97 0.01 80);
-  --border: oklch(0.85 0.1 75 / 14%);
-  --input: oklch(0.85 0.1 75 / 18%);
-  --ring: oklch(0.8 0.15 75);
-  --brand: oklch(0.86 0.14 85);
-  --brand-foreground: oklch(0.2 0.05 70);
-  --radius: 0.5rem;
+  color-scheme: light;
+  --background: oklch(0.95 0.05 92);
+  --foreground: oklch(0.17 0.01 60);
+  --card: oklch(0.995 0.01 95);
+  --card-foreground: oklch(0.17 0.01 60);
+  --popover: oklch(0.995 0.01 95);
+  --popover-foreground: oklch(0.17 0.01 60);
+  --primary: oklch(0.82 0.17 78);
+  --primary-foreground: oklch(0.17 0.01 60);
+  --secondary: oklch(0.995 0.01 95);
+  --secondary-foreground: oklch(0.17 0.01 60);
+  --muted: oklch(0.91 0.05 90);
+  --muted-foreground: oklch(0.4 0.03 70);
+  --accent: oklch(0.88 0.12 85);
+  --accent-foreground: oklch(0.17 0.01 60);
+  --destructive: oklch(0.58 0.22 28);
+  --success: oklch(0.55 0.15 150);
+  --warning: oklch(0.62 0.16 55);
+  /* Softer lines for the site chrome; previews draw them in full ink below. */
+  --border: oklch(0.17 0.01 60 / 22%);
+  --input: oklch(0.17 0.01 60 / 40%);
+  --ring: oklch(0.17 0.01 60);
+  --brand: oklch(0.63 0.21 25);
+  --brand-foreground: oklch(0.99 0 0);
+}
+[data-theme="saffron"][data-ds],
+:where([data-theme="saffron"]) [data-ds] {
+  --radius: 0rem;
+  --type-display: var(--font-lalezar), var(--font-iransans), system-ui, sans-serif;
+  --type-display-weight: 400;
+  --border: oklch(0.17 0.01 60);
+  --input: oklch(0.17 0.01 60);
+  --shape-control: 0rem;
+  --shape-field: 0rem;
+  --shape-surface: 0rem;
+  --shape-overlay: 0rem;
+  --line: 2px;
+  --line-field: 2px;
+  --field: var(--card);
+  /* Offsets fall toward inline-end (left) in RTL. */
+  --depth-control: -3px 3px 0 0 var(--foreground);
+  --depth-press: 0 0 0 0 var(--foreground);
+  --depth-surface: -6px 6px 0 0 var(--foreground);
+  --depth-overlay: -8px 8px 0 0 var(--foreground);
+  --press: translate(-3px, 3px);
+  --motion: 90ms;
+  --motion-ease: linear;
 }
 
+/* انار — soft clay. Pills, puffy layered shadows, springy motion. */
 [data-theme="pomegranate"] {
-  color-scheme: dark;
-  --background: oklch(0.14 0.02 15);
-  --foreground: oklch(0.97 0.01 15);
-  --card: oklch(0.17 0.025 15);
-  --card-foreground: oklch(0.97 0.01 15);
-  --popover: oklch(0.19 0.025 15);
-  --popover-foreground: oklch(0.97 0.01 15);
-  --primary: oklch(0.7 0.18 20);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.24 0.04 15);
-  --secondary-foreground: oklch(0.97 0.01 15);
-  --muted: oklch(0.21 0.03 15);
-  --muted-foreground: oklch(0.72 0.04 15);
-  --accent: oklch(0.24 0.04 15);
-  --accent-foreground: oklch(0.97 0.01 15);
-  --border: oklch(0.8 0.1 15 / 14%);
-  --input: oklch(0.8 0.1 15 / 18%);
-  --ring: oklch(0.7 0.18 20);
-  --brand: oklch(0.8 0.12 25);
-  --brand-foreground: oklch(0.2 0.05 20);
-  --radius: 1rem;
+  color-scheme: light;
+  --background: oklch(0.94 0.025 15);
+  --foreground: oklch(0.27 0.05 15);
+  --card: oklch(0.975 0.012 15);
+  --card-foreground: oklch(0.27 0.05 15);
+  --popover: oklch(0.985 0.008 15);
+  --popover-foreground: oklch(0.27 0.05 15);
+  --primary: oklch(0.6 0.2 18);
+  --primary-foreground: oklch(0.99 0.005 15);
+  --secondary: oklch(0.9 0.035 15);
+  --secondary-foreground: oklch(0.27 0.05 15);
+  --muted: oklch(0.92 0.03 15);
+  --muted-foreground: oklch(0.5 0.05 15);
+  --accent: oklch(0.9 0.04 15);
+  --accent-foreground: oklch(0.27 0.05 15);
+  --destructive: oklch(0.55 0.2 28);
+  --success: oklch(0.58 0.14 160);
+  --warning: oklch(0.68 0.15 65);
+  --border: oklch(0.27 0.05 15 / 9%);
+  --input: oklch(0.27 0.05 15 / 12%);
+  --ring: oklch(0.6 0.2 18);
+  --brand: oklch(0.6 0.17 340);
+  --brand-foreground: oklch(0.99 0 0);
+}
+[data-theme="pomegranate"][data-ds],
+:where([data-theme="pomegranate"]) [data-ds] {
+  --radius: 1.25rem;
+  --type-body: var(--font-vazirmatn), var(--font-iransans), system-ui, sans-serif;
+  --type-display: var(--font-vazirmatn), var(--font-iransans), system-ui, sans-serif;
+  --type-display-weight: 800;
+  --shape-control: 999px;
+  --shape-field: 1rem;
+  --shape-surface: 1.75rem;
+  --shape-overlay: 1.5rem;
+  --field: var(--card);
+  --depth-control: inset 0 -3px 0 0 oklch(0.2 0.08 15 / 16%), inset 0 2px 0 0 oklch(1 0 0 / 35%), 0 10px 20px -10px oklch(0.45 0.16 18 / 55%);
+  --depth-press: inset 0 2px 5px 0 oklch(0.2 0.08 15 / 22%);
+  --depth-field: inset 0 2px 5px 0 oklch(0.3 0.08 15 / 9%);
+  --depth-surface: inset 0 2px 0 0 oklch(1 0 0 / 80%), inset 0 -4px 10px 0 oklch(0.45 0.1 15 / 7%), 0 24px 44px -24px oklch(0.45 0.14 18 / 40%);
+  --depth-overlay: inset 0 2px 0 0 oklch(1 0 0 / 80%), 0 30px 60px -22px oklch(0.45 0.14 18 / 45%);
+  --press: scale(0.95);
+  --motion: 420ms;
+  --motion-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --density: 0.275rem;
 }
 
+/* لاجورد — terminal. Sharp, dense, dashed rules, stepped instant motion. */
 [data-theme="lapis"] {
   color-scheme: dark;
-  --background: oklch(0.13 0.03 275);
-  --foreground: oklch(0.97 0.01 275);
-  --card: oklch(0.165 0.035 275);
-  --card-foreground: oklch(0.97 0.01 275);
-  --popover: oklch(0.19 0.035 275);
-  --popover-foreground: oklch(0.97 0.01 275);
-  --primary: oklch(0.7 0.16 275);
-  --primary-foreground: oklch(0.98 0.01 275);
-  --secondary: oklch(0.23 0.04 275);
-  --secondary-foreground: oklch(0.97 0.01 275);
-  --muted: oklch(0.2 0.035 275);
-  --muted-foreground: oklch(0.72 0.04 275);
-  --accent: oklch(0.23 0.04 275);
-  --accent-foreground: oklch(0.97 0.01 275);
-  --border: oklch(0.7 0.1 275 / 18%);
-  --input: oklch(0.7 0.1 275 / 22%);
-  --ring: oklch(0.7 0.16 275);
-  --brand: oklch(0.8 0.12 255);
-  --brand-foreground: oklch(0.16 0.04 265);
-  --radius: 0.375rem;
+  --background: oklch(0.14 0.03 268);
+  --foreground: oklch(0.92 0.03 250);
+  --card: oklch(0.165 0.035 268);
+  --card-foreground: oklch(0.92 0.03 250);
+  --popover: oklch(0.18 0.035 268);
+  --popover-foreground: oklch(0.92 0.03 250);
+  --primary: oklch(0.72 0.16 258);
+  --primary-foreground: oklch(0.14 0.03 268);
+  --secondary: oklch(0.22 0.04 268);
+  --secondary-foreground: oklch(0.92 0.03 250);
+  --muted: oklch(0.19 0.035 268);
+  --muted-foreground: oklch(0.68 0.05 260);
+  --accent: oklch(0.23 0.05 265);
+  --accent-foreground: oklch(0.92 0.03 250);
+  --destructive: oklch(0.68 0.19 25);
+  --success: oklch(0.84 0.19 145);
+  --warning: oklch(0.85 0.15 90);
+  --border: oklch(0.72 0.1 260 / 26%);
+  --input: oklch(0.72 0.1 260 / 34%);
+  --ring: oklch(0.84 0.19 145);
+  --brand: oklch(0.84 0.19 145);
+  --brand-foreground: oklch(0.16 0.04 150);
+}
+[data-theme="lapis"][data-ds],
+:where([data-theme="lapis"]) [data-ds] {
+  --radius: 0.125rem;
+  --type-body: var(--font-plex-arabic), var(--font-iransans), system-ui, sans-serif;
+  --type-display: var(--font-plex-arabic), var(--font-iransans), system-ui, sans-serif;
+  --type-display-weight: 600;
+  --shape-control: 0.125rem;
+  --shape-field: 0.125rem;
+  --shape-surface: 0.125rem;
+  --shape-overlay: 0.125rem;
+  --line-style: dashed;
+  --field: oklch(0.12 0.03 268);
+  --depth-surface: 0 0 #0000;
+  --depth-overlay: 0 0 0 1px oklch(0.72 0.16 258 / 35%), 0 18px 40px -20px oklch(0 0 0 / 80%);
+  --press: translateY(1px);
+  --motion: 120ms;
+  --motion-ease: steps(3, end);
+  --backdrop: repeating-linear-gradient(to bottom, oklch(1 0 0 / 2.5%) 0 1px, transparent 1px 4px);
+  --density: 0.225rem;
 }
 
+/* کاغذ — editorial. Serif headings, hairline rules, underlined fields, no shadows. */
 [data-theme="paper"] {
   color-scheme: light;
   --background: oklch(0.985 0.004 85);
   --foreground: oklch(0.2 0.01 60);
-  --card: oklch(1 0 0);
+  --card: oklch(0.985 0.004 85);
   --card-foreground: oklch(0.2 0.01 60);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0.01 60);
@@ -401,36 +574,39 @@
   --muted-foreground: oklch(0.47 0.015 60);
   --accent: oklch(0.94 0.008 85);
   --accent-foreground: oklch(0.2 0.01 60);
-  --destructive: oklch(0.58 0.2 25);
-  --success: oklch(0.55 0.15 160);
-  --warning: oklch(0.7 0.15 75);
-  --border: oklch(0.2 0.01 60 / 12%);
-  --input: oklch(0.2 0.01 60 / 16%);
+  --destructive: oklch(0.55 0.2 25);
+  --success: oklch(0.52 0.13 160);
+  --warning: oklch(0.62 0.14 70);
+  --border: oklch(0.2 0.01 60 / 14%);
+  --input: oklch(0.2 0.01 60 / 30%);
   --ring: oklch(0.5 0.02 60);
-  --brand: oklch(0.68 0.17 55);
+  --brand: oklch(0.55 0.19 30);
   --brand-foreground: oklch(0.985 0 0);
-  --radius: 0.75rem;
 }
-
-/* Light theme: hairline patterns and glass need dark ink instead of white. */
-[data-theme="paper"] .bg-grid,
-[data-theme="paper"] .bg-blueprint {
-  background-image:
-    linear-gradient(to right, oklch(0 0 0 / 6%) 1px, transparent 1px),
-    linear-gradient(to bottom, oklch(0 0 0 / 6%) 1px, transparent 1px);
-}
-[data-theme="paper"] .bg-dots {
-  background-image: radial-gradient(oklch(0 0 0 / 14%) 1px, transparent 1px);
-}
-[data-theme="paper"] .bg-hatch {
-  background-image: repeating-linear-gradient(-45deg, oklch(0 0 0 / 6%) 0 1px, transparent 1px 9px);
+[data-theme="paper"][data-ds],
+:where([data-theme="paper"]) [data-ds] {
+  --radius: 0.25rem;
+  --type-display: var(--font-naskh), var(--font-iransans), serif;
+  --type-display-weight: 700;
+  --shape-control: 0.125rem;
+  --shape-field: 0rem;
+  --shape-surface: 0.125rem;
+  --shape-overlay: 0.25rem;
+  --line-field: 0 0 1px 0;
+  --field: transparent;
+  --depth-surface: 0 0 #0000;
+  --depth-overlay: 0 12px 32px -16px oklch(0.2 0.01 60 / 25%);
+  --press: translateY(1px);
+  --motion: 160ms;
+  --motion-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --density: 0.26rem;
 }
 
 /* Diagonal hatch for spacer bands (blueprint feel). */
 @utility bg-hatch {
   background-image: repeating-linear-gradient(
     -45deg,
-    oklch(1 0 0 / 4.5%) 0 1px,
+    color-mix(in oklch, var(--foreground) 4.5%, transparent) 0 1px,
     transparent 1px 9px
   );
 }
@@ -438,8 +614,8 @@
 /* Fine blueprint grid for the hero stage. */
 @utility bg-blueprint {
   background-image:
-    linear-gradient(to right, oklch(1 0 0 / 5%) 1px, transparent 1px),
-    linear-gradient(to bottom, oklch(1 0 0 / 5%) 1px, transparent 1px);
+    linear-gradient(to right, color-mix(in oklch, var(--foreground) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklch, var(--foreground) 5%, transparent) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 

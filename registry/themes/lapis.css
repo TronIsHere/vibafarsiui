@@ -1,24 +1,53 @@
-/* لاجورد. روی <html data-theme="lapis"> یا هر عنصر دیگری اعمال کنید. */
+/* لاجورد، ترمینال. متن و تیتر با IBM Plex Sans Arabic هستن. */
 [data-theme="lapis"] {
   color-scheme: dark;
-  --background: oklch(0.13 0.03 275);
-  --foreground: oklch(0.97 0.01 275);
-  --card: oklch(0.165 0.035 275);
-  --card-foreground: oklch(0.97 0.01 275);
-  --popover: oklch(0.19 0.035 275);
-  --popover-foreground: oklch(0.97 0.01 275);
-  --primary: oklch(0.7 0.16 275);
-  --primary-foreground: oklch(0.98 0.01 275);
-  --secondary: oklch(0.23 0.04 275);
-  --secondary-foreground: oklch(0.97 0.01 275);
-  --muted: oklch(0.2 0.035 275);
-  --muted-foreground: oklch(0.72 0.04 275);
-  --accent: oklch(0.23 0.04 275);
-  --accent-foreground: oklch(0.97 0.01 275);
-  --border: oklch(0.7 0.1 275 / 18%);
-  --input: oklch(0.7 0.1 275 / 22%);
-  --ring: oklch(0.7 0.16 275);
-  --brand: oklch(0.8 0.12 255);
-  --brand-foreground: oklch(0.16 0.04 265);
-  --radius: 0.375rem;
+
+  /* رنگ */
+  --background: oklch(0.14 0.03 268);
+  --foreground: oklch(0.92 0.03 250);
+  --card: oklch(0.165 0.035 268);
+  --card-foreground: oklch(0.92 0.03 250);
+  --popover: oklch(0.18 0.035 268);
+  --popover-foreground: oklch(0.92 0.03 250);
+  --primary: oklch(0.72 0.16 258);
+  --primary-foreground: oklch(0.14 0.03 268);
+  --secondary: oklch(0.22 0.04 268);
+  --secondary-foreground: oklch(0.92 0.03 250);
+  --muted: oklch(0.19 0.035 268);
+  --muted-foreground: oklch(0.68 0.05 260);
+  --accent: oklch(0.23 0.05 265);
+  --accent-foreground: oklch(0.92 0.03 250);
+  --destructive: oklch(0.68 0.19 25);
+  --success: oklch(0.84 0.19 145);
+  --warning: oklch(0.85 0.15 90);
+  --border: oklch(0.72 0.1 260 / 26%);
+  --input: oklch(0.72 0.1 260 / 34%);
+  --ring: oklch(0.84 0.19 145);
+  --brand: oklch(0.84 0.19 145);
+  --brand-foreground: oklch(0.16 0.04 150);
+
+  /* زبان طراحی: فونت، فرم، خط، عمق، حرکت و تراکم */
+  --radius: 0.125rem;
+  --type-body: "IBM Plex Sans Arabic", "IRANSans", "Vazirmatn", system-ui, sans-serif;
+  --type-display: "IBM Plex Sans Arabic", "IRANSans", "Vazirmatn", system-ui, sans-serif;
+  --type-display-weight: 600;
+  --shape-control: 0.125rem;
+  --shape-field: 0.125rem;
+  --shape-surface: 0.125rem;
+  --shape-overlay: 0.125rem;
+  --line: 1px;
+  --line-field: 1px;
+  --line-style: dashed;
+  --field: oklch(0.12 0.03 268);
+  --depth-control: 0 0 #0000;
+  --depth-press: 0 0 #0000;
+  --depth-field: 0 0 #0000;
+  --depth-surface: 0 0 #0000;
+  --depth-overlay: 0 0 0 1px oklch(0.72 0.16 258 / 35%), 0 18px 40px -20px oklch(0 0 0 / 80%);
+  --surface-filter: none;
+  --press: translateY(1px);
+  --motion: 120ms;
+  --motion-ease: steps(3, end);
+  --backdrop: repeating-linear-gradient(to bottom, oklch(1 0 0 / 2.5%) 0 1px, transparent 1px 4px);
+  --spacing: 0.225rem;
 }

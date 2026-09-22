@@ -21,6 +21,7 @@ function toUserSource(src: string): string {
     .replace(/@\/registry\/backgrounds\//g, "@/components/backgrounds/")
     .replace(/@\/registry\/templates\//g, "@/components/templates/")
     .replace(/@\/registry\/blocks\//g, "@/components/blocks/")
+    .replace(/@\/registry\/sites\//g, "@/components/sites/")
     .trimEnd();
 }
 
@@ -80,6 +81,8 @@ let cached: Catalog | undefined;
 type LocalRegistry = {
   catalog: () => Catalog | Promise<Catalog>;
   readFile: (file: string) => string | undefined;
+  /** Whole multi-file items (sites) that a single readFile cannot describe. */
+  readItem?: (hit: CatalogItem) => RegistryItem | undefined;
 };
 
 let local: LocalRegistry | undefined;
@@ -133,6 +136,13 @@ async function itemFromHttp(hit: CatalogItem): Promise<RegistryItem | undefined>
 }
 
 export async function loadItem(hit: CatalogItem): Promise<RegistryItem> {
+  const whole = local?.readItem?.(hit);
+  if (whole) return whole;
+  if (hit.type === "site") {
+    // A site is a folder of files; only the registry route knows how to bundle it.
+    const remote = await itemFromHttp(hit);
+    return remote ? { ...remote, prompt: remote.prompt ?? hit.prompt } : metaItem(hit);
+  }
   const hooked = local?.readFile(hit.file);
   if (hooked) return metaItem(hit, hooked);
   const fromDisk = readLocalFile(hit.file);

@@ -13,11 +13,26 @@ import { Field, Input } from "@/registry/ui/input";
 import { Progress } from "@/registry/ui/progress";
 import { Tabs, TabsList, TabsTrigger } from "@/registry/ui/tabs";
 import { Alert } from "@/registry/ui/alert";
+import { Card } from "@/registry/ui/card";
 
-function Sample() {
+const SPEC = [
+  { key: "type", label: "فونت" },
+  { key: "shape", label: "فرم" },
+  { key: "depth", label: "عمق" },
+  { key: "motion", label: "حرکت" },
+  { key: "density", label: "تراکم" },
+] as const;
+
+function Sample({ theme }: { theme: ThemeDoc }) {
   return (
     <div className="grid w-full max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
-      <div className="space-y-4 rounded-xl border border-border bg-card p-4">
+      <div className="sm:col-span-2">
+        <h3 className="text-2xl leading-snug">کتاب‌فروشی شهر، سفارش امروز</h3>
+        <p className="mt-1 text-sm text-muted-foreground">
+          همین کامپوننت‌ها در زبان «{theme.style}». فونت، گوشه، خط، سایه و حس کلیک همه از توکن‌ها می‌آن.
+        </p>
+      </div>
+      <Card className="space-y-4 p-4">
         <div className="flex items-center justify-between">
           <span className="text-sm font-semibold">سبد خرید</span>
           <Badge variant="brand">۳ کالا</Badge>
@@ -33,8 +48,8 @@ function Sample() {
           <Button className="flex-1">پرداخت</Button>
           <Button variant="outline">بعداً</Button>
         </div>
-      </div>
-      <div className="space-y-4 rounded-xl border border-border bg-card p-4">
+      </Card>
+      <Card className="space-y-4 p-4">
         <Tabs defaultValue="a">
           <TabsList aria-label="نمونه">
             <TabsTrigger value="a">همه</TabsTrigger>
@@ -49,7 +64,7 @@ function Sample() {
         <Alert variant="success" title="ذخیره شد">
           تنظیمات جدید اعمال شد.
         </Alert>
-      </div>
+      </Card>
     </div>
   );
 }
@@ -93,8 +108,8 @@ export function ThemeDetail({
           </div>
           <dl className="flex gap-5 text-xs text-muted-foreground">
             <div>
-              <dt>شعاع گوشه</dt>
-              <dd className="  text-foreground">{theme.radius}</dd>
+              <dt>زبان طراحی</dt>
+              <dd className="text-foreground">{theme.style}</dd>
             </div>
             <div>
               <dt>حالت</dt>
@@ -124,6 +139,14 @@ export function ThemeDetail({
           {isActive && <Check className="size-4" />}
           {isActive ? "فعال روی کل سایت" : "اعمال روی کل سایت"}
         </button>
+        <dl className="grid w-full grid-cols-2 gap-x-6 gap-y-2 border-t border-border pt-3 text-xs sm:grid-cols-5">
+          {SPEC.map((row) => (
+            <div key={row.key}>
+              <dt className="text-muted-foreground">{row.label}</dt>
+              <dd className="mt-0.5 leading-5 text-foreground">{theme.language[row.key]}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
 
       <div className="overflow-hidden rounded-xl border border-border bg-card">
@@ -163,9 +186,10 @@ export function ThemeDetail({
         {tab === "preview" && (
           <div
             data-theme={theme.slug}
+            data-ds=""
             className="flex min-h-[360px] items-center justify-center bg-background p-6 text-foreground sm:p-10"
           >
-            <Sample />
+            <Sample theme={theme} />
           </div>
         )}
         {tab === "code" && codeBlock}

@@ -49,7 +49,8 @@ const SECTIONS: Record<Exclude<Topic, "all">, string> = {
 
 - Colors come from CSS variables already mapped to Tailwind: \`background\`, \`foreground\`, \`card\`, \`primary\`, \`secondary\`, \`muted\`, \`accent\`, \`border\`, \`input\`, \`ring\`, \`brand\`, \`destructive\`, \`success\`, \`warning\`.
 - Never hard-code hex/oklch in a component. Never pick a new blue because the model likes it.
-- Radius comes from \`--radius\`. Do not mix 6px and 16px in one view unless the theme says so.
+- Radius comes from \`--radius\` and the \`--shape-*\` tokens. Do not mix 6px and 16px in one view unless the theme says so.
+- A theme is a design language, not a palette: Saffron is neo-brutalist (2px ink borders, hard offset shadows), Turquoise is glass, Pomegranate is soft clay, Lapis is a dense terminal, Paper is editorial. Read borders, shadows, press, motion and fonts from its tokens (\`border-line\`, \`shadow-control\`, \`shadow-surface\`, \`rounded-control\`, \`duration-(--motion) ease-motion\`, \`font-display\`) instead of hardcoding them.
 - Default theme is Graphite (dark, white primary, amber brand). Call \`get_theme\` before inventing a palette.
 - Borders: \`border-border\`. Do not use \`border-white/10\` as a habit; themes differ (Paper is light).
 `,

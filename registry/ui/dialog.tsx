@@ -55,7 +55,7 @@ export function Dialog({ open, onOpenChange, title, description, children, foote
         aria-describedby={description ? descId : undefined}
         onClick={(e) => e.stopPropagation()}
         className={cn(
-          "w-full max-w-md rounded-2xl border border-border bg-popover p-5 text-popover-foreground shadow-[0_30px_80px_-20px_oklch(0_0_0/80%)]",
+          "w-full max-w-md rounded-surface border-line border-border bg-popover p-5 text-popover-foreground shadow-overlay",
           "animate-fade-up [animation-duration:250ms]",
           className,
         )}

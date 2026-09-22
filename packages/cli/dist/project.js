@@ -131,6 +131,12 @@ export function writeFile(file, content, dryRun) {
     ensureDir(file);
     writeFileSync(file, content.endsWith("\n") ? content : `${content}\n`, "utf8");
 }
+export function writeBytes(file, bytes, dryRun) {
+    if (dryRun)
+        return;
+    ensureDir(file);
+    writeFileSync(file, bytes);
+}
 export function readText(file) {
     return existsSync(file) ? readFileSync(file, "utf8") : null;
 }

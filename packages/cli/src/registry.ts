@@ -1,6 +1,6 @@
 export const DEFAULT_REGISTRY = "https://vibefarsi.ir/r";
 
-export type RegistryType = "component" | "animation" | "background" | "template" | "block" | "theme" | "lib" | "skill";
+export type RegistryType = "component" | "animation" | "background" | "template" | "block" | "site" | "theme" | "lib" | "skill";
 
 export type CatalogItem = {
   type: RegistryType;
@@ -24,9 +24,28 @@ export type Catalog = {
 
 export type RegistryFile = {
   path: string;
-  content: string;
+  /** Text files carry their content; binary assets (photos) carry a url to download instead. */
+  content?: string;
+  url?: string;
   type?: string;
 };
+
+/** Text of every file that has content, for dependency sniffing. */
+export function textOf(files: RegistryFile[]) {
+  return files.map((f) => f.content ?? "").join("\n");
+}
+
+export async function fetchBytes(client: RegistryClient, url: string) {
+  const target = client.itemUrl(url);
+  let res: Response;
+  try {
+    res = await fetch(target);
+  } catch (err) {
+    throw new Error(`Cannot download ${target}. ${err instanceof Error ? err.message : String(err)}`);
+  }
+  if (!res.ok) throw new Error(`Registry ${res.status} for ${target}`);
+  return Buffer.from(await res.arrayBuffer());
+}
 
 export type RegistryItem = {
   name: string;
@@ -83,7 +102,7 @@ export async function fetchItem(client: RegistryClient, item: CatalogItem) {
   return getJson<RegistryItem>(client.itemUrl(item.url));
 }
 
-const TYPE_RANK: RegistryType[] = ["lib", "component", "block", "animation", "background", "template", "theme", "skill"];
+const TYPE_RANK: RegistryType[] = ["lib", "component", "block", "animation", "background", "template", "site", "theme", "skill"];
 
 export function resolveItems(catalog: Catalog, queries: string[]) {
   const found: CatalogItem[] = [];
@@ -99,7 +118,7 @@ export function resolveItems(catalog: Catalog, queries: string[]) {
 export function resolveOne(catalog: Catalog, query: string): CatalogItem | undefined {
   const q = query.trim().toLowerCase();
   if (!q) return undefined;
-  const typed = q.match(/^(components?|blocks?|animations?|backgrounds?|templates?|themes?|skills?|lib)\/(.+)$/);
+  const typed = q.match(/^(components?|blocks?|animations?|backgrounds?|templates?|sites?|themes?|skills?|lib)\/(.+)$/);
   if (typed) {
     const rawType = typed[1].replace(/s$/, "") as RegistryType;
     const type = (rawType === "component" || TYPE_RANK.includes(rawType) ? rawType : "component") as RegistryType;
@@ -127,7 +146,9 @@ export function rewriteUserSource(src: string) {
     .replace(/@\/registry\/ui\//g, "@/components/ui/")
     .replace(/@\/registry\/animations\//g, "@/components/animations/")
     .replace(/@\/registry\/backgrounds\//g, "@/components/backgrounds/")
-    .replace(/@\/registry\/templates\//g, "@/components/templates/");
+    .replace(/@\/registry\/templates\//g, "@/components/templates/")
+    .replace(/@\/registry\/blocks\//g, "@/components/blocks/")
+    .replace(/@\/registry\/sites\//g, "@/components/sites/");
 }
 
 export function implicitLibSlugs(content: string) {

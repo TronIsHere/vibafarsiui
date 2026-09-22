@@ -173,7 +173,7 @@ export function PlateInput({ value, defaultValue = EMPTY_PLATE, onChange, letter
         aria-label="پلاک خودرو"
         dir="ltr"
         className={cn(
-          "flex h-12 items-stretch overflow-hidden rounded-lg border border-input bg-background/60 transition-colors focus-within:border-transparent focus-within:ring-2 focus-within:ring-ring/60",
+          "flex h-12 items-stretch overflow-hidden rounded-field border-line-field border-input bg-field shadow-field transition-colors focus-within:border-transparent focus-within:ring-2 focus-within:ring-ring/60",
           disabled && "opacity-50",
         )}
       >

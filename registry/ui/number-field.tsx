@@ -30,7 +30,7 @@ export function NumberField({ value, defaultValue = 0, onChange, min = -Infinity
   const btn = "flex w-10 cursor-pointer items-center justify-center text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40";
 
   return (
-    <div className={cn("inline-flex h-10 items-stretch overflow-hidden rounded-lg border border-input bg-background/60", className)} role="group" aria-label={aria["aria-label"]}>
+    <div className={cn("inline-flex h-10 items-stretch overflow-hidden rounded-field border-line-field border-input bg-field shadow-field", className)} role="group" aria-label={aria["aria-label"]}>
       <button type="button" aria-label="افزایش" disabled={disabled || n >= max} onClick={() => set(n + step)} className={btn}>
         <Plus className="size-4" />
       </button>

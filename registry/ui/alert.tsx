@@ -21,7 +21,7 @@ export function Alert({ variant = "info", title, icon, className, children, ...p
   const s = styles[variant];
   const Icon = icon ?? s.icon;
   return (
-    <div role={variant === "destructive" ? "alert" : "status"} className={cn("flex items-start gap-3 rounded-xl border p-4 text-sm", s.box, className)} {...props}>
+    <div role={variant === "destructive" ? "alert" : "status"} className={cn("flex items-start gap-3 rounded-overlay border-line p-4 text-sm [--tw-border-style:var(--line-style)]", s.box, className)} {...props}>
       <Icon className={cn("mt-0.5 size-4 shrink-0", s.iconColor)} />
       <div className="min-w-0">
         {title && <p className={cn("font-semibold", variant !== "info" && s.iconColor)}>{title}</p>}

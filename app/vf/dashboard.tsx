@@ -5,6 +5,7 @@ import { Stat } from "@/registry/ui/stat";
 import { logout } from "@/lib/analytics/actions";
 import { ADMIN_PATH, RANGES, type RangeKey } from "@/lib/analytics/config";
 import { getStats, startedOnLabel, type Device } from "@/lib/analytics/store";
+import { listSubmissions } from "@/lib/community/store";
 import { fa, faNumber, cn } from "@/lib/utils";
 
 const DEVICE_ICON: Record<Device, typeof Monitor> = {
@@ -84,7 +85,7 @@ function RankedList({
 }
 
 export async function Dashboard({ range }: { range: RangeKey }) {
-  const stats = await getStats(range);
+  const [stats, pending] = await Promise.all([getStats(range), listSubmissions({ status: "pending" })]);
 
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 py-8 sm:px-6">
@@ -93,14 +94,25 @@ export async function Dashboard({ range }: { range: RangeKey }) {
           <Logo />
           <span className="text-sm text-muted-foreground">{startedOnLabel(range)}</span>
         </div>
-        <form action={logout}>
-          <button
-            type="submit"
-            className="inline-flex h-8 cursor-pointer items-center rounded-md border border-border px-3 text-[13px] text-muted-foreground transition-colors hover:text-foreground"
+        <div className="flex items-center gap-2">
+          <Link
+            href={`${ADMIN_PATH}/community`}
+            className="inline-flex h-8 items-center gap-1.5 rounded-md border border-border px-3 text-[13px] text-muted-foreground transition-colors hover:text-foreground"
           >
-            خروج
-          </button>
-        </form>
+            صف جامعه
+            {pending.length > 0 && (
+              <span className="rounded-full bg-brand px-1.5 text-[11px] font-semibold text-brand-foreground">{fa(pending.length)}</span>
+            )}
+          </Link>
+          <form action={logout}>
+            <button
+              type="submit"
+              className="inline-flex h-8 cursor-pointer items-center rounded-md border border-border px-3 text-[13px] text-muted-foreground transition-colors hover:text-foreground"
+            >
+              خروج
+            </button>
+          </form>
+        </div>
       </header>
 
       <div className="mt-6 flex w-fit flex-wrap gap-1 rounded-lg border border-border p-1">

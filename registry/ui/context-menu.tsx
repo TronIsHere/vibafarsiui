@@ -44,7 +44,7 @@ export function ContextMenu({ items, children, className }: { items: MenuItem[];
         theme={theme}
         panelRef={panel}
         role="menu"
-        className="fixed z-50 min-w-44 rounded-lg border border-border bg-popover p-1 text-sm text-popover-foreground shadow-lg animate-fade-up [animation-duration:120ms]"
+        className="fixed z-50 min-w-44 rounded-overlay border-line border-border bg-popover p-1 text-sm text-popover-foreground shadow-overlay [backdrop-filter:var(--surface-filter)] animate-fade-up [animation-duration:120ms]"
       >
         {items.map((it, i) => {
           if (it.type === "separator") return <hr key={i} className="my-1 border-border" />;

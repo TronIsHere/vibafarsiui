@@ -23,9 +23,13 @@ function itemCard(item: CatalogItem, score?: number): string {
 }
 
 function renderItem(item: RegistryItem): string {
-  const files = item.files
-    .map((f) => `#### ${f.path}\n\n\`\`\`${f.path.endsWith(".md") ? "md" : f.path.endsWith(".css") ? "css" : "tsx"}\n${f.content}\n\`\`\``)
-    .join("\n\n");
+  const assets = item.files.filter((f) => f.content === undefined && f.url);
+  const files = [
+    ...item.files
+      .filter((f) => f.content !== undefined)
+      .map((f) => `#### ${f.path}\n\n\`\`\`${f.path.endsWith(".md") ? "md" : f.path.endsWith(".css") ? "css" : "tsx"}\n${f.content}\n\`\`\``),
+    ...(assets.length ? [`#### Images\n\nDownload each into the given path:\n${assets.map((f) => `- ${f.path} ← ${registryUrl().replace(/\/r$/, "")}${f.url}`).join("\n")}`] : []),
+  ].join("\n\n");
   const deps = item.dependencies.length ? item.dependencies.join(", ") : "none beyond react / tailwind";
   const rdeps = item.registryDependencies.length ? item.registryDependencies.join(", ") : "none";
   return [
@@ -125,6 +129,7 @@ export async function handleScaffold(goal: string, theme?: string) {
 
   const searched = searchCatalog(catalog, goal, { limit: 10 }).map((h) => h.item);
   const templates = searched.filter((i) => i.type === "template");
+  const fullSites = searched.filter((i) => i.type === "site");
   const picks = fromRecipe.length ? fromRecipe : searched.slice(0, 8);
 
   const slugs = Array.from(new Set(picks.map((p) => p.slug)));
@@ -144,6 +149,7 @@ export async function handleScaffold(goal: string, theme?: string) {
     "## Registry pieces",
     ...picks.map((p) => `- ${p.name} (\`${p.slug}\`, ${p.type}) — ${p.desc}`),
     templates.length && !recipe?.template ? `\nMatching templates: ${templates.map((t) => t.slug).join(", ")}` : "",
+    fullSites.length ? `\nWhole multi-page sites (shell + every route, one get_component call): ${fullSites.map((t) => t.slug).join(", ")}` : "",
     "",
     "## Next calls",
     "1. get_design_rules (if you have not)",
@@ -173,7 +179,7 @@ export function registerTools(server: McpServer) {
     "search_registry",
     {
       description:
-        "Search the VibeFarsi registry (components, blocks, animations, backgrounds, templates, themes, lib helpers, and agent skills such as persian-conversational or jalali-calendar) with Persian or English. Use this instead of guessing shadcn names.",
+        "Search the VibeFarsi registry (components, blocks, animations, backgrounds, templates, whole multi-page sites, themes, lib helpers, and agent skills such as persian-conversational or jalali-calendar) with Persian or English. Use this instead of guessing shadcn names.",
       inputSchema: z.object({
         query: z.string().describe("What you need, e.g. تقویم, otp, toman, dashboard, فیروزه"),
         type: z.enum(REGISTRY_TYPES).optional().describe("Limit to one registry kind."),

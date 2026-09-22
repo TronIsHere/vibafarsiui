@@ -1,7 +1,8 @@
 import { createMcpHandler } from "@modelcontextprotocol/server";
 import { createServer } from "../../mcp/dist/server.js";
 import { useLocalRegistry } from "../../mcp/dist/load.js";
-import { buildCatalog } from "@/lib/registry";
+import { buildCatalog, sites } from "@/lib/registry";
+import { siteRegistryItem } from "@/lib/site-registry";
 import { readSource } from "@/lib/source";
 
 useLocalRegistry({
@@ -12,6 +13,11 @@ useLocalRegistry({
     } catch {
       return undefined;
     }
+  },
+  readItem: (hit) => {
+    if (hit.type !== "site") return undefined;
+    const site = sites.find((s) => s.slug === hit.slug);
+    return site ? siteRegistryItem(site) : undefined;
   },
 });
 

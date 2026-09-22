@@ -24,7 +24,7 @@ import { backgroundDemos } from "@/components/demos/backgrounds";
 import { blockDemos } from "@/components/demos/blocks";
 
 export type DemoRef = {
-  kind: "component" | "animation" | "background" | "template" | "block";
+  kind: "component" | "animation" | "background" | "template" | "block" | "site";
   slug: string;
 };
 
@@ -57,11 +57,13 @@ function PreviewFrame({
   theme,
   width,
   title,
+  tall,
 }: {
   href: string;
   theme: string;
   width: number | "100%";
   title: string;
+  tall?: boolean;
 }) {
   const ref = React.useRef<HTMLIFrameElement>(null);
   const src = React.useRef(previewSrc(href, theme));
@@ -80,7 +82,8 @@ function PreviewFrame({
       onLoad={apply}
       style={{ width: width === "100%" ? "100%" : width }}
       className={cn(
-        "h-[640px] shrink-0 rounded-lg border border-border bg-background transition-[width] duration-300",
+        "shrink-0 rounded-lg border border-border bg-background transition-[width] duration-300",
+        tall ? "h-[780px]" : "h-[640px]",
         width === "100%" && "w-full",
       )}
     />
@@ -90,6 +93,7 @@ function PreviewFrame({
 function frameHref(demo: DemoRef): string | null {
   if (demo.kind === "template") return `/preview/${demo.slug}`;
   if (demo.kind === "block") return `/preview/block/${demo.slug}`;
+  if (demo.kind === "site") return `/preview/site/${demo.slug}`;
   return null;
 }
 
@@ -98,9 +102,10 @@ function renderDemo(
   k: number,
   theme: string,
   viewport: Viewport,
+  page?: string,
 ): React.ReactNode {
   const width = VIEWPORTS.find((v) => v.id === viewport)!.width;
-  const href = frameHref(demo);
+  const href = page ?? frameHref(demo);
 
   switch (demo.kind) {
     case "component":
@@ -134,6 +139,17 @@ function renderDemo(
           title="پیش‌نمایش قالب"
         />
       );
+    case "site":
+      return (
+        <PreviewFrame
+          key={`${href}-${k}`}
+          href={href!}
+          theme={theme}
+          width={width}
+          title="پیش‌نمایش سایت"
+          tall
+        />
+      );
   }
 }
 
@@ -155,6 +171,8 @@ export interface ItemTabsClientProps {
   previewClass?: string;
   /** Preview is a background layer: render inside an overflow-hidden box with sample text. */
   layer?: boolean;
+  /** Multi-page sites: a page picker that points the preview frame at each route. */
+  pages?: { label: string; href: string }[];
 }
 
 export function ItemTabsClient({
@@ -164,12 +182,13 @@ export function ItemTabsClient({
   previewHref,
   previewClass,
   layer,
+  pages,
 }: ItemTabsClientProps) {
-  const sized = demo.kind === "block" || demo.kind === "template";
+  const sized = demo.kind === "block" || demo.kind === "template" || demo.kind === "site";
   const replayable =
     demo.kind === "animation"
       ? replayableAnimations.has(demo.slug)
-      : demo.kind === "template";
+      : demo.kind === "template" || demo.kind === "site";
   const [tab, setTab] = React.useState<"preview" | "code" | "prompt">(
     "preview",
   );
@@ -177,7 +196,9 @@ export function ItemTabsClient({
   const [scope, setScope] = React.useState("graphite");
   const [viewport, setViewport] = React.useState<Viewport>("desktop");
   const [file, setFile] = React.useState(0);
-  const rendered = renderDemo(demo, k, scope, viewport);
+  const [page, setPage] = React.useState(0);
+  const pageHref = pages?.[page]?.href;
+  const rendered = renderDemo(demo, k, scope, viewport, pageHref);
   const framed = sized && viewport !== "desktop";
 
   const tabs = [
@@ -241,6 +262,25 @@ export function ItemTabsClient({
                 ))}
               </div>
             )}
+            {pages && pages.length > 1 && (
+              <label className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span className="hidden sm:inline">صفحه</span>
+                <span className="relative inline-flex">
+                  <select
+                    value={page}
+                    onChange={(e) => setPage(Number(e.target.value))}
+                    className="h-7 cursor-pointer appearance-none rounded-md border border-border bg-background ps-2.5 pe-7 text-xs leading-none text-foreground outline-none"
+                  >
+                    {pages.map((p, i) => (
+                      <option key={p.href} value={i}>
+                        {p.label}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="pointer-events-none absolute end-2 top-1/2 size-3 -translate-y-1/2 text-muted-foreground" />
+                </span>
+              </label>
+            )}
             <label className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <span className="hidden sm:inline">سیستم طراحی</span>
               <span className="relative inline-flex">
@@ -251,7 +291,7 @@ export function ItemTabsClient({
                 >
                   {themes.map((t) => (
                     <option key={t.slug} value={t.slug}>
-                      {t.name}
+                      {t.name} · {t.style}
                     </option>
                   ))}
                 </select>
@@ -270,7 +310,7 @@ export function ItemTabsClient({
             )}
             {previewHref && (
               <a
-                href={`${previewHref}?theme=${encodeURIComponent(scope)}`}
+                href={`${pageHref ?? previewHref}?theme=${encodeURIComponent(scope)}`}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex h-7 cursor-pointer items-center gap-1 rounded-md border border-border px-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
@@ -283,7 +323,24 @@ export function ItemTabsClient({
         )}
         {tab === "code" && (
           <div className="flex items-center gap-1.5">
-            {files.length > 1 && (
+            {files.length > 4 && (
+              <span className="relative inline-flex" dir="ltr">
+                <select
+                  value={file}
+                  onChange={(e) => setFile(Number(e.target.value))}
+                  aria-label="فایل"
+                  className="h-7 max-w-[16rem] cursor-pointer appearance-none truncate rounded-md border border-border bg-background ps-2.5 pe-7 font-mono text-[11px] leading-none text-foreground outline-none"
+                >
+                  {files.map((f, i) => (
+                    <option key={f.name} value={i}>
+                      {f.name}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute end-2 top-1/2 size-3 -translate-y-1/2 text-muted-foreground" />
+              </span>
+            )}
+            {files.length > 1 && files.length <= 4 && (
               <div className="inline-flex rounded-md border border-border p-0.5">
                 {files.map((f, i) => (
                   <button
@@ -322,6 +379,7 @@ export function ItemTabsClient({
       {tab === "preview" && (
         <div
           data-theme={scope}
+          data-ds=""
           className={cn(
             "relative flex items-center justify-center rounded-b-xl text-foreground",
             framed
@@ -333,7 +391,7 @@ export function ItemTabsClient({
                 ),
           )}
         >
-          {!layer && demo.kind !== "template" && demo.kind !== "block" && (
+          {!layer && demo.kind !== "template" && demo.kind !== "block" && demo.kind !== "site" && (
             <div
               aria-hidden
               className="pointer-events-none absolute inset-0 rounded-b-xl opacity-40"

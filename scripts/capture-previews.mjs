@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Snapshot block + template preview routes, compress to WebP, write public/previews.
+ * Snapshot block, template and site preview routes, compress to WebP, write public/previews.
  * Templates are cropped to a top-right (RTL start) peek, matching the catalog cards.
  *
  * Usage: npm run previews
@@ -147,10 +147,12 @@ async function shotPage(page, url) {
 async function main() {
   const blocks = slugsFrom(path.join(ROOT, "lib/registry/blocks.ts"));
   const templates = slugsFrom(path.join(ROOT, "lib/registry/templates.ts"));
+  const sites = slugsFrom(path.join(ROOT, "lib/registry/sites.ts"));
 
   await waitForServer();
   await mkdir(path.join(OUT, "blocks"), { recursive: true });
   await mkdir(path.join(OUT, "templates"), { recursive: true });
+  await mkdir(path.join(OUT, "sites"), { recursive: true });
   await rm(path.join(OUT, "components"), { recursive: true, force: true });
 
   const browser = await chromium.launch({
@@ -210,13 +212,30 @@ async function main() {
     }
   }
 
+  // Whole sites: the top of the home page, shown in a browser frame on the /sites cards.
+  for (const slug of sites) {
+    if (only && !only.has(slug)) continue;
+    const dest = path.join(OUT, "sites", `${slug}.webp`);
+    try {
+      await page.setViewportSize({ width: 1280, height: 800 });
+      const png = await shotPage(page, `${BASE}/preview/site/${slug}?theme=graphite`);
+      const webp = await compress(png, { maxWidth: 1280, maxHeight: 800 });
+      await writeFile(dest, webp);
+      console.log(`site      ${slug}  ${(webp.length / 1024).toFixed(1)}kb`);
+    } catch (err) {
+      failed++;
+      console.error(`site      ${slug}  FAIL  ${err.message}`);
+    }
+  }
+
   await browser.close();
 
   const templateCount = only
     ? templates.filter((s) => only.has(s)).length
     : templates.length;
   const blockCount = only ? blocks.filter((s) => only.has(s)).length : blocks.length;
-  const total = blockCount + templateCount;
+  const siteCount = only ? sites.filter((s) => only.has(s)).length : sites.length;
+  const total = blockCount + templateCount + siteCount;
   console.log(`\nWrote ${total - failed}/${total} snapshots under public/previews`);
   if (failed) process.exit(1);
 }

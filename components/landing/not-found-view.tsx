@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
+  AppWindow,
   ArrowLeft,
   Boxes,
   Image,
@@ -22,6 +23,7 @@ const ICONS: Record<SectionKey, LucideIcon> = {
   animations: Sparkles,
   backgrounds: Image,
   templates: LayoutTemplate,
+  sites: AppWindow,
   themes: Palette,
   skills: WandSparkles,
 };

@@ -7,6 +7,7 @@ import { PromptCode } from "@/components/landing/prompt-code";
 import { Animations } from "@/components/landing/animations";
 import { Backgrounds } from "@/components/landing/backgrounds";
 import { Templates } from "@/components/landing/templates";
+import { Sites } from "@/components/landing/sites";
 import { Blocks } from "@/components/landing/blocks";
 import { DesignSystems } from "@/components/landing/design-systems";
 import { McpSteps } from "@/components/landing/mcp-steps";
@@ -47,6 +48,8 @@ export default function Home() {
           <Backgrounds />
           <HatchBand />
           <Templates />
+          <HatchBand />
+          <Sites />
           <HatchBand />
           <DesignSystems />
           <HatchBand />
