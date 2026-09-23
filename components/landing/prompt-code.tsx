@@ -75,7 +75,7 @@ export function PromptCode({
                   </button>
                 ))}
               </div>
-              <div className="flex items-center gap-2">
+              <div dir="ltr" className="flex items-center gap-2">
                 <span className="  text-xs text-muted-foreground" dir="ltr">
                   {tab === "code" ? "button.tsx" : "button.prompt.md"}
                 </span>
