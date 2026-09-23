@@ -5,7 +5,8 @@ import { ThemeToggle } from "./theme-toggle";
 import { GithubButton, GithubStarsButton } from "./github-stars";
 import { SiteSearch } from "./site-search";
 import { LandingMobileNav } from "./mobile-nav";
-import { navLinks } from "./nav-links";
+import { navLinks, isGroup } from "./nav-links";
+import { NavMenu } from "./nav-menu";
 
 export function TopBar() {
   return (
@@ -24,15 +25,19 @@ export function TopBar() {
             className="hidden items-center gap-0.5 lg:flex"
             aria-label="ناوبری اصلی"
           >
-            {navLinks.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="inline-flex h-8 cursor-pointer items-center rounded-md px-2 text-[13px] leading-none text-muted-foreground transition-colors duration-200 hover:text-foreground"
-              >
-                {l.label}
-              </Link>
-            ))}
+            {navLinks.map((l) =>
+              isGroup(l) ? (
+                <NavMenu key={l.label} group={l} />
+              ) : (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="inline-flex h-8 cursor-pointer items-center rounded-md px-2 text-[13px] leading-none text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                >
+                  {l.label}
+                </Link>
+              ),
+            )}
           </nav>
         </div>
 
