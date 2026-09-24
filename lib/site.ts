@@ -5,7 +5,8 @@ export const SITE_NAME = "وایب‌فارسی";
 export const SITE_NAME_EN = "VibeFarsi";
 export const GITHUB_URL = "https://github.com/TronIsHere/vibafarsiui";
 export const GITHUB_REPO = "TronIsHere/vibafarsiui";
-export const SPONSOR_URL = "https://x.com/Erwinamm";
+export const X_URL = "https://x.com/Erwinamm";
+export const SPONSOR_URL = X_URL;
 export const NPM_URL = "https://www.npmjs.com/package/vibefarsi";
 
 export const SITE_TITLE = "کامپوننت‌های فارسی راست‌چین برای React · وایب‌فارسی";
