@@ -175,7 +175,7 @@ export function ThemeDetail({
             ))}
           </div>
           {tab !== "preview" && (
-            <div className="flex items-center gap-1.5">
+            <div dir="ltr" className="flex items-center gap-1.5">
               <span className="  text-xs text-muted-foreground" dir="ltr">
                 {tab === "code" ? theme.file.split("/").pop() : "prompt.md"}
               </span>

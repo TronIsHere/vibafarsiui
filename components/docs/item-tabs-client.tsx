@@ -322,7 +322,7 @@ export function ItemTabsClient({
           </div>
         )}
         {tab === "code" && (
-          <div className="flex items-center gap-1.5">
+          <div dir="ltr" className="flex items-center gap-1.5">
             {files.length > 4 && (
               <span className="relative inline-flex" dir="ltr">
                 <select
@@ -369,7 +369,7 @@ export function ItemTabsClient({
           </div>
         )}
         {tab === "prompt" && (
-          <div className="flex items-center gap-1.5">
+          <div dir="ltr" className="flex items-center gap-1.5">
             <span className="  text-xs text-muted-foreground">prompt.md</span>
             <CopyButton text={prompt} />
           </div>
