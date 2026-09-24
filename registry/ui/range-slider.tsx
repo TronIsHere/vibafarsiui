@@ -230,12 +230,15 @@ export function RangeSlider({
             <span />
           )}
           {showValue && (
-            <span className="shrink-0 font-medium tabular-nums" aria-live="polite">
-              {format(lo)}
-              <span className="mx-1 text-muted-foreground" aria-hidden>
+            <span
+              className="flex shrink-0 items-center gap-1.5 font-medium tabular-nums"
+              aria-live="polite"
+            >
+              <span>{format(lo)}</span>
+              <span className="font-normal text-muted-foreground" aria-hidden>
                 تا
               </span>
-              {format(hi)}
+              <span>{format(hi)}</span>
             </span>
           )}
         </div>
