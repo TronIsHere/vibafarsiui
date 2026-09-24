@@ -155,6 +155,12 @@ export const EXTRA_ALIASES: Record<string, string[]> = {
   collapsible: ["collapse", "show more", "نمایش بیشتر", "بازشو", "expand"],
   "scroll-area": ["scrollarea", "scrollbar", "اسکرول", "اسکرول‌بار", "ناحیه اسکرول", "باکس اسکرول", "overflow"],
   countdown: ["timer", "شمارش معکوس", "تایمر", "فلش فروش", "لانچ", "launch", "flash sale"],
+  "video-player": ["video", "player", "ویدئو", "ویدیو", "پخش کننده", "پخش‌کننده", "فیلم آموزشی", "زیرنویس", "lms"],
+  "course-outline": ["syllabus", "curriculum", "سرفصل", "سرفصل‌ها", "سرفصل دوره", "فصل", "درس", "دوره آموزشی", "lms"],
+  "lesson-note": ["lesson", "article", "callout", "درس نامه", "درس‌نامه", "جزوه", "نکته", "تعریف", "فرمول", "واژه‌نامه"],
+  "function-plot": ["graph", "plot", "math", "نمودار تابع", "نمودار تعاملی", "ریاضی", "فیزیک", "سینوس", "interactive chart"],
+  "hotspot-figure": ["hotspot", "diagram", "labeled image", "شکل", "شکل تعاملی", "دیاگرام", "نقطه", "برچسب تصویر"],
+  quiz: ["assessment", "exam", "test", "mcq", "ارزیابی", "آزمون", "آزمونک", "امتحان", "تست", "چهارگزینه‌ای", "چندگزینه‌ای"],
   // sites
   "agency-site": ["agency", "studio", "portfolio", "آژانس", "استودیو", "سایت شرکتی", "نمونه کار", "full website"],
   "saas-site": ["saas", "startup website", "سایت استارتاپ", "نرم افزار", "حسابداری", "landing multi page"],
