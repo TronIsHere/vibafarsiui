@@ -282,7 +282,7 @@ export function ItemTabsClient({
           </div>
         )}
         {tab === "code" && (
-          <div className="flex items-center gap-1.5">
+          <div dir="ltr" className="flex items-center gap-1.5">
             {files.length > 1 && (
               <div className="inline-flex rounded-md border border-border p-0.5">
                 {files.map((f, i) => (
@@ -312,7 +312,7 @@ export function ItemTabsClient({
           </div>
         )}
         {tab === "prompt" && (
-          <div className="flex items-center gap-1.5">
+          <div dir="ltr" className="flex items-center gap-1.5">
             <span className="  text-xs text-muted-foreground">prompt.md</span>
             <CopyButton text={prompt} />
           </div>

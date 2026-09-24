@@ -49,7 +49,7 @@ export function SkillDetail({
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-1.5">
+        <div dir="ltr" className="flex items-center gap-1.5">
           <span className="hidden text-xs text-muted-foreground sm:inline" dir="ltr">
             {fileName}
           </span>

@@ -220,7 +220,7 @@ export function InstallSteps({
 export function UsageBlock({ code }: { code: string }) {
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card">
-      <div className="flex items-center justify-between border-b border-border px-3 py-1.5">
+      <div dir="ltr" className="flex items-center justify-between border-b border-border px-3 py-1.5">
         <span className="  text-xs text-muted-foreground" dir="ltr">
           usage.tsx
         </span>
