@@ -21,7 +21,7 @@ export type DocBase = {
   wide?: boolean;
 };
 
-export type ComponentCat = "form" | "display" | "feedback" | "nav" | "overlay" | "data";
+export type ComponentCat = "form" | "display" | "feedback" | "nav" | "overlay" | "data" | "education";
 export type ComponentDoc = DocBase & { cat: ComponentCat };
 export type AnimationDoc = DocBase;
 export type BackgroundDoc = DocBase & {

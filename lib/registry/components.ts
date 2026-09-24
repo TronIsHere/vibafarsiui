@@ -8,6 +8,7 @@ export const componentCats: { key: ComponentCat | "all"; label: string }[] = [
   { key: "overlay", label: "پنجره و منو" },
   { key: "nav", label: "ناوبری" },
   { key: "data", label: "داده و نمودار" },
+  { key: "education", label: "آموزشی" },
 ];
 
 const ui = (slug: string) => `registry/ui/${slug}.tsx`;
@@ -1078,5 +1079,240 @@ const launch = new Date("2026-10-01T12:00:00+03:30")
     ],
     notes: ["تا قبل از mount خانه‌ها «--» هستند تا HTML سرور و کلاینت یکی بماند.", "useCountdown را هم می‌توان جدا برای منطق سفارشی import کرد.", "dir=ltr روی رقم‌هاست تا ترتیب روز←ثانیه درست خوانده شود؛ برچسب‌ها فارسی می‌مانند."],
     promptBullets: ["Client timer to a target Date; Persian digits via fa(); labels روز/ساعت/دقیقه/ثانیه; pad to two digits.", "SSR-safe: null until mounted so first paint shows -- placeholders; onComplete fires once at zero.", "variant cards (bordered grid, dir=ltr) or inline colon-separated; units array picks which cells to show."],
+  },
+  {
+    slug: "video-player", name: "پخش‌کننده ویدئو", cat: "education", file: ui("video-player"), wide: true, deps: ["lucide-react"],
+    desc: "پخش‌کننده‌ی ویدئوی آموزشی با فصل‌بندی، سرعت پخش، زیرنویس و ادامه از جای قبلی؛ زمان‌ها فارسی و نوار زمان طبق قاعده‌ی رسانه چپ‌به‌راست.",
+    usage: `import { VideoPlayer } from "@/components/ui/video-player"
+
+<VideoPlayer
+  src="/videos/lesson-3.mp4"
+  poster="/videos/lesson-3.webp"
+  title="درس ۳: ساختار پوشه‌ها در App Router"
+  startAt={lastPosition}
+  chapters={[
+    { start: 0, title: "مقدمه" },
+    { start: 95, title: "پوشه‌ی app و فایل page" },
+    { start: 310, title: "layout و مسیرهای تو در تو" },
+  ]}
+  captions={[{ src: "/videos/lesson-3.fa.vtt", srclang: "fa", label: "فارسی", default: true }]}
+  onTimeUpdate={(t) => savePosition(t)}
+  onEnded={() => markLessonDone()}
+/>`,
+    props: [
+      { name: "src / poster", type: "string", desc: "آدرس ویدئو و تصویر پیش از پخش." },
+      { name: "title", type: "string", desc: "روی لایه‌ی توقف نشان داده میشه و نام دسترس‌پذیر ناحیه است." },
+      { name: "chapters", type: "{ start: number; title: string }[]", desc: "فصل‌ها با زمان شروع به ثانیه. روی نوار زمان علامت می‌خورن و فهرست کلیک‌پذیر زیر ویدئو می‌سازن." },
+      { name: "captions", type: "{ src; srclang; label; default? }[]", desc: "زیرنویس‌های WebVTT." },
+      { name: "showChapters", type: "boolean", default: "true", desc: "نمایش فهرست فصل‌ها زیر ویدئو." },
+      { name: "startAt", type: "number", default: "0", desc: "ثانیه‌ی شروع؛ برای «ادامه از جایی که ماندید»." },
+      { name: "rates", type: "number[]", default: "[0.75, 1, 1.25, 1.5, 2]", desc: "سرعت‌های قابل انتخاب." },
+      { name: "onTimeUpdate / onEnded", type: "(t, duration) => void / () => void", desc: "برای ذخیره‌ی پیشرفت و تیک زدن درس." },
+    ],
+    notes: [
+      "نوار زمان و دکمه‌های پخش عمداً dir=\"ltr\" هستن: پیشرفت رسانه جهت زمان را نشان میده، نه جهت متن (قاعده‌ی bidi متریال). فقط برچسب‌ها و فهرست فصل‌ها راست‌چین‌اند.",
+      "میان‌برها وقتی فوکوس روی ویدئوست: Space یا K پخش/توقف، فلش راست/چپ ۵ ثانیه جلو/عقب، M بی‌صدا، F تمام‌صفحه.",
+      "هر دکمه حداقل ۴۴ پیکسل است؛ در عرض کم (container query) دکمه‌های ۱۰ ثانیه و بعد زمان پنهان میشن تا کنترل‌ها سرریز نکنن.",
+    ],
+    promptBullets: [
+      "Native <video> with custom controls; aspect-video box reserved before load; big play overlay while paused.",
+      "Timeline and transport buttons are dir=\"ltr\" (media progress follows time, not text); seek is a native range with aria-valuetext in Persian («۴:۱۲ از ۱۸:۰۰»).",
+      "Chapters: markers on the track, current chapter title above it, clickable chapter list with Persian numbers and LTR timestamps.",
+      "Speed menu (menuitemradio) with Persian decimals «۱٫۵×», mute, fullscreen, WebVTT subtitles; all hit targets ≥ 44px.",
+      "Keyboard: Space/K toggle, ArrowRight/ArrowLeft ±5s, M mute, F fullscreen; onTimeUpdate/onEnded for resume and completion.",
+    ],
+  },
+  {
+    slug: "course-outline", name: "سرفصل دوره", cat: "education", file: ui("course-outline"), deps: ["lucide-react"],
+    desc: "سرفصل‌های دوره با فصل‌های بازشو، حلقه‌ی پیشرفت هر فصل، نوع درس (ویدئو، درس‌نامه، آزمونک، تمرین)، مدت، قفل و پیش‌نمایش رایگان.",
+    usage: `import { CourseOutline } from "@/components/ui/course-outline"
+
+<CourseOutline
+  currentId="l3"
+  onSelect={(lesson) => router.push(\`/learn/\${lesson.id}\`)}
+  sections={[
+    {
+      id: "s1", title: "شروع کار",
+      lessons: [
+        { id: "l1", title: "معرفی دوره", kind: "video", minutes: 6, done: true, preview: true },
+        { id: "l2", title: "نصب ابزارها", kind: "reading", minutes: 10, done: true },
+        { id: "l3", title: "اولین پروژه", kind: "video", minutes: 18 },
+        { id: "l4", title: "آزمونک فصل اول", kind: "quiz", minutes: 5 },
+      ],
+    },
+    { id: "s2", title: "مسیرها", lessons: [{ id: "l5", title: "صفحه‌ی داینامیک", minutes: 22, locked: true }] },
+  ]}
+/>`,
+    props: [
+      { name: "sections", type: "{ id; title; lessons: OutlineLesson[] }[]", desc: "فصل‌ها و درس‌ها." },
+      { name: "OutlineLesson", type: "{ id; title; kind?; minutes?; done?; locked?; preview? }", desc: "kind یکی از video | reading | quiz | assignment است." },
+      { name: "currentId", type: "string", desc: "درس در حال پخش؛ با نوار brand در ابتدای ردیف مشخص میشه و فصلش باز می‌مونه." },
+      { name: "onSelect", type: "(lesson) => void", desc: "کلیک روی درس. درس قفل (بدون preview) غیرفعال است." },
+      { name: "defaultOpen", type: "string[]", desc: "فصل‌های باز در شروع؛ پیش‌فرض فصل درس جاری." },
+      { name: "showSummary", type: "boolean", default: "true", desc: "ردیف «۴ فصل · ۱۲ درس · ۳ ساعت و ۱۵ دقیقه»." },
+    ],
+    notes: ["مدت کل با formatMinutes به «۳ ساعت و ۱۵ دقیقه» تبدیل میشه؛ همین تابع export شده.", "پنل بسته inert است تا Tab روی درس‌های پنهان نره."],
+    promptBullets: [
+      "Collapsible sections (grid-rows 0fr↔1fr), chevron at inline-end, closed panels inert.",
+      "Section header: Persian number inside a progress ring (brand, success when complete), «۲ از ۴ درس · ۴۰ دقیقه».",
+      "Lesson row: type icon (PlayCircle/FileText/ClipboardCheck/PenLine), CheckCircle2 when done, Lock when locked, «رایگان» chip for preview, minutes in Persian.",
+      "Current lesson: aria-current=step, bg-accent and a brand bar on the inline-start (before:start-0).",
+    ],
+  },
+  {
+    slug: "lesson-note", name: "درس‌نامه", cat: "education", file: ui("lesson-note"), deps: ["lucide-react"],
+    desc: "قالب درس‌نامه‌ی متنی با اهداف یادگیری و زمان مطالعه، کادرهای نکته، تعریف، مثال و اشتباه رایج، فرمول چپ‌به‌راست و واژه‌نامه.",
+    usage: `import { LessonNote, Callout, Formula, KeyTerms } from "@/components/ui/lesson-note"
+
+<LessonNote
+  eyebrow="فصل ۲ · درس ۳"
+  title="سرعت متوسط و سرعت لحظه‌ای"
+  minutes={8}
+  objectives={["فرق سرعت متوسط و لحظه‌ای را بگویید", "سرعت را از روی نمودار مکان-زمان بخوانید"]}
+>
+  <p>سرعت متوسط یعنی جابه‌جایی تقسیم بر مدت زمان.</p>
+  <Formula caption="رابطه‌ی ۲-۱">v̄ = Δx / Δt</Formula>
+  <Callout kind="example">خودرویی ۱۲۰ کیلومتر را در ۲ ساعت می‌رود؛ سرعت متوسطش ۶۰ کیلومتر بر ساعت است.</Callout>
+  <Callout kind="warning">سرعت متوسط میانگین سرعت‌ها نیست.</Callout>
+  <KeyTerms terms={[{ term: "جابه‌جایی", en: "displacement", desc: "فاصله‌ی مستقیم نقطه‌ی شروع تا پایان، با جهت." }]} />
+</LessonNote>`,
+    props: [
+      { name: "LessonNote", type: "{ title; eyebrow?; minutes?; objectives? }", desc: "پوسته‌ی مقاله با سربرگ، کادر «در این درس یاد می‌گیرید» و متن با ارتفاع خط خواندنی." },
+      { name: "Callout kind", type: '"tip" | "definition" | "example" | "warning" | "summary" | "quote"', default: '"tip"', desc: "نکته، تعریف، مثال، اشتباه رایج، جمع‌بندی، نقل‌قول. title برچسب را عوض می‌کنه." },
+      { name: "Formula", type: "{ caption?; inline? }", desc: "فرمول در جعبه‌ی LTR؛ inline برای وسط جمله." },
+      { name: "KeyTerms", type: "{ terms: { term; en?; desc }[]; title? }", desc: "واژه‌نامه با معادل انگلیسی LTR." },
+    ],
+    notes: [
+      "فرمول و معادل انگلیسی داخل bdi با dir=\"ltr\" هستن تا ترتیب کلمات جمله‌ی فارسی به‌هم نریزه.",
+      "نوار رنگی کادرها با border-s است، پس در RTL سمت راست می‌نشینه.",
+      "متن درس‌نامه ارتفاع خط ۱٫۹ دارد (خواندن طولانی)، سربرگ‌ها فشرده.",
+    ],
+    promptBullets: [
+      "Article shell: eyebrow in brand, h2 title, «زمان مطالعه: ۸ دقیقه», objectives card with CheckCircle2 bullets; body line-height 1.9.",
+      "Callout kinds tip/definition/example/warning/summary/quote with Persian labels (نکته، تعریف، مثال، اشتباه رایج، جمع‌بندی) and a border-s-4 accent bar.",
+      "Formula: centred LTR box (Persian digits, tabular-nums) with a Persian figcaption; inline variant is <bdi dir=ltr>.",
+      "KeyTerms: dl with Persian term, optional English equivalent in <bdi dir=ltr>, definition.",
+    ],
+  },
+  {
+    slug: "function-plot", name: "نمودار تعاملی", cat: "education", file: ui("function-plot"), wide: true, deps: ["lucide-react"], registryDeps: ["slider"],
+    desc: "نمودار تابع با اسلایدر برای هر پارامتر، فرمول زنده، ردیاب مختصات و منحنی خط‌چین حالت اول برای مقایسه؛ برای درس ریاضی و فیزیک.",
+    usage: `import { FunctionPlot, faDecimal } from "@/components/ui/function-plot"
+
+<FunctionPlot
+  label="نمودار y = a·sin(bx)"
+  xDomain={[-6.3, 6.3]}
+  yDomain={[-3, 3]}
+  params={[
+    { key: "a", label: "دامنه (a)", min: 0.5, max: 3, step: 0.1, default: 1 },
+    { key: "b", label: "بسامد (b)", min: 0.5, max: 3, step: 0.1, default: 1 },
+  ]}
+  fn={(x, p) => p.a * Math.sin(p.b * x)}
+  formula={(p) => \`y = \${faDecimal(p.a, 1)} · sin(\${faDecimal(p.b, 1)}x)\`}
+/>`,
+    props: [
+      { name: "fn", type: "(x, params) => number", desc: "تابع. NaN یعنی نقطه رسم نشه (مثلاً بیرون از دامنه)." },
+      { name: "params", type: "{ key; label; min; max; step?; default }[]", desc: "هر پارامتر یک اسلایدر می‌سازه." },
+      { name: "formula", type: "(params) => string", desc: "فرمول زنده در جعبه‌ی LTR بالای نمودار." },
+      { name: "xDomain / yDomain", type: "[number, number]", default: "[-10, 10] / [-6, 6]", desc: "بازه‌ی محورها." },
+      { name: "showBaseline", type: "boolean", default: "true", desc: "بعد از تغییر پارامتر، منحنی حالت اول خط‌چین می‌مونه." },
+      { name: "label", type: "string", desc: "توضیح دسترس‌پذیر نمودار." },
+    ],
+    notes: [
+      "محورها قرارداد ریاضی را نگه می‌دارن (x به راست زیاد میشه) حتی در صفحه‌ی راست‌چین؛ فقط اعداد محور فارسی میشن. این با نمودار داده‌ی فروش (chart) فرق داره که از راست شروع میشه.",
+      "مجانب قائم (مثل tan) خودکار تشخیص داده میشه و خط از بالا به پایین وصل نمیشه.",
+      "روی موبایل با لمس و کشیدن هم مختصات نقطه را نشان میده.",
+    ],
+    promptBullets: [
+      "Pure SVG plot of y = f(x; params) inside dir=ltr (maths axes are never mirrored); Persian tick numbers with «٫» decimal.",
+      "One Slider per param (label, min, max, step); live formula in an LTR box; «حالت اول» reset button.",
+      "Dashed ghost of the default curve once params change; hover/touch tracer with dot and «x = ۱٫۵ | y = ۰٫۹۹» readout.",
+      "Lift the pen on NaN and across vertical asymptotes; clip to the plot area.",
+    ],
+  },
+  {
+    slug: "hotspot-figure", name: "شکل تعاملی", cat: "education", file: ui("hotspot-figure"), wide: true, deps: ["lucide-react"],
+    desc: "تصویر یا دیاگرام با نقطه‌های شماره‌دار که با کلیک نام و توضیح هر بخش را نشان میدن و راهنمای زیر شکل بخش‌های دیده‌شده را تیک می‌زنه.",
+    usage: `import { HotspotFigure } from "@/components/ui/hotspot-figure"
+
+<HotspotFigure
+  ratio="4 / 3"
+  caption="شکل ۴-۱: ساختار سلول گیاهی"
+  hotspots={[
+    { id: "wall", x: 12, y: 50, title: "دیواره‌ی سلولی", desc: "لایه‌ی سلولزی محکم بیرون غشا." },
+    { id: "nucleus", x: 58, y: 38, title: "هسته", desc: "DNA سلول و مرکز کنترل." },
+    { id: "chloroplast", x: 36, y: 70, title: "کلروپلاست", desc: "محل فتوسنتز." },
+  ]}
+  onExplore={(seen) => seen.length === 3 && markDone()}
+>
+  <img src="/figures/plant-cell.webp" alt="سلول گیاهی" />
+</HotspotFigure>`,
+    props: [
+      { name: "hotspots", type: "{ id; x; y; title; desc? }[]", desc: "x و y درصد از لبه‌ی چپ و بالای تصویرند." },
+      { name: "children", type: "ReactNode", desc: "تصویر، SVG یا هر المانی که کادر را پر کنه." },
+      { name: "ratio", type: "string", default: '"16 / 10"', desc: "نسبت ابعاد؛ قبل از بارگذاری جا رزرو میشه." },
+      { name: "showLegend", type: "boolean", default: "true", desc: "فهرست شماره‌دار زیر شکل با تیک بخش‌های دیده‌شده." },
+      { name: "onExplore", type: "(visited: string[]) => void", desc: "هر بار که بخش تازه‌ای دیده میشه." },
+      { name: "caption", type: "ReactNode", desc: "شرح شکل." },
+    ],
+    notes: [
+      "مختصات نقطه‌ها فیزیکی (left/top) است چون خود تصویر در RTL آینه نمیشه؛ کارت توضیح و راهنما راست‌چین‌اند.",
+      "نقطه‌های دیده‌نشده پالس می‌زنن (با prefers-reduced-motion خاموش میشه)؛ Escape کارت را می‌بنده.",
+      "هر نقطه ناحیه‌ی لمس ۴۴ پیکسلی داره، هرچند دایره‌ی دیده‌شده کوچک‌تره.",
+    ],
+    promptBullets: [
+      "Picture box with reserved aspect-ratio; numbered hotspot buttons (44px hit area, Persian digits) placed by physical left/top percent because images don't mirror.",
+      "Clicking a hotspot opens an RTL card (title + explanation) that flips above/below and is clamped horizontally (left: clamp(…)) to stay inside the picture; Escape closes.",
+      "Unvisited hotspots pulse (animate-ping, off under prefers-reduced-motion); visited ones turn neutral.",
+      "Legend grid under the figure mirrors the hotspots, ticks explored ones and shows «۲ از ۵ بخش را دیده‌اید».",
+    ],
+  },
+  {
+    slug: "quiz", name: "ارزیابی", cat: "education", file: ui("quiz"), deps: ["lucide-react"], registryDeps: ["button", "progress"],
+    desc: "ارزیابی چندگزینه‌ای با گزینه‌های الف تا د، سؤال چندپاسخی، بازخورد فوری با توضیح یا حالت امتحان، و صفحه‌ی نتیجه با درصد، مرور پاسخ‌ها و تلاش دوباره.",
+    usage: `import { Quiz } from "@/components/ui/quiz"
+
+<Quiz
+  title="آزمونک فصل ۲"
+  passPercent={60}
+  onComplete={(r) => saveScore(r.percent)}
+  questions={[
+    {
+      id: "q1",
+      prompt: "خودرویی ۱۲۰ کیلومتر را در ۲ ساعت طی می‌کند. سرعت متوسط آن چقدر است؟",
+      options: [
+        { id: "a", label: "۲۴۰ کیلومتر بر ساعت" },
+        { id: "b", label: "۶۰ کیلومتر بر ساعت" },
+        { id: "c", label: "۱۲۰ کیلومتر بر ساعت" },
+      ],
+      answer: "b",
+      explanation: "سرعت متوسط = جابه‌جایی ÷ زمان = ۱۲۰ ÷ ۲.",
+    },
+    {
+      id: "q2",
+      prompt: "کدام کمیت‌ها برداری‌اند؟",
+      options: [{ id: "a", label: "جابه‌جایی" }, { id: "b", label: "مسافت" }, { id: "c", label: "سرعت" }],
+      answer: ["a", "c"],
+    },
+  ]}
+/>`,
+    props: [
+      { name: "questions", type: "{ id; prompt; options; answer; explanation? }[]", desc: "answer یک id یا آرایه‌ای از idها (سؤال چندپاسخی) است." },
+      { name: "feedback", type: '"instant" | "end"', default: '"instant"', desc: "instant: بررسی هر سؤال با توضیح. end: حالت امتحان، نتیجه در پایان." },
+      { name: "passPercent", type: "number", default: "70", desc: "درصد قبولی." },
+      { name: "onComplete", type: "(result) => void", desc: "{ correct, total, percent, passed, answers } بعد از پایان." },
+      { name: "title", type: "ReactNode", desc: "عنوان بالای نوار پیشرفت." },
+    ],
+    notes: [
+      "گزینه‌ها input واقعی radio/checkbox هستن (sr-only)، پس کیبورد و صفحه‌خوان بدون کد اضافه کار می‌کنن.",
+      "حروف گزینه‌ها «الف، ب، ج، د» است نه A/B/C؛ ثابت OPTION_LETTERS export شده.",
+      "دکمه‌ی «سؤال بعدی» آیکون ArrowLeft دارد چون در RTL جلو یعنی چپ.",
+    ],
+    promptBullets: [
+      "Single or multiple answer (answer: string | string[]); options are real sr-only radio/checkbox inputs inside labels, lettered الف/ب/ج/د.",
+      "Instant mode: «بررسی پاسخ» reveals success/destructive states and an explanation box (border-s-4) in an aria-live region; end mode grades at the end with قبلی/بعدی.",
+      "Header «سؤال ۲ از ۵» with Progress; next button uses ArrowLeft (RTL forward).",
+      "Result: percent ring (success if ≥ passPercent else warning), «قبول شدید / نیاز به مرور دارید», per-question review with the right letter, retry button.",
+    ],
   },
 ];

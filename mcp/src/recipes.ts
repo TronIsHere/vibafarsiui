@@ -185,6 +185,21 @@ Step 2: six-cell OtpField, resend countdown with Persian digits, «تغییر ش
     avoid: ["Zendesk English defaults", "Oops"],
   },
   {
+    id: "lesson",
+    title: "صفحه‌ی درس آموزشی",
+    aliases: ["lesson", "course", "lms", "e-learning", "elearning", "درس", "دوره", "آموزش", "آموزشی", "کلاس آنلاین", "آزمون", "آزمونک"],
+    summary: "ویدئو با فصل‌بندی، سرفصل دوره کنار صفحه، درس‌نامه، شکل و نمودار تعاملی و آزمونک پایان درس.",
+    template: "course",
+    components: ["video-player", "course-outline", "lesson-note", "function-plot", "hotspot-figure", "quiz", "tabs", "progress", "button"],
+    libs: ["utils"],
+    layout: `Two columns on desktop, CourseOutline in the right (inline-start) column with currentId; stacks under the video on mobile.
+Main: VideoPlayer with chapters and startAt (resume) → Tabs «درس‌نامه / منابع / پرسش و پاسخ».
+درس‌نامه tab: LessonNote with objectives, Callout (نکته، مثال، اشتباه رایج), Formula in LTR, a HotspotFigure or FunctionPlot where a picture teaches, KeyTerms.
+End of lesson: Quiz (instant feedback) whose onComplete marks the lesson done and unlocks the next one in the outline.`,
+    copy: ["درس بعدی", "در این درس یاد می‌گیرید", "زمان مطالعه", "بررسی پاسخ", "قبول شدید", "ادامه از جایی که ماندید"],
+    avoid: ["mirrored video timeline", "A/B/C/D option letters", "Latin digits in durations", "math axes flipped right-to-left"],
+  },
+  {
     id: "ride",
     title: "درخواست تاکسی",
     aliases: ["ride", "taxi", "snapp", "تاکسی", "اسنپ", "درخواست خودرو"],

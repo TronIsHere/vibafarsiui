@@ -106,6 +106,7 @@ import { LoadingOverlay, Spinner } from "@/registry/ui/spinner";
 import { Collapsible } from "@/registry/ui/collapsible";
 import { ScrollArea } from "@/registry/ui/scroll-area";
 import { Countdown } from "@/registry/ui/countdown";
+import { educationCardDemos, educationDemos } from "./education";
 import { AlignCenter, AlignLeft, AlignRight, Bold, Italic, LayoutGrid, List, Underline } from "lucide-react";
 
 type Order = {
@@ -1325,6 +1326,7 @@ export const componentDemos: Record<string, React.ReactNode> = {
       size="sm"
     />
   ),
+  ...educationDemos,
 };
 
 /**
@@ -1716,4 +1718,5 @@ export const componentCardDemos: Record<string, React.ReactNode> = {
       className="w-full"
     />
   ),
+  ...educationCardDemos,
 };
