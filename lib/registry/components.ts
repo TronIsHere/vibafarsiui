@@ -188,6 +188,39 @@ import { formatToman } from "@/lib/utils"
     promptBullets: ["Use a native input[type=range] and fill the track from the right with linear-gradient(to left …).", "Value label uses Persian digits and is swappable via a format prop."],
   },
   {
+    slug: "range-slider", name: "اسلایدر بازه", cat: "form", file: ui("range-slider"),
+    desc: "اسلایدر دو دستگیره‌ای برای فیلتر کف تا سقف (مثل محدوده قیمت فروشگاه) با پر شدن ترک از راست و اعداد فارسی.",
+    usage: `import { RangeSlider } from "@/components/ui/range-slider"
+import { formatToman } from "@/lib/utils"
+
+<RangeSlider
+  label="محدوده قیمت"
+  min={0}
+  max={150_000_000}
+  step={1_000_000}
+  defaultValue={[20_000_000, 50_000_000]}
+  format={formatToman}
+  onChange={([lo, hi]) => setRange([lo, hi])}
+/>`,
+    props: [
+      { name: "value / defaultValue", type: "[number, number]", desc: "زوج کف و سقف. دستگیره‌ها از هم رد نمی‌شن." },
+      { name: "onChange", type: "([min, max]) => void", desc: "بعد از هر جابه‌جایی یا کلید." },
+      { name: "format", type: "(v: number) => string", default: "ارقام فارسی", desc: "قالب هر دو برچسب، مثلاً formatToman." },
+      { name: "min / max / step", type: "number", desc: "بازه‌ی مجاز و گام." },
+      { name: "minThumbLabel / maxThumbLabel", type: "string", default: "«کف» / «سقف»", desc: "aria-label هر دستگیره." },
+    ],
+    notes: [
+      "پر شدن ترک با همان الگوی اسلایدر تک‌دستگیره است: linear-gradient(to left …) تا در RTL از راست پر بشه؛ جای دستگیره با inset-inline-start است، نه left/right.",
+      "هر دستگیره role=\"slider\" دارد با aria-valuemin/max/now و aria-valuetext فارسی؛ فلش‌ها در RTL با جهت بومی range هماهنگ‌اند.",
+    ],
+    promptBullets: [
+      "Two thumbs on one track; value is [min, max]; thumbs cannot cross.",
+      "Fill the band from the right with linear-gradient(to left …) between the two percentages; position thumbs with inset-inline-start only (no left/right).",
+      "Each thumb is role=\"slider\" with aria-valuemin/max/now/valuetext; keyboard arrows respect RTL; touch target ≥ 44px.",
+      "Value labels use format prop (e.g. formatToman); honor prefers-reduced-motion on thumb transitions.",
+    ],
+  },
+  {
     slug: "rating", name: "امتیاز", cat: "form", file: ui("rating"), deps: ["lucide-react"],
     desc: "امتیاز ستاره‌ای که از راست پر میشه و با هاور پیش‌نمایش میده.",
     usage: `import { Rating } from "@/components/ui/rating"
