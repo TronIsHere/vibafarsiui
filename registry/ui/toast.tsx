@@ -74,7 +74,7 @@ export function ToastCard({ toast, onClose, className }: { toast: Omit<Toast, "i
     <div
       role="status"
       className={cn(
-        "pointer-events-auto flex items-start gap-3 rounded-xl border border-border bg-popover px-3.5 py-3 text-popover-foreground shadow-[0_12px_40px_-16px_oklch(0_0_0/70%)]",
+        "pointer-events-auto flex items-start gap-3 rounded-overlay border-line border-border bg-popover px-3.5 py-3 text-popover-foreground shadow-overlay [backdrop-filter:var(--surface-filter)]",
         "animate-slide-in",
         className,
       )}

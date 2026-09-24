@@ -1,4 +1,4 @@
-export const REGISTRY_TYPES = ["component", "animation", "background", "template", "block", "theme", "lib", "skill"] as const;
+export const REGISTRY_TYPES = ["component", "animation", "background", "template", "block", "site", "theme", "lib", "skill"] as const;
 export type RegistryType = (typeof REGISTRY_TYPES)[number];
 
 export type CatalogItem = {
@@ -27,7 +27,9 @@ export type Catalog = {
 
 export type RegistryFile = {
   path: string;
-  content: string;
+  /** Absent for binary assets (photos), which carry a download url instead. */
+  content?: string;
+  url?: string;
   type?: string;
 };
 

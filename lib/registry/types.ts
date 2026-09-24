@@ -30,15 +30,30 @@ export type BackgroundDoc = DocBase & {
 };
 export type TemplateDoc = DocBase & { tags: string[]; pages: number };
 export type BlockDoc = DocBase & { tags: string[] };
+/** How a design system looks beyond its palette. Short Persian phrases. */
+export type ThemeLanguage = {
+  type: string;
+  shape: string;
+  depth: string;
+  motion: string;
+  density: string;
+};
+
 export type ThemeDoc = {
   slug: string;
   name: string;
   nameEn: string;
+  /** Name of the design language, e.g. «نئوبروتالیسم». */
+  style: string;
+  styleEn: string;
   desc: string;
   radius: string;
   swatches: [string, string, string, string];
   light?: boolean;
   file: string;
+  language: ThemeLanguage;
+  /** Google Fonts families the system needs besides the body font. */
+  fonts?: string[];
   promptBullets: string[];
 };
 
@@ -78,4 +93,28 @@ export type SkillDoc = {
   license?: string;
   /** Install commands for external skills. */
   install?: { label: string; cmd: string }[];
+};
+
+/** One route of a multi-page site. `path` is "" for the home page, "about" for /about. */
+export type SitePage = {
+  path: string;
+  /** Short nav label, e.g. «خدمات». */
+  label: string;
+  /** Component file inside the site folder, e.g. "about.tsx". */
+  file: string;
+  /** Named export of that file, e.g. "AboutPage". */
+  export: string;
+  /** Browser tab title written into the generated app/<path>/page.tsx. */
+  title: string;
+};
+
+/** A whole website: a shared shell plus several pages, copied as one folder. */
+export type SiteDoc = DocBase & {
+  nameEn: string;
+  tags: string[];
+  /** Folder of the site in this repo, e.g. registry/sites/agency-site. */
+  dir: string;
+  pages: SitePage[];
+  /** Highlights shown on the card and the docs page. */
+  features: string[];
 };

@@ -3,13 +3,14 @@ import { backgrounds } from "./backgrounds";
 import { blocks } from "./blocks";
 import { components } from "./components";
 import { libs } from "./libs";
-import { buildPrompt, buildThemePrompt } from "./prompt";
+import { buildPrompt, buildSitePrompt, buildThemePrompt } from "./prompt";
 import { templates } from "./templates";
+import { sites } from "./sites";
 import { hostedSkills, skillTarget } from "./skills";
 import { themes } from "./themes";
-import type { DocBase, SkillDoc, ThemeDoc } from "./types";
+import type { DocBase, SiteDoc, SkillDoc, ThemeDoc } from "./types";
 
-export const REGISTRY_TYPES = ["component", "animation", "background", "template", "block", "theme", "lib", "skill"] as const;
+export const REGISTRY_TYPES = ["component", "animation", "background", "template", "block", "site", "theme", "lib", "skill"] as const;
 export type RegistryType = (typeof REGISTRY_TYPES)[number];
 
 export type CatalogItem = {
@@ -59,7 +60,8 @@ export const EXTRA_ALIASES: Record<string, string[]> = {
   "checkbox-group": ["checkbox", "چک باکس"],
   "radio-group": ["radio", "رادیو"],
   switch: ["toggle", "کلید"],
-  slider: ["range"],
+  slider: ["سقف قیمت", "تک دستگیره"],
+  "range-slider": ["range", "dual", "محدوده قیمت", "کف", "سقف", "دو طرفه", "فروشگاه", "فیلتر قیمت"],
   rating: ["stars", "ستاره"],
   "file-upload": ["upload", "آپلود", "پیوست"],
   calendar: ["jalali", "شمسی", "تاریخ"],
@@ -105,7 +107,7 @@ export const EXTRA_ALIASES: Record<string, string[]> = {
   blog: ["article", "مقاله", "پست"],
   hero: ["هیرو"],
   testimonials: ["نظرات", "social proof"],
-  graphite: ["default", "پیش فرض", "پیش‌فرض"],
+  graphite: ["default", "پیش فرض", "پیش‌فرض", "minimal", "technical", "مینیمال"],
   shader: ["webgl", "glsl", "شیدر", "canvas", "shader canvas"],
   silk: ["satin", "ساتن", "پارچه"],
   fog: ["smoke", "mist", "دود", "مه"],
@@ -130,7 +132,11 @@ export const EXTRA_ALIASES: Record<string, string[]> = {
   scanlines: ["crt", "retro", "tv", "اسکن لاین", "اسکن‌لاین", "تلویزیون"],
   "iso-cubes": ["isometric", "cubes", "3d", "ایزومتریک", "مکعب"],
   "liquid-gradient": ["chroma flow", "fluid", "gradient", "گرادیان", "سیال", "cursor"],
-  paper: ["light", "روشن"],
+  paper: ["light", "روشن", "editorial", "مجله‌ای", "serif", "نسخ"],
+  saffron: ["brutalist", "neo-brutalism", "neobrutalism", "بروتال", "نئوبروتالیسم"],
+  pomegranate: ["clay", "claymorphism", "soft ui", "خمیری", "کلی"],
+  turquoise: ["glass", "glassmorphism", "شیشه‌ای", "گلس", "frosted"],
+  lapis: ["terminal", "dev tool", "developer", "ترمینال", "فشرده"],
   "national-id-input": ["national id", "کد ملی", "کدملی", "شماره ملی", "melli code"],
   "card-number-input": ["card number", "شماره کارت", "کارت بانکی", "bank card", "bin", "شماره‌ی کارت"],
   "plate-input": ["plate", "پلاک", "پلاک خودرو", "license plate", "ماشین", "خودرو"],
@@ -149,6 +155,13 @@ export const EXTRA_ALIASES: Record<string, string[]> = {
   collapsible: ["collapse", "show more", "نمایش بیشتر", "بازشو", "expand"],
   "scroll-area": ["scrollarea", "scrollbar", "اسکرول", "اسکرول‌بار", "ناحیه اسکرول", "باکس اسکرول", "overflow"],
   countdown: ["timer", "شمارش معکوس", "تایمر", "فلش فروش", "لانچ", "launch", "flash sale"],
+  // sites
+  "agency-site": ["agency", "studio", "portfolio", "آژانس", "استودیو", "سایت شرکتی", "نمونه کار", "full website"],
+  "saas-site": ["saas", "startup website", "سایت استارتاپ", "نرم افزار", "حسابداری", "landing multi page"],
+  "shop-site": ["ecommerce", "online shop", "فروشگاه اینترنتی", "سبد خرید", "قهوه", "coffee"],
+  "clinic-site": ["clinic", "dentist", "doctor", "کلینیک", "دندانپزشکی", "مطب", "نوبت دهی", "پزشک"],
+  "restaurant-site": ["restaurant", "cafe", "menu", "رستوران", "کافه", "منو", "رزرو میز"],
+  "lodge-site": ["hotel", "lodge", "travel", "هتل", "اقامتگاه", "بوم گردی", "بوم‌گردی", "رزرو اتاق"],
 };
 
 function collectionPath(type: RegistryType): string {
@@ -172,7 +185,7 @@ function aliasesFor(type: RegistryType, item: { slug: string; name: string; name
   return Array.from(new Set([item.slug, item.name, item.nameEn, item.slug.replace(/-/g, " "), ...extra].filter(Boolean) as string[]));
 }
 
-function fromDoc(type: Exclude<RegistryType, "theme" | "skill">, item: DocBase, extra: Partial<CatalogItem> = {}): CatalogItem {
+function fromDoc(type: Exclude<RegistryType, "theme" | "skill" | "site">, item: DocBase, extra: Partial<CatalogItem> = {}): CatalogItem {
   return {
     type,
     slug: item.slug,
@@ -203,9 +216,27 @@ function fromTheme(item: ThemeDoc): CatalogItem {
     url: `/r/themes/${item.slug}.json`,
     deps: [],
     registryDeps: [],
-    tags: [item.nameEn, item.light ? "light" : "dark", `radius-${item.radius}`],
+    tags: [item.nameEn, item.styleEn, item.light ? "light" : "dark", `radius-${item.radius}`],
     aliases: aliasesFor("theme", item),
     prompt: buildThemePrompt(item),
+  };
+}
+
+function fromSite(item: SiteDoc): CatalogItem {
+  return {
+    type: "site",
+    slug: item.slug,
+    name: item.name,
+    nameEn: item.nameEn,
+    desc: item.desc,
+    file: item.dir,
+    target: `components/sites/${item.slug}/`,
+    url: `/r/sites/${item.slug}.json`,
+    deps: item.deps ?? [],
+    registryDeps: item.registryDeps ?? [],
+    tags: ["website", "multi-page", ...item.tags],
+    aliases: aliasesFor("site", item),
+    prompt: buildSitePrompt(item),
   };
 }
 
@@ -234,6 +265,7 @@ export function buildCatalog(homepage = "https://vibefarsi.ir"): Catalog {
     ...backgrounds.map((i) => fromDoc("background", i, { tags: i.engine ? ["webgl", "shader", "شیدر"] : [] })),
     ...templates.map((i) => fromDoc("template", i, { tags: i.tags })),
     ...blocks.map((i) => fromDoc("block", i, { tags: i.tags })),
+    ...sites.map(fromSite),
     ...themes.map(fromTheme),
     ...hostedSkills.map(fromSkill),
   ];

@@ -133,7 +133,7 @@ export function TimePicker({ value, defaultValue = null, onChange, step = 5, min
         aria-label="ساعت"
         dir="ltr"
         className={cn(
-          "flex h-10 items-center gap-1 rounded-lg border bg-background/60 px-3 transition-colors focus-within:ring-2 focus-within:ring-ring/60",
+          "flex h-10 items-center gap-1 rounded-field border-line-field bg-field shadow-field px-3 transition-colors focus-within:ring-2 focus-within:ring-ring/60",
           invalid ? "border-destructive/60" : "border-input",
           disabled && "opacity-50",
         )}

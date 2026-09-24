@@ -29,7 +29,7 @@ export function PhoneInput({ value, onChange, className, id, autoFocus }: PhoneI
 
   return (
     <div className={cn("space-y-1.5", className)}>
-      <div className={cn("flex h-10 items-center gap-2 rounded-lg border bg-background/60 px-3 transition-colors focus-within:ring-2 focus-within:ring-ring/60", digits.length === 10 && !valid ? "border-destructive/60" : "border-input")} dir="ltr">
+      <div className={cn("flex h-10 items-center gap-2 rounded-field border-line-field bg-field shadow-field px-3 transition-colors focus-within:ring-2 focus-within:ring-ring/60", digits.length === 10 && !valid ? "border-destructive/60" : "border-input")} dir="ltr">
         <span className="text-sm text-muted-foreground">+98</span>
         <input
           id={id}

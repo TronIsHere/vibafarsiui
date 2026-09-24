@@ -13,14 +13,14 @@ const sizes: Record<Size, string> = {
 };
 
 const base =
-  "inline-flex cursor-pointer items-center justify-center gap-2 rounded-md font-medium whitespace-nowrap transition-colors " +
+  "inline-flex cursor-pointer items-center justify-center gap-2 rounded-control font-medium whitespace-nowrap transition-colors duration-(--motion) ease-motion " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 disabled:pointer-events-none disabled:opacity-50";
 
 function toggleClass(on: boolean, variant: Variant, size: Size, sliding: boolean) {
   return cn(
     base,
     sizes[size],
-    variant === "outline" && !sliding && "border border-input",
+    variant === "outline" && !sliding && "border-line border-input",
     sliding
       ? on
         ? "text-foreground"
@@ -163,8 +163,8 @@ export function ToggleGroup(props: ToggleGroupProps) {
       }}
       className={cn(
         "relative isolate inline-flex items-center",
-        sliding ? "gap-0.5 rounded-lg p-0.5" : "gap-1",
-        (variant === "outline" || sliding) && "border border-input",
+        sliding ? "gap-0.5 rounded-[calc(var(--shape-control)+2px)] p-0.5" : "gap-1",
+        (variant === "outline" || sliding) && "border-line border-input",
         sliding && "bg-muted",
         className,
       )}
@@ -172,7 +172,7 @@ export function ToggleGroup(props: ToggleGroupProps) {
       {sliding && pill ? (
         <span
           aria-hidden
-          className="absolute inset-y-0.5 -z-10 rounded-md bg-background shadow-sm ring-1 ring-border transition-[transform,width] duration-200 ease-out"
+          className="absolute inset-y-0.5 -z-10 rounded-control bg-background shadow-sm ring-1 ring-border transition-[transform,width] duration-(--motion) ease-motion"
           style={{ width: pill.w, left: 0, transform: `translateX(${pill.x}px)` }}
         />
       ) : null}

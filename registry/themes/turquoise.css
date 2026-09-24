@@ -1,24 +1,52 @@
-/* فیروزه. روی <html data-theme="turquoise"> یا هر عنصر دیگری اعمال کنید. */
+/* فیروزه، شیشه‌ای. تیترها با Noto Kufi Arabic هستن. */
 [data-theme="turquoise"] {
   color-scheme: dark;
-  --background: oklch(0.15 0.03 215);
+
+  /* رنگ */
+  --background: oklch(0.2 0.045 225);
   --foreground: oklch(0.97 0.01 200);
-  --card: oklch(0.18 0.03 215);
+  --card: oklch(0.97 0.02 200 / 7%);
   --card-foreground: oklch(0.97 0.01 200);
-  --popover: oklch(0.2 0.03 215);
+  --popover: oklch(0.25 0.045 225 / 88%);
   --popover-foreground: oklch(0.97 0.01 200);
-  --primary: oklch(0.83 0.13 190);
-  --primary-foreground: oklch(0.16 0.04 200);
-  --secondary: oklch(0.25 0.04 215);
+  --primary: oklch(0.86 0.12 190);
+  --primary-foreground: oklch(0.2 0.05 210);
+  --secondary: oklch(0.97 0.02 200 / 11%);
   --secondary-foreground: oklch(0.97 0.01 200);
-  --muted: oklch(0.22 0.035 215);
-  --muted-foreground: oklch(0.72 0.04 205);
-  --accent: oklch(0.25 0.04 215);
+  --muted: oklch(0.97 0.02 200 / 6%);
+  --muted-foreground: oklch(0.8 0.04 205);
+  --accent: oklch(0.97 0.02 200 / 12%);
   --accent-foreground: oklch(0.97 0.01 200);
-  --border: oklch(0.85 0.08 200 / 14%);
-  --input: oklch(0.85 0.08 200 / 18%);
-  --ring: oklch(0.83 0.13 190);
-  --brand: oklch(0.88 0.1 185);
-  --brand-foreground: oklch(0.16 0.04 200);
-  --radius: 0.75rem;
+  --destructive: oklch(0.7 0.18 22);
+  --success: oklch(0.8 0.15 165);
+  --warning: oklch(0.85 0.14 85);
+  --border: oklch(0.97 0.03 200 / 16%);
+  --input: oklch(0.97 0.03 200 / 22%);
+  --ring: oklch(0.86 0.12 190);
+  --brand: oklch(0.87 0.12 165);
+  --brand-foreground: oklch(0.2 0.05 180);
+
+  /* زبان طراحی: فونت، فرم، خط، عمق، حرکت و تراکم */
+  --radius: 0.875rem;
+  --type-display: "Noto Kufi Arabic", "IRANSans", "Vazirmatn", system-ui, sans-serif;
+  --type-display-weight: 600;
+  --shape-control: 0.75rem;
+  --shape-field: 0.75rem;
+  --shape-surface: 1.375rem;
+  --shape-overlay: 1rem;
+  --line: 1px;
+  --line-field: 1px;
+  --line-style: solid;
+  --field: oklch(0.97 0.02 200 / 6%);
+  --depth-control: 0 1px 0 0 oklch(1 0 0 / 22%) inset, 0 10px 24px -14px oklch(0.8 0.14 190 / 60%);
+  --depth-press: 0 1px 0 0 oklch(1 0 0 / 12%) inset;
+  --depth-field: 0 0 #0000;
+  --depth-surface: 0 1px 0 0 oklch(1 0 0 / 18%) inset, 0 30px 60px -30px oklch(0.08 0.03 230 / 70%);
+  --depth-overlay: 0 1px 0 0 oklch(1 0 0 / 20%) inset, 0 30px 70px -24px oklch(0.08 0.03 230 / 80%);
+  --surface-filter: blur(20px) saturate(1.6);
+  --press: scale(0.97);
+  --motion: 280ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --backdrop: radial-gradient(55% 45% at 90% 0%, oklch(0.72 0.14 195 / 50%), transparent 70%), radial-gradient(45% 50% at 5% 100%, oklch(0.55 0.17 265 / 45%), transparent 70%), radial-gradient(35% 35% at 45% 55%, oklch(0.75 0.13 160 / 18%), transparent 70%);
+  --spacing: 0.25rem;
 }

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { iranSans, geistMono } from "./fonts";
+import { fontVariables } from "./fonts";
 import { JsonLd } from "@/components/shared/json-ld";
 import { THEME_STORAGE_KEY } from "@/lib/registry";
 import {
@@ -79,7 +79,9 @@ export const metadata: Metadata = {
 };
 
 // Applies a saved design system before first paint (see Next.js "preventing flash" guide).
-const themeScript = `(function(){try{var q=new URLSearchParams(location.search).get("theme");var t=q||localStorage.getItem(${JSON.stringify(THEME_STORAGE_KEY)});if(t&&t!=="graphite")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme")}catch(e){}})()`;
+// Full-page previews (/preview/*, /sandbox) also get data-ds, so the whole design
+// language applies there; elsewhere the site chrome only takes the colors.
+const themeScript = `(function(){try{var d=document.documentElement;if(/^\\/(preview|sandbox)(\\/|$)/.test(location.pathname))d.setAttribute("data-ds","");var q=new URLSearchParams(location.search).get("theme");var t=q||localStorage.getItem(${JSON.stringify(THEME_STORAGE_KEY)});if(t&&t!=="graphite")d.setAttribute("data-theme",t);else d.removeAttribute("data-theme")}catch(e){}})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -88,7 +90,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       dir="rtl"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
-      className={`${iranSans.variable} ${geistMono.variable} h-full max-w-full antialiased`}
+      className={`${fontVariables} h-full max-w-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

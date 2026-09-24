@@ -236,7 +236,7 @@ export function DateRangePicker({ value, defaultValue = EMPTY, onChange, placeho
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          "flex h-10 w-full cursor-pointer items-center justify-between gap-2 rounded-lg border border-input bg-background/60 px-3 text-sm transition-colors",
+          "flex h-10 w-full cursor-pointer items-center justify-between gap-2 rounded-field border-line-field border-input bg-field shadow-field px-3 text-sm transition-colors",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60",
         )}
       >

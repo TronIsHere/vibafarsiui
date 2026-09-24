@@ -186,7 +186,7 @@ async function writeLibFromRegistry(project, flags, slug) {
         skip(`${path.relative(project.cwd, dest)} (exists)`);
         return;
     }
-    writeFile(dest, rewriteUserSource(file.content), flags.dryRun);
+    writeFile(dest, rewriteUserSource(file.content ?? ""), flags.dryRun);
     info(path.relative(project.cwd, dest));
 }
 export async function runInit(flags) {

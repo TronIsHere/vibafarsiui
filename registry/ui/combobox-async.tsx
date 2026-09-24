@@ -51,7 +51,7 @@ export function ComboboxAsync({ loadOptions, value = null, onChange, placeholder
 
   return (
     <div ref={root} className={cn("relative", className)}>
-      <div className="flex h-10 items-center overflow-visible rounded-lg border border-input bg-background/60 pe-2 ps-3 transition-colors focus-within:border-transparent focus-within:ring-2 focus-within:ring-ring/60">
+      <div className="flex h-10 items-center overflow-visible rounded-field border-line-field border-input bg-field shadow-field pe-2 ps-3 transition-colors focus-within:border-transparent focus-within:ring-2 focus-within:ring-ring/60">
         <input
           role="combobox"
           aria-expanded={open}

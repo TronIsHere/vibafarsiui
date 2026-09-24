@@ -1,6 +1,6 @@
-import type { DocBase, ThemeDoc } from "./types";
+import type { DocBase, SiteDoc, ThemeDoc } from "./types";
 
-const SHARED_RULES = [
+export const SHARED_RULES = [
   "RTL layout with dir=\"rtl\". Use logical properties (ms/me/ps/pe/start/end), never left/right.",
   "Font from the project (IRANSans or Vazirmatn). Never apply letter-spacing on Persian text.",
   "Visible numbers use Persian digits (۰–۹), thousands separator «٬» (U+066C), and the unit «تومان» after the number.",
@@ -61,8 +61,29 @@ export function buildThemePrompt(item: ThemeDoc, css?: string) {
   lines.push(
     "Rules:",
     ...item.promptBullets.map((b) => `• ${b}`),
-    "• Components must read color only from these tokens. No hardcoded hex inside components.",
-    "• Corner radius comes from --radius.",
+    "• A design system is a design language, not a palette. Components read color AND shape (--shape-control/field/surface/overlay), border width (--line, --line-field), shadows (--depth-*), press transform (--press), motion (--motion, --motion-ease), fonts (--type-display, --type-body) and density (--spacing) from these tokens.",
+    "• No hardcoded hex, radius, shadow, border width or duration inside components. Use the mapped utilities: rounded-control, rounded-field, rounded-surface, border-line, shadow-control, shadow-surface, active:shadow-press, active:[transform:var(--press)], duration-(--motion) ease-motion, font-display.",
   );
+  return lines.join("\n");
+}
+
+/** Builds the English prompt for a whole multi-page site. */
+export function buildSitePrompt(site: SiteDoc) {
+  const lines = [
+    `Build a complete multi-page React + Tailwind CSS website named "${site.nameEn}" (${site.slug}) for the Next.js App Router.`,
+    "",
+    "Routes:",
+    ...site.pages.map((p) => `• /${p.path} (${p.label}): ${p.export} in components/sites/${site.slug}/${p.file}`),
+    "",
+    "This site requires:",
+    ...site.promptBullets.map((b) => `• ${b}`),
+    "• Internal links go through a useHref() helper from shell.tsx so the whole site can be mounted under a base path; use plain <a> tags, not next/link.",
+    `• Photos live in public/sites/${site.slug}/ and render through a small Photo helper (plain <img>, lazy-loaded, object-cover, meaningful Persian alt). Decorative art uses theme tokens only, so every page follows the active theme.`,
+    "",
+    "Persian / RTL rules for all output:",
+    ...SHARED_RULES.map((b) => `• ${b}`),
+    "",
+    `Output: shell.tsx plus one file per page in TypeScript, and a tiny app/<route>/page.tsx for each route that renders the page and sets metadata.title. No extra dependencies except lucide-react.`,
+  ];
   return lines.join("\n");
 }

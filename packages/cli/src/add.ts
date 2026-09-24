@@ -4,8 +4,9 @@ import path from "node:path";
 import type { Flags } from "./args.js";
 import { applyItemCss, applyThemeTokens } from "./css.js";
 import { fail, hint, info, skip, title, warn } from "./log.js";
-import { loadProject, resolveTarget, writeFile, type PackageManager, type Project } from "./project.js";
+import { loadProject, resolveTarget, writeBytes, writeFile, type PackageManager, type Project } from "./project.js";
 import {
+  fetchBytes,
   fetchCatalog,
   fetchItem,
   implicitLibSlugs,
@@ -14,6 +15,7 @@ import {
   resolveItems,
   resolveOne,
   rewriteUserSource,
+  textOf,
   type Catalog,
   type CatalogItem,
   type RegistryClient,
@@ -95,7 +97,7 @@ async function materialize(
   written.add(key);
 
   const payload = await fetchItem(client, item);
-  const extra = implicitLibSlugs(payload.files.map((f) => f.content).join("\n"));
+  const extra = implicitLibSlugs(textOf(payload.files));
   for (const slug of extra) {
     if (slug === item.slug) continue;
     const lib = resolveOne(catalog, slug);
@@ -103,7 +105,7 @@ async function materialize(
   }
 
   if (isCssItem(item, payload)) {
-    const css = payload.files.map((f) => f.content).join("\n");
+    const css = textOf(payload.files);
     applyThemeTokens(project, item.slug, css, "--font-vazirmatn", flags.dryRun, {
       googleCss: project.framework !== "next",
     });
@@ -118,7 +120,12 @@ async function materialize(
       skip(`${rel} (exists)`);
       continue;
     }
-    writeFile(dest, rewriteUserSource(file.content), flags.dryRun);
+    if (file.url && file.content === undefined) {
+      // Binary asset such as a photo: public/sites/<slug>/hero.webp
+      writeBytes(dest, await fetchBytes(client, file.url), flags.dryRun);
+    } else {
+      writeFile(dest, rewriteUserSource(file.content ?? ""), flags.dryRun);
+    }
     info(rel);
   }
   if (applyItemCss(project, payload, flags.dryRun)) {
@@ -164,7 +171,7 @@ export async function runAdd(flags: Flags) {
       const payload = await materialize(project, client, catalog, item, flags, written);
       if (!payload) continue;
       for (const d of payload.dependencies ?? []) deps.add(d);
-      if (payload.files.some((f) => lucideNeeded(f.content))) deps.add("lucide-react");
+      if (lucideNeeded(textOf(payload.files))) deps.add("lucide-react");
     } catch (err) {
       fail(`${item.slug}: ${err instanceof Error ? err.message : String(err)}`);
       process.exitCode = 1;

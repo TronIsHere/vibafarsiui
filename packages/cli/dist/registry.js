@@ -1,4 +1,21 @@
 export const DEFAULT_REGISTRY = "https://vibefarsi.ir/r";
+/** Text of every file that has content, for dependency sniffing. */
+export function textOf(files) {
+    return files.map((f) => f.content ?? "").join("\n");
+}
+export async function fetchBytes(client, url) {
+    const target = client.itemUrl(url);
+    let res;
+    try {
+        res = await fetch(target);
+    }
+    catch (err) {
+        throw new Error(`Cannot download ${target}. ${err instanceof Error ? err.message : String(err)}`);
+    }
+    if (!res.ok)
+        throw new Error(`Registry ${res.status} for ${target}`);
+    return Buffer.from(await res.arrayBuffer());
+}
 export function makeClient(registry) {
     if (!registry) {
         throw new Error(`Registry URL is missing. Pass --registry ${DEFAULT_REGISTRY}`);
@@ -35,7 +52,7 @@ export async function fetchCatalog(client) {
 export async function fetchItem(client, item) {
     return getJson(client.itemUrl(item.url));
 }
-const TYPE_RANK = ["lib", "component", "block", "animation", "background", "template", "theme", "skill"];
+const TYPE_RANK = ["lib", "component", "block", "animation", "background", "template", "site", "theme", "skill"];
 export function resolveItems(catalog, queries) {
     const found = [];
     const missing = [];
@@ -52,7 +69,7 @@ export function resolveOne(catalog, query) {
     const q = query.trim().toLowerCase();
     if (!q)
         return undefined;
-    const typed = q.match(/^(components?|blocks?|animations?|backgrounds?|templates?|themes?|skills?|lib)\/(.+)$/);
+    const typed = q.match(/^(components?|blocks?|animations?|backgrounds?|templates?|sites?|themes?|skills?|lib)\/(.+)$/);
     if (typed) {
         const rawType = typed[1].replace(/s$/, "");
         const type = (rawType === "component" || TYPE_RANK.includes(rawType) ? rawType : "component");
@@ -78,7 +95,9 @@ export function rewriteUserSource(src) {
         .replace(/@\/registry\/ui\//g, "@/components/ui/")
         .replace(/@\/registry\/animations\//g, "@/components/animations/")
         .replace(/@\/registry\/backgrounds\//g, "@/components/backgrounds/")
-        .replace(/@\/registry\/templates\//g, "@/components/templates/");
+        .replace(/@\/registry\/templates\//g, "@/components/templates/")
+        .replace(/@\/registry\/blocks\//g, "@/components/blocks/")
+        .replace(/@\/registry\/sites\//g, "@/components/sites/");
 }
 export function implicitLibSlugs(content) {
     const slugs = [];

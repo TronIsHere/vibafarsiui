@@ -25,6 +25,7 @@ import { Checkbox, CheckboxGroup } from "@/registry/ui/checkbox";
 import { RadioGroup } from "@/registry/ui/radio-group";
 import { Switch } from "@/registry/ui/switch";
 import { Slider } from "@/registry/ui/slider";
+import { RangeSlider } from "@/registry/ui/range-slider";
 import { Rating } from "@/registry/ui/rating";
 import { FileUpload } from "@/registry/ui/file-upload";
 import { Calendar } from "@/registry/ui/calendar";
@@ -845,6 +846,18 @@ export const componentDemos: Record<string, React.ReactNode> = {
       />
     </div>
   ),
+  "range-slider": (
+    <div className="w-full max-w-xs">
+      <RangeSlider
+        label="محدوده قیمت"
+        min={0}
+        max={150_000_000}
+        step={1_000_000}
+        defaultValue={[20_000_000, 50_000_000]}
+        format={formatToman}
+      />
+    </div>
+  ),
   rating: <Rating defaultValue={4} showValue />,
   "file-upload": (
     <div className="w-full max-w-xs">
@@ -1470,6 +1483,18 @@ export const componentCardDemos: Record<string, React.ReactNode> = {
         max={10_000_000}
         step={100_000}
         defaultValue={6_500_000}
+        format={formatToman}
+      />
+    </div>
+  ),
+  "range-slider": (
+    <div className="w-full">
+      <RangeSlider
+        label="محدوده قیمت"
+        min={0}
+        max={150_000_000}
+        step={1_000_000}
+        defaultValue={[20_000_000, 50_000_000]}
         format={formatToman}
       />
     </div>

@@ -23,12 +23,12 @@ export function Input({ className, type, startAddon, endAddon, error, id, dir, .
       dir={grouped ? undefined : dir}
       aria-invalid={error ? true : undefined}
       className={cn(
-        "flex w-full min-w-0 bg-transparent text-sm text-foreground placeholder:text-muted-foreground/70",
+        "flex w-full min-w-0 text-sm text-foreground placeholder:text-muted-foreground/70",
         "disabled:cursor-not-allowed disabled:opacity-50",
         grouped
-          ? "h-full px-0 outline-none"
+          ? "h-full bg-transparent px-0 outline-none"
           : cn(
-              "h-10 rounded-lg border border-input bg-background/60 px-3 transition-colors",
+              "h-10 rounded-field border-line-field border-input bg-field shadow-field px-3 transition-colors",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:border-transparent",
               "aria-invalid:border-destructive/60",
             ),
@@ -45,7 +45,7 @@ export function Input({ className, type, startAddon, endAddon, error, id, dir, .
     <div
       dir={dir}
       className={cn(
-        "flex h-10 w-full items-center gap-2 rounded-lg border border-input bg-background/60 px-3 text-sm transition-colors",
+        "flex h-10 w-full items-center gap-2 rounded-field border-line-field border-input bg-field shadow-field px-3 text-sm transition-colors",
         "focus-within:border-transparent focus-within:ring-2 focus-within:ring-ring/60",
         error && "border-destructive/60",
       )}

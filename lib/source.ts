@@ -10,6 +10,7 @@ export function toUserSource(src: string): string {
     .replace(/@\/registry\/backgrounds\//g, "@/components/backgrounds/")
     .replace(/@\/registry\/templates\//g, "@/components/templates/")
     .replace(/@\/registry\/blocks\//g, "@/components/blocks/")
+    .replace(/@\/registry\/sites\//g, "@/components/sites/")
     .trimEnd();
 }
 

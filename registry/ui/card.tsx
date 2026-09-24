@@ -5,7 +5,10 @@ export function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElemen
   return (
     <div
       className={cn(
-        "rounded-2xl border border-border bg-card text-card-foreground shadow-[0_1px_0_0_oklch(1_0_0/6%)_inset]",
+        "relative isolate rounded-surface border-line border-border bg-card text-card-foreground shadow-surface [--tw-border-style:var(--line-style)]",
+        // Glass systems blur what sits behind the card. The filter lives on a
+        // pseudo-element so the card never traps fixed-position popovers.
+        "before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:[backdrop-filter:var(--surface-filter)] before:content-['']",
         className,
       )}
       {...props}

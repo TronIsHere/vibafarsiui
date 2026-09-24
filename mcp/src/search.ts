@@ -47,7 +47,7 @@ export function searchCatalog(
 
 export function resolveName(catalog: Catalog, name: string, type?: RegistryType): CatalogItem | undefined {
   const q = normalize(name);
-  const typed = q.match(/^(component|animation|background|template|block|theme|lib|skill)s?\/(.+)$/);
+  const typed = q.match(/^(component|animation|background|template|block|site|theme|lib|skill)s?\/(.+)$/);
   if (typed) {
     const kind = typed[1].replace(/s$/, "") as RegistryType;
     return catalog.items.find((i) => i.type === kind && normalize(i.slug) === normalize(typed[2]));

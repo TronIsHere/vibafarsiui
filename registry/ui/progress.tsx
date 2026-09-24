@@ -20,8 +20,8 @@ export function Progress({ value, max = 100, label, showValue, size = "md", clas
           {showValue && <span className="text-muted-foreground tabular-nums">{faPercent(pct)}</span>}
         </div>
       )}
-      <div role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={max} className={cn("w-full overflow-hidden rounded-full bg-input", size === "sm" ? "h-1.5" : "h-2")}>
-        <div className="h-full rounded-full bg-primary transition-[width] duration-500" style={{ width: `${pct}%` }} />
+      <div role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={max} className={cn("w-full overflow-hidden rounded-[calc(var(--shape-control)*999)] bg-input", size === "sm" ? "h-1.5" : "h-2")}>
+        <div className="h-full rounded-[calc(var(--shape-control)*999)] bg-primary transition-[width] duration-500" style={{ width: `${pct}%` }} />
       </div>
     </div>
   );

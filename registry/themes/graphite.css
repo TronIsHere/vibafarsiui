@@ -1,6 +1,8 @@
-/* گرافیت، پیش‌فرض. این بلوک را در :root بگذارید. */
+/* گرافیت، مینیمال فنی و تم پیش‌فرض. این بلوک را در :root بگذارید. */
 :root {
   color-scheme: dark;
+
+  /* رنگ */
   --background: oklch(0.115 0.002 285);
   --foreground: oklch(0.975 0 0);
   --card: oklch(0.14 0.002 285);
@@ -23,5 +25,27 @@
   --ring: oklch(0.7 0 0);
   --brand: oklch(0.8 0.165 65);
   --brand-foreground: oklch(0.22 0.06 60);
+
+  /* زبان طراحی: فونت، فرم، خط، عمق، حرکت و تراکم */
   --radius: 0.625rem;
+  --type-display-weight: 700;
+  --shape-control: calc(var(--radius) - 2px);
+  --shape-field: calc(var(--radius) - 2px);
+  --shape-surface: calc(var(--radius) + 12px);
+  --shape-overlay: calc(var(--radius) + 4px);
+  --line: 1px;
+  --line-field: 1px;
+  --line-style: solid;
+  --field: color-mix(in oklch, var(--background) 60%, transparent);
+  --depth-control: 0 0 #0000;
+  --depth-press: 0 0 #0000;
+  --depth-field: 0 0 #0000;
+  --depth-surface: 0 1px 0 0 oklch(1 0 0 / 6%) inset;
+  --depth-overlay: 0 20px 50px -20px oklch(0 0 0 / 80%);
+  --surface-filter: none;
+  --press: scale(0.98);
+  --motion: 200ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+  --backdrop: none;
+  --spacing: 0.25rem;
 }

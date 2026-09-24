@@ -1,11 +1,15 @@
-import { animations, backgrounds, blocks, buildPrompt, buildThemePrompt, components, hostedSkills, libs, skillTarget, templates, themes } from "@/lib/registry";
+import { animations, backgrounds, blocks, buildPrompt, buildThemePrompt, components, hostedSkills, libs, sites, skillTarget, templates, themes } from "@/lib/registry";
 import { readSource } from "@/lib/source";
+import { siteRegistryItem } from "@/lib/site-registry";
 
 const lists = { components, animations, backgrounds, templates, blocks, themes, lib: libs, skills: hostedSkills } as const;
 type Type = keyof typeof lists;
 
 export function generateStaticParams() {
-  return (Object.keys(lists) as Type[]).flatMap((type) => lists[type].map((i) => ({ type, slug: `${i.slug}.json` })));
+  return [
+    ...(Object.keys(lists) as Type[]).flatMap((type) => lists[type].map((i) => ({ type, slug: `${i.slug}.json` }))),
+    ...sites.map((i) => ({ type: "sites", slug: `${i.slug}.json` })),
+  ];
 }
 
 function userPath(type: Type, file: string) {
@@ -31,6 +35,11 @@ function targetPath(type: Type, item: { file: string; slug: string; format?: "sk
 export async function GET(_req: Request, ctx: RouteContext<"/r/[type]/[slug]">) {
   const { type, slug: raw } = await ctx.params;
   const slug = raw.replace(/\.json$/, "");
+  if (type === "sites") {
+    const site = sites.find((i) => i.slug === slug);
+    if (!site) return Response.json({ error: "not_found" }, { status: 404 });
+    return Response.json(siteRegistryItem(site), { headers: { "Cache-Control": "public, max-age=3600" } });
+  }
   const list = lists[type as Type];
   const item = list?.find((i) => i.slug === slug);
   if (!item) return Response.json({ error: "not_found" }, { status: 404 });

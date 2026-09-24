@@ -1,24 +1,53 @@
-/* انار. روی <html data-theme="pomegranate"> یا هر عنصر دیگری اعمال کنید. */
+/* انار، خمیری. متن و تیتر با Vazirmatn هستن. */
 [data-theme="pomegranate"] {
-  color-scheme: dark;
-  --background: oklch(0.14 0.02 15);
-  --foreground: oklch(0.97 0.01 15);
-  --card: oklch(0.17 0.025 15);
-  --card-foreground: oklch(0.97 0.01 15);
-  --popover: oklch(0.19 0.025 15);
-  --popover-foreground: oklch(0.97 0.01 15);
-  --primary: oklch(0.7 0.18 20);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.24 0.04 15);
-  --secondary-foreground: oklch(0.97 0.01 15);
-  --muted: oklch(0.21 0.03 15);
-  --muted-foreground: oklch(0.72 0.04 15);
-  --accent: oklch(0.24 0.04 15);
-  --accent-foreground: oklch(0.97 0.01 15);
-  --border: oklch(0.8 0.1 15 / 14%);
-  --input: oklch(0.8 0.1 15 / 18%);
-  --ring: oklch(0.7 0.18 20);
-  --brand: oklch(0.8 0.12 25);
-  --brand-foreground: oklch(0.2 0.05 20);
-  --radius: 1rem;
+  color-scheme: light;
+
+  /* رنگ */
+  --background: oklch(0.94 0.025 15);
+  --foreground: oklch(0.27 0.05 15);
+  --card: oklch(0.975 0.012 15);
+  --card-foreground: oklch(0.27 0.05 15);
+  --popover: oklch(0.985 0.008 15);
+  --popover-foreground: oklch(0.27 0.05 15);
+  --primary: oklch(0.6 0.2 18);
+  --primary-foreground: oklch(0.99 0.005 15);
+  --secondary: oklch(0.9 0.035 15);
+  --secondary-foreground: oklch(0.27 0.05 15);
+  --muted: oklch(0.92 0.03 15);
+  --muted-foreground: oklch(0.5 0.05 15);
+  --accent: oklch(0.9 0.04 15);
+  --accent-foreground: oklch(0.27 0.05 15);
+  --destructive: oklch(0.55 0.2 28);
+  --success: oklch(0.58 0.14 160);
+  --warning: oklch(0.68 0.15 65);
+  --border: oklch(0.27 0.05 15 / 9%);
+  --input: oklch(0.27 0.05 15 / 12%);
+  --ring: oklch(0.6 0.2 18);
+  --brand: oklch(0.6 0.17 340);
+  --brand-foreground: oklch(0.99 0 0);
+
+  /* زبان طراحی: فونت، فرم، خط، عمق، حرکت و تراکم */
+  --radius: 1.25rem;
+  --type-body: "Vazirmatn", "IRANSans", "Vazirmatn", system-ui, sans-serif;
+  --type-display: "Vazirmatn", "IRANSans", "Vazirmatn", system-ui, sans-serif;
+  --type-display-weight: 800;
+  --shape-control: 999px;
+  --shape-field: 1rem;
+  --shape-surface: 1.75rem;
+  --shape-overlay: 1.5rem;
+  --line: 1px;
+  --line-field: 1px;
+  --line-style: solid;
+  --field: var(--card);
+  --depth-control: inset 0 -3px 0 0 oklch(0.2 0.08 15 / 16%), inset 0 2px 0 0 oklch(1 0 0 / 35%), 0 10px 20px -10px oklch(0.45 0.16 18 / 55%);
+  --depth-press: inset 0 2px 5px 0 oklch(0.2 0.08 15 / 22%);
+  --depth-field: inset 0 2px 5px 0 oklch(0.3 0.08 15 / 9%);
+  --depth-surface: inset 0 2px 0 0 oklch(1 0 0 / 80%), inset 0 -4px 10px 0 oklch(0.45 0.1 15 / 7%), 0 24px 44px -24px oklch(0.45 0.14 18 / 40%);
+  --depth-overlay: inset 0 2px 0 0 oklch(1 0 0 / 80%), 0 30px 60px -22px oklch(0.45 0.14 18 / 45%);
+  --surface-filter: none;
+  --press: scale(0.95);
+  --motion: 420ms;
+  --motion-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --backdrop: none;
+  --spacing: 0.275rem;
 }

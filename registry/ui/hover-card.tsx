@@ -46,7 +46,7 @@ export function HoverCard({ trigger, children, openDelay = 300, closeDelay = 150
         panelRef={panel}
         onMouseEnter={() => schedule(true, 0)}
         onMouseLeave={() => schedule(false, closeDelay)}
-        className={cn("fixed z-50 w-72 rounded-xl border border-border bg-popover p-4 text-sm text-popover-foreground shadow-[0_20px_50px_-20px_oklch(0_0_0/80%)] animate-fade-up [animation-duration:180ms]", className)}
+        className={cn("fixed z-50 w-72 rounded-overlay border-line border-border bg-popover p-4 text-sm text-popover-foreground shadow-overlay [backdrop-filter:var(--surface-filter)] animate-fade-up [animation-duration:180ms]", className)}
       >
         {children}
       </FloatPortal>

@@ -62,7 +62,7 @@ export function RadioGroup({ options, value, defaultValue, onChange, variant = "
               "flex w-full cursor-pointer items-start gap-2.5 text-start text-sm transition-colors",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
               "disabled:cursor-not-allowed disabled:opacity-50",
-              variant === "cards" && "rounded-lg border p-3",
+              variant === "cards" && "rounded-control border-line p-3",
               variant === "cards" && (on ? "border-foreground/50 bg-accent/60" : "border-border hover:bg-accent/40"),
             )}
           >

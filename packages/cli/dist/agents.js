@@ -122,7 +122,7 @@ async function copyGuide(project, flags, client, catalog, slug) {
         skip(`${rel} (exists)`);
         return rel;
     }
-    writeFile(dest, file.content, flags.dryRun);
+    writeFile(dest, file.content ?? "", flags.dryRun);
     info(rel);
     return rel;
 }
